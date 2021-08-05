@@ -1,116 +1,104 @@
 package bibli.controle;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 
+import bibli.excecoes.ExcecaoLivro;
+import bibli.modelo.AcervoLivro;
 import bibli.modelo.Livro;
 
 public class ControladorLivro {
 
-	private static ArrayList<Livro> livros= new ArrayList<Livro>();
-
-	public static ArrayList<Livro> getLivros() {
+	public static HashMap<String, Livro> getLivros() {
 		
-		return livros;
+		return AcervoLivro.getLivros();
 	}
 
 	public static int getNumeroLivros() {
 		
-		return livros.size();
+		return AcervoLivro.getNumeroLivros();
 	}
 
 	public static void exibirLivros() {
 
-		if(livros.size() == 0)
+		if(AcervoLivro.getNumeroLivros() == 0)
 			System.out.println("Não há livros cadastrados.");
 		else {
 			System.out.println("----------------- Livros -----------------");
-			for(Livro livro : livros)
+			for(Livro livro : AcervoLivro.getLivros().values())
 				System.out.println(livro+"\n");
 		}
 	}
-	
-	public static void ordenarLivros() {
 
-		Collections.sort(livros);
-	}
-
-	public static void adicionarLivro(Livro livro) throws Exception {
+	public static void adicionarLivro(Livro livro) throws ExcecaoLivro {
 
 		if(livro == null)
-			throw new Exception("Livro nulo.");
+			throw new ExcecaoLivro("Livro nulo.");
 		
-		if(livros.contains(livro)) 
-			throw new Exception("Livro já cadastrado.");
+		if(AcervoLivro.buscarLivro(livro.getIsbn()) != null)
+			throw new ExcecaoLivro("Livro já cadastrado.");
 
-		livros.add(livro);
+		AcervoLivro.adicionarLivro(livro);
 	}
 	
-	public static void removerLivro(Livro livro) throws Exception {
+	public static void removerLivro(Livro livro) throws ExcecaoLivro {
 
 		if(livro == null)
-			throw new Exception("Livro nulo.");
+			throw new ExcecaoLivro("Livro nulo.");
 		
-		if(!livros.contains(livro)) 
-			throw new Exception("Livro não cadastrado.");
-
-		livros.remove(livro);
-	}
-	
-	public static void editarLivro(Livro livro, Livro livroAtualizado) throws Exception {
-
-		if(livro == null)
-			throw new Exception("Livro nulo.");
-
-		int indice= livros.indexOf(livro);
+		Livro l= AcervoLivro.removerLivro(livro.getIsbn());
 		
-		if(indice == -1)
-			throw new Exception("Livro não cadastrado.");
-		else
-			livros.set(indice, livroAtualizado);			
+		if(l == null) 
+			throw new ExcecaoLivro("Livro não cadastrado.");
 	}
 	
-	public static Livro buscarLivro(String isbn) throws Exception{
+	public static void removerLivro(String isbn) throws ExcecaoLivro {
 
-		Livro livro= null;
+		if(isbn == null)
+			throw new ExcecaoLivro("ISBN nulo.");
+		
+		Livro l= AcervoLivro.removerLivro(isbn);
+		
+		if(l == null) 
+			throw new ExcecaoLivro("Livro não cadastrado.");
+	}
+	
+	public static void editarLivro(Livro livroAtualizado) throws ExcecaoLivro {
 
-		for(Livro l : livros) {
-			if(l.getIsbn().equals(isbn)) {
-				livro= l;
-				break;
-			}
-		}
-
+		if(livroAtualizado == null)
+			throw new ExcecaoLivro("O conteúdo de atualização do livro está nulo.");
+				
+		Livro l= AcervoLivro.editarLivro(livroAtualizado);		
+		
+		if(l == null)
+			throw new ExcecaoLivro("Livro não cadastrado.");			
+	}
+	
+	public static Livro buscarLivro(String isbn) throws ExcecaoLivro{
+		
+		Livro livro= AcervoLivro.buscarLivro(isbn);
+		
 		if(livro == null)
-			throw new Exception("Livro não encontrado.");
+			throw new ExcecaoLivro("Livro não encontrado.");
 
 		return livro;
 	}
 	
-	public static ArrayList<Livro> buscarLivrosPorAutor(String autor) throws Exception{
+	public static HashMap<String, Livro> buscarLivrosPorAutor(String autor) throws ExcecaoLivro{
 
-		ArrayList<Livro> livrosEncontrados= new ArrayList<Livro>();
-
-		for(Livro livro : livros) 
-			if(livro.getAutor().equals(autor)) 
-				livrosEncontrados.add(livro);	
+		HashMap<String, Livro> livrosEncontrados= AcervoLivro.buscarLivrosPorAutor(autor);
 
 		if(livrosEncontrados.size() == 0)
-			throw new Exception("Nenhum livro encontrado.");
+			throw new ExcecaoLivro("Nenhum livro encontrado.");
 
 		return livrosEncontrados;
 	}
 	
-	public static ArrayList<Livro> buscarLivrosPorTitulo(String titulo) throws Exception{
+	public static HashMap<String, Livro> buscarLivrosPorTitulo(String titulo) throws ExcecaoLivro{
 
-		ArrayList<Livro> livrosEncontrados= new ArrayList<Livro>();
-
-		for(Livro livro : livros)
-			if(livro.getTitulo().equals(titulo)) 
-				livrosEncontrados.add(livro);	
+		HashMap<String, Livro> livrosEncontrados= AcervoLivro.buscarLivrosPorTitulo(titulo);	
 				
 		if(livrosEncontrados.size() == 0)
-			throw new Exception("Nenhum livro encontrado.");
+			throw new ExcecaoLivro("Nenhum livro encontrado.");
 
 		return livrosEncontrados;
 	}

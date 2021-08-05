@@ -1,7 +1,6 @@
 package bibli.aplicacao;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 
 import bibli.controle.ControladorExemplar;
 import bibli.controle.ControladorLivro;
@@ -55,7 +54,7 @@ public class Principal {
 		System.out.println("Há " + ControladorLivro.getNumeroLivros() + " livros cadastrados.");		
 		ControladorLivro.exibirLivros();
 				
-		for(Livro livro : ControladorLivro.getLivros()) {
+		for(Livro livro : ControladorLivro.getLivros().values()) {
 			try {
 				ControladorExemplar.adicionarExemplar(new Exemplar(livro));
 				ControladorExemplar.adicionarExemplar(new Exemplar(livro));
@@ -78,10 +77,10 @@ public class Principal {
 		}				
 		
 		System.out.println("\nBuscando livros pelo autor \"Kiera Cass\"");
-		ArrayList<Livro> ls;
+		HashMap<String, Livro> ls;
 		try {
 			ls = ControladorLivro.buscarLivrosPorAutor("Kiera Cass");			
-			for(Livro livro : ls) 
+			for(Livro livro : ls.values()) 
 				System.out.println(livro + "\n");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -91,7 +90,7 @@ public class Principal {
 		System.out.println("\nBuscando livros pelo título \"O Mundo de Sofia\"");
 		try {
 			ls= ControladorLivro.buscarLivrosPorTitulo("O Mundo de Sofia");
-			for(Livro livro : ls) 
+			for(Livro livro : ls.values()) 
 				System.out.println(livro + "\n");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -99,17 +98,37 @@ public class Principal {
 		}		
 		
 		System.out.println("\nEditando livro \"Pollyana\"");
-		try {
-			Livro l= new Livro("Pollyana", "Eleanor Porter", 1, "Pé de Letra", 184, "978-8595201170", "Clássico");
-			ArrayList<Exemplar> es= ControladorExemplar.buscarExemplares(livro1);
+		try {		
 			
+			//compara Livro livro1 com campos recebidos, se ha diferenças o livro eh atualizado
+			HashMap<String, Exemplar> es= ControladorExemplar.buscarExemplares(livro1);
+			
+			String novoTitulo= "Pollyana", novoAutor= "Eleanor Porter", 
+					novaEditora= "Pé de Letra", novoIsbn= "978-8595201170", novaCategoria= "Clássico";
+			int novaEdicao= 1, novoNumeroPaginas= 184;
+			
+			if(!livro1.getTitulo().equals(novoTitulo))
+				livro1.setTitulo(novoTitulo);
+			if(!livro1.getAutor().equals(novoAutor))
+				livro1.setAutor(novoAutor);
+			if(!livro1.getEditora().equals(novaEditora))
+				livro1.setEditora(novaEditora);
+			if(!livro1.getIsbn().equals(novoIsbn))
+				livro1.setIsbn(novoIsbn);
+			if(!livro1.getCategoria().equals(novaCategoria))
+				livro1.setCategoria(novaCategoria);
+			if(livro1.getEdicao() != novaEdicao)
+				livro1.setEdicao(novaEdicao);
+			if(livro1.getNumeroPaginas() != novoNumeroPaginas)
+				livro1.setNumeroPaginas(novoNumeroPaginas);
+							
 			if(es.isEmpty())
-				ControladorLivro.editarLivro(livro1, l);			
+				ControladorLivro.editarLivro(livro1);			
 			else {
 				
-				ControladorLivro.editarLivro(livro1, l);				
-				for(Exemplar e : es)
-					ControladorExemplar.editarExemplar(e, new Exemplar(e.getCodigo(), l));
+				ControladorLivro.editarLivro(livro1);				
+				for(Exemplar e : es.values())
+					ControladorExemplar.editarExemplar(e, new Exemplar(e.getCodigo(), livro1));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -122,13 +141,13 @@ public class Principal {
 		
 		System.out.println("\nExcluindo livro e exemplares de \"O Mundo de Sofia\"");
 		try {
-			ArrayList<Exemplar> es= ControladorExemplar.buscarExemplares(livro2);
+			HashMap<String, Exemplar> es= ControladorExemplar.buscarExemplares(livro2);
 			
 			if(es.isEmpty())
 				ControladorLivro.removerLivro(livro2);
 			else {
 				System.err.println("Os " + es.size() + " exemplares vinculados a este livro serão apagados.\n");
-				for(Exemplar e : es)
+				for(Exemplar e : es.values())
 					ControladorExemplar.removerExemplar(e);
 				
 				ControladorLivro.removerLivro(livro2);
@@ -138,8 +157,7 @@ public class Principal {
 			e.printStackTrace();
 		}		
 		
-		System.out.println("Há " + ControladorLivro.getNumeroLivros() + " livros cadastrados.");		
-		ControladorLivro.ordenarLivros();	
+		System.out.println("Há " + ControladorLivro.getNumeroLivros() + " livros cadastrados.");			
 		ControladorLivro.exibirLivros();	
 		System.out.println("Há " + ControladorExemplar.getNumeroExemplares() + " exemplares cadastrados.");	
 		ControladorExemplar.exibirExemplares();
@@ -147,25 +165,25 @@ public class Principal {
 		System.out.println("Removendo exemplares do livro5= \"O Menino do Pijama Listrado\"");
 		try {
 			
-			for(Exemplar e : ControladorExemplar.buscarExemplares(livro5))
+			for(Exemplar e : ControladorExemplar.buscarExemplares(livro5).values())
 				ControladorExemplar.removerExemplar(e);			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}			
-		
-		System.out.println("Removendo exemplar 1 (é do livro \"Pollyana\")");
+	
+		System.out.println("Removendo exemplar 6 (é do livro \"Pollyana\")");
 		try {
-			ControladorExemplar.removerExemplar("1");
+			ControladorExemplar.removerExemplar("6");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		System.out.println("Editando exemplar8 (colocando como o livro \"A Seleção\")");
+		System.out.println("Editando exemplar10 (colocando como o livro \"A Seleção\")");
 		try {
-			Exemplar e= ControladorExemplar.buscarExemplar("8");
+			Exemplar e= ControladorExemplar.buscarExemplar("10");
 			ControladorExemplar.editarExemplar(e, new Exemplar(e.getCodigo(), livro3));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
@@ -173,7 +191,6 @@ public class Principal {
 		}
 		
 		System.out.println("Há " + ControladorLivro.getNumeroLivros() + " livros cadastrados.");		
-		ControladorLivro.ordenarLivros();	
 		ControladorLivro.exibirLivros();	
 		System.out.println("Há " + ControladorExemplar.getNumeroExemplares() + " exemplares cadastrados.");
 		ControladorExemplar.exibirExemplares();
