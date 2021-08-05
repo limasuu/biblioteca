@@ -128,7 +128,7 @@ public class Principal {
 				
 				ControladorLivro.editarLivro(livro1);				
 				for(Exemplar e : es.values())
-					ControladorExemplar.editarExemplar(e, new Exemplar(e.getCodigo(), livro1));
+					ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro1));
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -184,7 +184,7 @@ public class Principal {
 		System.out.println("Editando exemplar10 (colocando como o livro \"A Seleção\")");
 		try {
 			Exemplar e= ControladorExemplar.buscarExemplar("10");
-			ControladorExemplar.editarExemplar(e, new Exemplar(e.getCodigo(), livro3));
+			ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro3));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

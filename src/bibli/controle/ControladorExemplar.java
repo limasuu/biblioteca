@@ -2,94 +2,94 @@ package bibli.controle;
 
 import java.util.HashMap;
 
+import bibli.excecoes.ExcecaoExemplar;
+import bibli.modelo.AcervoExemplar;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
 public class ControladorExemplar {
-	
-	private static HashMap<String, Exemplar> exemplares= new HashMap<String, Exemplar>();
-	
+
 	public static HashMap<String, Exemplar> getExemplares() {
-		
-		return exemplares;
+
+		return AcervoExemplar.getExemplares();
 	}
-	
+
 	public static int getNumeroExemplares() {
-		
-		return exemplares.size();
+
+		return AcervoExemplar.getNumeroExemplares();
 	}
 
 	public static void exibirExemplares() {
 
-		System.out.println("----------------- Exemplares -----------------");
-		for(Exemplar exemplar : exemplares.values())
-			System.out.println(exemplar+"\n");
+		if(AcervoExemplar.getNumeroExemplares() == 0)
+			System.out.println("Não há exemplares cadastrados.");
+		else {
+			System.out.println("----------------- Exemplares -----------------");
+			for(Exemplar exemplar : AcervoExemplar.getExemplares().values())
+				System.out.println(exemplar+"\n");
+		}
 	}
-	
-	public static void adicionarExemplar(Exemplar exemplar) throws Exception {
+
+	public static void adicionarExemplar(Exemplar exemplar) throws ExcecaoExemplar {
 
 		if(exemplar == null)
-			throw new Exception("Exemplar nulo.");
-		
-		if(exemplares.containsValue(exemplar)) 
-			throw new Exception("Exemplar já cadastrado.");
+			throw new ExcecaoExemplar("Exemplar nulo.");
 
-		exemplares.put(exemplar.getCodigo(), exemplar);
+		if(AcervoExemplar.buscarExemplar(exemplar.getCodigo()) != null)
+			throw new ExcecaoExemplar("Exemplar já cadastrado.");
+
+		AcervoExemplar.adicionarExemplar(exemplar);
 	}
-	
-	public static void removerExemplar(Exemplar exemplar) throws Exception {
+
+	public static void removerExemplar(Exemplar exemplar) throws ExcecaoExemplar {
 
 		if(exemplar == null)
-			throw new Exception("Exemplar nulo.");	
-		
-		Exemplar e= exemplares.remove(exemplar.getCodigo());
-		
+			throw new ExcecaoExemplar("Exemplar nulo.");	
+
+		Exemplar e= AcervoExemplar.removerExemplar(exemplar.getCodigo());
+
 		if(e == null) 
-			throw new Exception("Exemplar não cadastrado.");
+			throw new ExcecaoExemplar("Exemplar não cadastrado.");
 	}
 
-	public static void removerExemplar(String codigo) throws Exception {
+	public static void removerExemplar(String codigo) throws ExcecaoExemplar {
 
 		if(codigo == null)
-			throw new Exception("Código nulo.");	
-		
-		Exemplar e= exemplares.remove(codigo);
-		
+			throw new ExcecaoExemplar("Código nulo.");	
+
+		Exemplar e= AcervoExemplar.removerExemplar(codigo);
+
 		if(e == null) 
-			throw new Exception("Não foi encontrado exemplar com o código informado.");
+			throw new ExcecaoExemplar("Não foi encontrado exemplar com o código informado.");
 	}
 
-	public static void editarExemplar(Exemplar exemplar, Exemplar exemplarAtualizado) throws Exception {
+	public static void editarExemplar(Exemplar exemplarAtualizado) throws ExcecaoExemplar {
 
-		if(exemplar == null || exemplarAtualizado == null)
-			throw new Exception("Exemplar nulo.");
+		if(exemplarAtualizado == null)
+			throw new ExcecaoExemplar("O conteúdo de atualização do exemplar está nulo.");
 
-		Exemplar e= exemplares.replace(exemplar.getCodigo(), exemplarAtualizado);		
-		
+		Exemplar e= AcervoExemplar.editarExemplar(exemplarAtualizado);		
+
 		if(e == null)
-			throw new Exception("Exemplar não cadastrado.");		
+			throw new ExcecaoExemplar("Exemplar não cadastrado.");	
 	}
-	
-	public static Exemplar buscarExemplar(String codigo) throws Exception{
 
-		Exemplar exemplar=  exemplares.get(codigo);
-		
+	public static Exemplar buscarExemplar(String codigo) throws ExcecaoExemplar{
+
+		Exemplar exemplar= AcervoExemplar.buscarExemplar(codigo);
+
 		if(exemplar == null)
-			throw new Exception("Exemplar não encontrado.");
+			throw new ExcecaoExemplar("Exemplar não encontrado.");
 
 		return exemplar;
 	}
-	
-	public static HashMap<String, Exemplar> buscarExemplares(Livro livro) throws Exception{
 
-		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
+	public static HashMap<String, Exemplar> buscarExemplares(Livro livro) throws ExcecaoExemplar{
 
-		for(Exemplar exemplar : exemplares.values()) 
-			if(exemplar.getLivro().equals(livro)) 
-				exemplaresEncontrados.put(exemplar.getCodigo(), exemplar);	
+		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(livro);
 
 		if(exemplaresEncontrados.size() == 0)
-			throw new Exception("Nenhum exemplar encontrado.");
+			throw new ExcecaoExemplar("Nenhum exemplar encontrado.");
 
 		return exemplaresEncontrados;
 	}	
