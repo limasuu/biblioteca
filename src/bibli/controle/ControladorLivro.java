@@ -18,14 +18,18 @@ public class ControladorLivro {
 		return AcervoLivro.getNumeroLivros();
 	}
 
-	public static void exibirLivros() {
+	public static void exibirLivros() throws ExcecaoLivro {
 
 		if(AcervoLivro.getNumeroLivros() == 0)
-			System.out.println("Não há livros cadastrados.");
+			throw new ExcecaoLivro("Não há livros cadastrados.");
 		else {
-			System.out.println("----------------- Livros -----------------");
+			
+			System.out.println("\n----------------- Livros -----------------");
+			System.out.println("Quantidade: " + ControladorLivro.getNumeroLivros());	
+			System.out.println("------------------------------------------");
 			for(Livro livro : AcervoLivro.getLivros().values())
 				System.out.println(livro+"\n");
+			System.out.println("------------------------------------------");
 		}
 	}
 
