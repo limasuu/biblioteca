@@ -13,60 +13,60 @@ public class MenuLivro {
 
 		try {
 			System.out.println(ControladorLivro.buscarLivro(isbn));
-			
+
 		} catch (ExcecaoLivro e) {			
 			System.err.println(e.getMessage());
 		}
 	}
-	
+
 	public static void exibirLivrosTotal (){
 
 		try {
 			ControladorLivro.exibirLivros();
-			
+
 		} catch (ExcecaoLivro e) {
 			System.err.println(e.getMessage());
 		}		
 	}
-	
+
 	public static void exibirLivrosPorAutor (String autor){
-		
+
 		try {			
 			HashMap<String, Livro> livros= ControladorLivro.buscarLivrosPorAutor(autor);
-			
+
 			System.out.println("\n----------- Livros de \"" + autor + "\" -----------");
 			System.out.println("Quantidade: " + livros.size());	
 			System.out.println("------------------------------------------");
-			
+
 			for(Livro livro: livros.values())
 				System.out.println("\n" + livro);	
-			
+
 			System.out.println("------------------------------------------");
-			
+
 		} catch (ExcecaoLivro e) {
 			System.err.println(e.getMessage());
 		}			
 	}
-	
+
 	public static void exibirLivrosPorTitulo (String titulo){
-		
+
 		try {
 			HashMap<String, Livro> livros= ControladorLivro.buscarLivrosPorTitulo(titulo);
-			
+
 			System.out.println("\n-------- Livros com o título \"" + titulo + "\" --------");
 			System.out.println("Quantidade: " + livros.size());	
 			System.out.println("------------------------------------------");
-			
+
 			for(Livro livro: livros.values())
 				System.out.println("\n" + livro);			
-			
+
 			System.out.println("------------------------------------------");
-			
+
 		} catch (ExcecaoLivro e) {
 			System.err.println(e.getMessage());
 		}	
 	}
-	
+
 	public static boolean adicionarLivro (String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,
 			String isbn, String categoria){
@@ -77,7 +77,7 @@ public class MenuLivro {
 				categoria == null) {
 			System.err.println("Há campos nulos.");
 			return false;
-			
+
 		}else {
 			Livro livro= new Livro(titulo, autor, edicao, editora, numeroPaginas, isbn, categoria);
 
@@ -91,16 +91,16 @@ public class MenuLivro {
 		}
 		return true;
 	}
-	
+
 	public static boolean editarLivro (String novoTitulo, String novoAutor, 
 			int novaEdicao, String novaEditora, int novoNumeroPaginas,
 			String isbn, String novaCategoria){
 
 		try {
 			Livro livro = ControladorLivro.buscarLivro(isbn);
-			
+
 			boolean mudancas= false;
-			
+
 			if(!livro.getTitulo().equals(novoTitulo)) {
 				livro.setTitulo(novoTitulo);
 				mudancas= true;
@@ -125,27 +125,76 @@ public class MenuLivro {
 				livro.setNumeroPaginas(novoNumeroPaginas);
 				mudancas= true;
 			}
-			
+
 			if(mudancas) {					
-				try {
-					HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livro);
-					
-					ControladorLivro.editarLivro(livro);				
-					for(Exemplar e : conjuntoExemplares.values())
-						ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro));
-					
-				} catch (ExcecaoExemplar e) {
-					
-					ControladorLivro.editarLivro(livro);
-					
-				}	
+				HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(isbn);
+
+				ControladorLivro.editarLivro(livro);	
+
+				if(!conjuntoExemplares.isEmpty()) {								
+					for(Exemplar e : conjuntoExemplares.values()) {
+
+						try {
+							ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro));
+						} catch (ExcecaoExemplar ee) {
+							System.err.println(ee.getMessage());
+						}
+					}
+				}					
 				return true;
+
 			}else
 				System.err.println("Não há mudanças para realizar.");
-			
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
+
+		} catch (ExcecaoLivro el) {
+			System.err.println(el.getMessage());
 		}
 		return false;
 	}	
+
+	public static void removerLivro(Livro livro) {
+
+		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livro);
+
+		if(!conjuntoExemplares.isEmpty()) {
+
+			System.err.println("Os " + conjuntoExemplares.size() + " exemplares vinculados a este livro também serão apagados!\n");
+			for(Exemplar e : conjuntoExemplares.values()) {
+				try {
+					ControladorExemplar.removerExemplar(e);
+				} catch (ExcecaoExemplar ee) {
+					System.err.println(ee.getMessage());
+				}
+			}
+		}
+
+		try {
+			ControladorLivro.removerLivro(livro);
+		} catch (ExcecaoLivro e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	public static void removerLivro(String isbn) {
+		
+		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(isbn);
+
+		if(!conjuntoExemplares.isEmpty()) {
+
+			System.err.println("Os " + conjuntoExemplares.size() + " exemplares vinculados a este livro também serão apagados!\n");
+			for(Exemplar e : conjuntoExemplares.values()) {
+				try {
+					ControladorExemplar.removerExemplar(e);
+				} catch (ExcecaoExemplar ee) {
+					System.err.println(ee.getMessage());
+				}
+			}
+		}
+
+		try {
+			ControladorLivro.removerLivro(isbn);
+		} catch (ExcecaoLivro e) {
+			System.err.println(e.getMessage());
+		}
+	}
 }

@@ -3,7 +3,9 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.excecoes.ExcecaoExemplar;
+import bibli.excecoes.ExcecaoLivro;
 import bibli.modelo.AcervoExemplar;
+import bibli.modelo.AcervoLivro;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
@@ -84,13 +86,15 @@ public class ControladorExemplar {
 		return exemplar;
 	}
 
-	public static HashMap<String, Exemplar> buscarExemplares(Livro livro) throws ExcecaoExemplar{
+	public static HashMap<String, Exemplar> buscarExemplares(Livro livro){
 
-		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(livro);
+		return AcervoExemplar.buscarExemplares(livro);
 
-		if(exemplaresEncontrados.size() == 0)
-			throw new ExcecaoExemplar("Nenhum exemplar encontrado.");
+	}	
+	
+	public static HashMap<String, Exemplar> buscarExemplares(String isbn){
 
-		return exemplaresEncontrados;
+		return AcervoExemplar.buscarExemplares(isbn);
+
 	}	
 }

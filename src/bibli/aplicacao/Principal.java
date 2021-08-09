@@ -1,7 +1,5 @@
 package bibli.aplicacao;
 
-import java.util.HashMap;
-
 import bibli.controle.ControladorExemplar;
 import bibli.controle.ControladorLivro;
 import bibli.controle.MenuLivro;
@@ -11,7 +9,9 @@ import bibli.modelo.Livro;
 public class Principal {
 
 	public static void main(String[] args) {
-				
+		
+		
+
 		Livro livro1= new Livro("Polianna", "Eleanor Porter", 1, "Pé de Letra", 184, "978-8595201170", "Clássico");
 		Livro livro2= new Livro("O Mundo de Sofia", "Jostein Gaarder", 1, "Seguinte", 568, "9788535921892", "Romance");
 		Livro livro3= new Livro("A Seleção", "Kiera Cass", 1, "Seguinte", 368, "9788565765015", "Young adult");
@@ -114,22 +114,8 @@ public class Principal {
 
 
 		System.out.println("\nExcluindo livro e exemplares de \"O Mundo de Sofia\"");
-		try {
-			HashMap<String, Exemplar> es= ControladorExemplar.buscarExemplares(livro2);
-
-			if(es.isEmpty())
-				ControladorLivro.removerLivro(livro2);
-			else {
-				System.err.println("Os " + es.size() + " exemplares vinculados a este livro serão apagados.\n");
-				for(Exemplar e : es.values())
-					ControladorExemplar.removerExemplar(e);
-
-				ControladorLivro.removerLivro(livro2);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		MenuLivro.removerLivro(livro2);		
+		
 
 		MenuLivro.exibirLivrosTotal();	
 		System.out.println("Há " + ControladorExemplar.getNumeroExemplares() + " exemplares cadastrados.");	

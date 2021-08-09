@@ -35,13 +35,24 @@ public class AcervoExemplar {
 
 		return exemplares.get(codigo);
 	}
-
+	
 	public static HashMap<String, Exemplar> buscarExemplares(Livro livro) {
 
 		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
 
 		for(Exemplar exemplar : exemplares.values()) 
 			if(exemplar.getLivro().equals(livro)) 
+				exemplaresEncontrados.put(exemplar.getCodigo(), exemplar);	
+
+		return exemplaresEncontrados;
+	}	
+	
+	public static HashMap<String, Exemplar> buscarExemplares(String isbn) {
+
+		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
+
+		for(Exemplar exemplar : exemplares.values()) 
+			if(exemplar.getLivro().getIsbn().equals(isbn)) 
 				exemplaresEncontrados.put(exemplar.getCodigo(), exemplar);	
 
 		return exemplaresEncontrados;
