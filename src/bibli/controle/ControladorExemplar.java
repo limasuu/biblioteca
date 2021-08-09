@@ -3,9 +3,7 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.excecoes.ExcecaoExemplar;
-import bibli.excecoes.ExcecaoLivro;
 import bibli.modelo.AcervoExemplar;
-import bibli.modelo.AcervoLivro;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
@@ -26,9 +24,12 @@ public class ControladorExemplar {
 		if(AcervoExemplar.getNumeroExemplares() == 0)
 			System.out.println("Não há exemplares cadastrados.");
 		else {
-			System.out.println("----------------- Exemplares -----------------");
+			System.out.println("\n----------------- Exemplares -----------------");
+			System.out.println("Quantidade: " + getNumeroExemplares());	
+			System.out.println("------------------------------------------");
 			for(Exemplar exemplar : AcervoExemplar.getExemplares().values())
 				System.out.println(exemplar+"\n");
+			System.out.println("------------------------------------------");
 		}
 	}
 

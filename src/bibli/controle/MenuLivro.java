@@ -154,19 +154,7 @@ public class MenuLivro {
 
 	public static void removerLivro(Livro livro) {
 
-		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livro);
-
-		if(!conjuntoExemplares.isEmpty()) {
-
-			System.err.println("Os " + conjuntoExemplares.size() + " exemplares vinculados a este livro também serão apagados!\n");
-			for(Exemplar e : conjuntoExemplares.values()) {
-				try {
-					ControladorExemplar.removerExemplar(e);
-				} catch (ExcecaoExemplar ee) {
-					System.err.println(ee.getMessage());
-				}
-			}
-		}
+		MenuExemplar.removerExemplares(livro);
 
 		try {
 			ControladorLivro.removerLivro(livro);
@@ -177,19 +165,7 @@ public class MenuLivro {
 
 	public static void removerLivro(String isbn) {
 		
-		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(isbn);
-
-		if(!conjuntoExemplares.isEmpty()) {
-
-			System.err.println("Os " + conjuntoExemplares.size() + " exemplares vinculados a este livro também serão apagados!\n");
-			for(Exemplar e : conjuntoExemplares.values()) {
-				try {
-					ControladorExemplar.removerExemplar(e);
-				} catch (ExcecaoExemplar ee) {
-					System.err.println(ee.getMessage());
-				}
-			}
-		}
+		MenuExemplar.removerExemplares(isbn);
 
 		try {
 			ControladorLivro.removerLivro(isbn);
