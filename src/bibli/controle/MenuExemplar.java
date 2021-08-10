@@ -2,88 +2,131 @@ package bibli.controle;
 
 import java.util.HashMap;
 
-import bibli.excecoes.ExcecaoExemplar;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
 public class MenuExemplar {
 
-	public static void exibirExemplar (String codigo){
+	public static boolean exibirExemplar (String codigo){
 
-		try {
-			System.out.println(ControladorExemplar.buscarExemplar(codigo));
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
 
-		} catch (ExcecaoExemplar e) {
-			System.err.println(e.getMessage());
+		if(!ControladorExemplar.verificarExistenciaExemplar(codigo)){
+			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
 		}	
+
+		System.out.println(ControladorExemplar.buscarExemplar(codigo));
+
+		return true;
 	}
 
 	public static void exibirExemplaresTotal (){
 
-		if(ControladorExemplar.getNumeroExemplares() == 0)
-			System.out.println("Não há exemplares cadastrados.");
-		else
-			ControladorExemplar.exibirExemplares();
+		ControladorExemplar.exibirExemplares();
 	}
 
-	public static void exibirExemplaresPorLivro (Livro livro){
+	public static boolean exibirExemplaresPorLivro (Livro livro){
 
-		HashMap<String, Exemplar> exemplares= ControladorExemplar.buscarExemplares(livro);
+		if(!ValidadorObra.validarLivro(livro)) {
+			System.err.println("Livro inválido.");
+			return false;
+		}
 
-		System.out.println("\n----------- Exemplares de \"" + livro.getTitulo() + "\" -----------");
-		System.out.println("Quantidade: " + exemplares.size());	
-		System.out.println("------------------------------------------");
+		HashMap<String, Exemplar> exemplaresEncontrados= ControladorExemplar.buscarExemplares(livro);		
 
-		for(Exemplar exemplar: exemplares.values())
-			System.out.println("\n" + exemplar);	
+		if(exemplaresEncontrados.size() == 0) 
+			System.err.println("Não há exemplares registrados para o livro informado.");			
+		else {
 
-		System.out.println("------------------------------------------");
+			System.out.println("\n----------- Exemplares de \"" + livro.getTitulo() + "\" -----------");
+			System.out.println("Quantidade: " + exemplaresEncontrados.size());	
+			System.out.println("------------------------------------------");
 
+			for(Exemplar exemplar: exemplaresEncontrados.values())
+				System.out.println("\n" + exemplar);	
+
+			System.out.println("------------------------------------------");
+		}
+
+		return true;
 	}
 
 	public static boolean adicionarExemplar (Livro livro) {
 
-		boolean saida= false;
-
-		try {
-			ControladorExemplar.adicionarExemplar(new Exemplar(livro));
-			saida= true;
-
-		} catch (ExcecaoExemplar e) {
-			System.err.println(e.getMessage());
+		if(!ValidadorObra.validarLivro(livro)) {
+			System.err.println("Livro inválido.");
+			return false;
 		}
-		return saida;
+
+		ControladorExemplar.adicionarExemplar(new Exemplar(livro));
+
+		return true;
 	}
 
 	public static boolean editarExemplar (String codigo, Livro livro){
 
-		boolean saida= false;
-
-		try {
-			Exemplar e = ControladorExemplar.buscarExemplar(codigo);
-			ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro));
-
-			saida= true;
-
-		} catch (ExcecaoExemplar ee) {
-			System.err.println(ee.getMessage());
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
 		}
 
-		return saida;
+		if(!ControladorExemplar.verificarExistenciaExemplar(codigo)){
+			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
+		}	
+
+		if(!ValidadorObra.validarLivro(livro)) {
+			System.err.println("Livro inválido.");
+			return false;
+		}
+
+		Exemplar exemplarAtualizado= ValidadorObra.validarAtualizacaoExemplar(codigo, livro);
+
+		if(exemplarAtualizado == null){
+			System.err.println("Não há mudanças para realizar.");
+			return false;
+		}	
+
+		ControladorExemplar.editarExemplar(exemplarAtualizado);
+
+		return true;
 	}	
 
-	public static void removerExemplares(Livro livro) {
+	public static boolean removerExemplares(Livro livro) {
+		
+		if(!ValidadorObra.validarLivro(livro)) {
+			System.err.println("Livro inválido.");
+			return false;
+		}
 
 		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livro);
 
 		removerExemplares(conjuntoExemplares);
+		
+		return true;
 	}	
 
-	public static void removerExemplares(String isbn) {
+	public static boolean removerExemplares(String isbn) {
+		
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
+		}
+
+		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}		
 
 		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(isbn);
 
 		removerExemplares(conjuntoExemplares);
+		
+		return true;
 	}
 
 	private static void removerExemplares(HashMap<String, Exemplar> conjuntoExemplares) {
@@ -91,24 +134,25 @@ public class MenuExemplar {
 		if(!conjuntoExemplares.isEmpty()) {
 
 			System.err.println("Será efetuada a remoção do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!\n");
-			for(Exemplar e : conjuntoExemplares.values()) {
-				try {
-					ControladorExemplar.removerExemplar(e);
-				} catch (ExcecaoExemplar ee) {
-					System.err.println(ee.getMessage());
-				}
-			}
-		}else
-			System.out.println("Não há exemplares vinculados a este livro.");		
+			for(Exemplar e : conjuntoExemplares.values()) 
+				ControladorExemplar.removerExemplar(e);
+		}	
 	}
 
-	public static void removerExemplar(String codigo) {
+	public static boolean removerExemplar(String codigo) {
 
-		try {
-			ControladorExemplar.removerExemplar(codigo);
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
 
-		} catch (ExcecaoExemplar ee) {				
-			System.err.println(ee.getMessage());
-		}		
+		if(!ControladorExemplar.verificarExistenciaExemplar(codigo)){
+			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
+		}	
+
+		ControladorExemplar.removerExemplar(codigo);
+
+		return true;
 	}
 }

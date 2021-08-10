@@ -9,7 +9,6 @@ public class Principal {
 
 	public static void main(String[] args) {
 		
-		
 		Livro livro1= new Livro("Polianna", "Eleanor Porter", 1, "Pé de Letra", 184, "978-8595201170", "Clássico");
 		Livro livro2= new Livro("O Mundo de Sofia", "Jostein Gaarder", 1, "Seguinte", 568, "9788535921892", "Romance");
 		Livro livro3= new Livro("A Seleção", "Kiera Cass", 1, "Seguinte", 368, "9788565765015", "Young adult");
@@ -17,7 +16,7 @@ public class Principal {
 		Livro livro5= new Livro("O Menino do Pijama Listrado", "John Boine", 1, "Seguinte", 192, "9788535911121", "Ficção infantil");
 
 		//		Livro livro6= new Livro("O Menino do Pijama Listrado", "John Boine", 1, "Seguinte", 192, "9788535911121", "Ficção infantil");	
-		Livro livroNaoCadastrado= new Livro("A Costureira", "Kate Alcott", 1, "Geração", 376, "9788581301310", "Romance");	
+	//	Livro livroNaoCadastrado= new Livro("A Costureira", "Kate Alcott", 1, "Geração", 376, "9788581301310", "Romance");	
 
 		//1--------------------------------------------------------------------------------------
 		boolean resultadoOperacao= MenuLivro.adicionarLivro(livro1.getTitulo(), livro1.getAutor(), 
@@ -121,7 +120,7 @@ public class Principal {
 
 
 		System.out.println("\nExcluindo livro e exemplares de \"O Mundo de Sofia\"");
-		MenuLivro.removerLivro(livro2);		
+		MenuLivro.removerLivro(livro2.getIsbn());		
 
 
 		MenuLivro.exibirLivrosTotal();	
@@ -143,6 +142,7 @@ public class Principal {
 
 		MenuLivro.exibirLivrosTotal();	
 		MenuExemplar.exibirExemplaresTotal();
+
 	}
 
 }

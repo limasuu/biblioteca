@@ -2,93 +2,103 @@ package bibli.controle;
 
 import java.util.HashMap;
 
-import bibli.excecoes.ExcecaoExemplar;
-import bibli.excecoes.ExcecaoLivro;
-import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
 public class MenuLivro {
 
-	public static void exibirLivro (String isbn){
+	public static boolean exibirLivro (String isbn){
 
-		try {
-			System.out.println(ControladorLivro.buscarLivro(isbn));
-
-		} catch (ExcecaoLivro e) {			
-			System.err.println(e.getMessage());
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
 		}
+		
+		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}	
+
+		System.out.println(ControladorLivro.buscarLivro(isbn));
+
+		return true;
 	}
 
 	public static void exibirLivrosTotal (){
 
-		try {
-			ControladorLivro.exibirLivros();
-
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
-		}		
+		ControladorLivro.exibirLivros();
 	}
 
-	public static void exibirLivrosPorAutor (String autor){
+	public static boolean exibirLivrosPorAutor (String autor){
 
-		try {			
-			HashMap<String, Livro> livros= ControladorLivro.buscarLivrosPorAutor(autor);
+		if(!ValidadorObra.validarCampo(autor)) {
+			System.err.println("Nome de autor inválido.");
+			return false;
+		}
+
+		HashMap<String, Livro> livrosEncontrados= ControladorLivro.buscarLivrosPorAutor(autor);
+
+		if(livrosEncontrados.size() == 0) 
+			System.err.println("Nenhum livro encontrado.");			
+		else {
 
 			System.out.println("\n----------- Livros de \"" + autor + "\" -----------");
-			System.out.println("Quantidade: " + livros.size());	
+			System.out.println("Quantidade: " + livrosEncontrados.size());	
 			System.out.println("------------------------------------------");
 
-			for(Livro livro: livros.values())
+			for(Livro livro: livrosEncontrados.values())
 				System.out.println("\n" + livro);	
 
 			System.out.println("------------------------------------------");
+		}
 
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
-		}			
+		return true;
 	}
 
-	public static void exibirLivrosPorTitulo (String titulo){
+	public static boolean exibirLivrosPorTitulo (String titulo){
 
-		try {
-			HashMap<String, Livro> livros= ControladorLivro.buscarLivrosPorTitulo(titulo);
+		if(!ValidadorObra.validarCampo(titulo)) {
+			System.err.println("Nome de título inválido.");
+			return false;
+		}
+
+		HashMap<String, Livro> livrosEncontrados= ControladorLivro.buscarLivrosPorTitulo(titulo);
+
+		if(livrosEncontrados.size() == 0) 
+			System.out.println("Nenhum livro encontrado.");
+		else{
 
 			System.out.println("\n-------- Livros com o título \"" + titulo + "\" --------");
-			System.out.println("Quantidade: " + livros.size());	
+			System.out.println("Quantidade: " + livrosEncontrados.size());	
 			System.out.println("------------------------------------------");
 
-			for(Livro livro: livros.values())
+			for(Livro livro: livrosEncontrados.values())
 				System.out.println("\n" + livro);			
 
 			System.out.println("------------------------------------------");
 
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
-		}	
+		} 
+
+		return true;
 	}
 
 	public static boolean adicionarLivro (String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,
 			String isbn, String categoria){
 
-		if(titulo == null || autor == null || 
-				edicao < 1 || editora == null ||
-				numeroPaginas < 1 || isbn == null ||
-				categoria == null) {
-			System.err.println("Há campos nulos.");
+		if(!ValidadorObra.validarCamposLivro(titulo, autor, edicao, editora,
+				numeroPaginas, isbn, categoria)){
+			System.err.println("Há campos inválidos.");
 			return false;
-
-		}else {
-			Livro livro= new Livro(titulo, autor, edicao, editora, numeroPaginas, isbn, categoria);
-
-			try {
-				ControladorLivro.adicionarLivro(livro);
-
-			} catch (ExcecaoLivro e) {			
-				System.err.println(e.getMessage());
-				return false;
-			}
 		}
+
+		if(ControladorLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Há um livro com o ISBN informado no sistema.");
+			return false;
+		}
+
+		Livro livro= new Livro(titulo, autor, edicao, editora, numeroPaginas, isbn, categoria);
+		ControladorLivro.adicionarLivro(livro);
+
 		return true;
 	}
 
@@ -96,81 +106,46 @@ public class MenuLivro {
 			int novaEdicao, String novaEditora, int novoNumeroPaginas,
 			String isbn, String novaCategoria){
 
-		try {
-			Livro livro = ControladorLivro.buscarLivro(isbn);
-
-			boolean mudancas= false;
-
-			if(!livro.getTitulo().equals(novoTitulo)) {
-				livro.setTitulo(novoTitulo);
-				mudancas= true;
-			}
-			if(!livro.getAutor().equals(novoAutor)) {
-				livro.setAutor(novoAutor);
-				mudancas= true;
-			}
-			if(!livro.getEditora().equals(novaEditora)) {
-				livro.setEditora(novaEditora);
-				mudancas= true;
-			}
-			if(!livro.getCategoria().equals(novaCategoria)) {
-				livro.setCategoria(novaCategoria);
-				mudancas= true;
-			}
-			if(livro.getEdicao() != novaEdicao) {
-				livro.setEdicao(novaEdicao);
-				mudancas= true;
-			}
-			if(livro.getNumeroPaginas() != novoNumeroPaginas) {
-				livro.setNumeroPaginas(novoNumeroPaginas);
-				mudancas= true;
-			}
-
-			if(mudancas) {					
-				HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(isbn);
-
-				ControladorLivro.editarLivro(livro);	
-
-				if(!conjuntoExemplares.isEmpty()) {								
-					for(Exemplar e : conjuntoExemplares.values()) {
-
-						try {
-							ControladorExemplar.editarExemplar(new Exemplar(e.getCodigo(), livro));
-						} catch (ExcecaoExemplar ee) {
-							System.err.println(ee.getMessage());
-						}
-					}
-				}					
-				return true;
-
-			}else
-				System.err.println("Não há mudanças para realizar.");
-
-		} catch (ExcecaoLivro el) {
-			System.err.println(el.getMessage());
+		if(!ValidadorObra.validarCamposLivro(novoTitulo, novoAutor, novaEdicao, novaEditora,
+				novoNumeroPaginas, isbn, novaCategoria)) {
+			System.err.println("Há campos inválidos.");
+			return false;
 		}
-		return false;
+
+		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}		
+
+		Livro livroAtualizado= ValidadorObra.validarAtualizacaoLivro(novoTitulo, novoAutor,
+				novaEdicao, novaEditora, novoNumeroPaginas, isbn, novaCategoria);
+
+		if(livroAtualizado == null){
+			System.err.println("Não há mudanças para realizar.");
+			return false;
+		}	
+
+		ControladorExemplar.editarExemplares(livroAtualizado);
+		ControladorLivro.editarLivro(livroAtualizado);	
+
+		return true;
 	}	
 
-	public static void removerLivro(Livro livro) {
+	public static boolean removerLivro(String isbn) {
 
-		MenuExemplar.removerExemplares(livro);
-
-		try {
-			ControladorLivro.removerLivro(livro);
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
 		}
-	}
 
-	public static void removerLivro(String isbn) {
-		
+		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}		
+
 		MenuExemplar.removerExemplares(isbn);
+		ControladorLivro.removerLivro(isbn);
 
-		try {
-			ControladorLivro.removerLivro(isbn);
-		} catch (ExcecaoLivro e) {
-			System.err.println(e.getMessage());
-		}
+		return true;
 	}
 }

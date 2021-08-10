@@ -2,7 +2,6 @@ package bibli.controle;
 
 import java.util.HashMap;
 
-import bibli.excecoes.ExcecaoExemplar;
 import bibli.modelo.AcervoExemplar;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
@@ -19,11 +18,17 @@ public class ControladorExemplar {
 		return AcervoExemplar.getNumeroExemplares();
 	}
 
+	public static boolean verificarExistenciaExemplar(String codigo) {
+
+		return AcervoExemplar.getExemplares().containsKey(codigo);		
+	}
+
 	public static void exibirExemplares() {
 
 		if(AcervoExemplar.getNumeroExemplares() == 0)
 			System.out.println("Não há exemplares cadastrados.");
 		else {
+			
 			System.out.println("\n----------------- Exemplares -----------------");
 			System.out.println("Quantidade: " + getNumeroExemplares());	
 			System.out.println("------------------------------------------");
@@ -33,58 +38,42 @@ public class ControladorExemplar {
 		}
 	}
 
-	public static void adicionarExemplar(Exemplar exemplar) throws ExcecaoExemplar {
-
-		if(exemplar == null)
-			throw new ExcecaoExemplar("Exemplar nulo.");
-
-		if(AcervoExemplar.buscarExemplar(exemplar.getCodigo()) != null)
-			throw new ExcecaoExemplar("Exemplar já cadastrado.");
+	public static void adicionarExemplar(Exemplar exemplar) {
 
 		AcervoExemplar.adicionarExemplar(exemplar);
 	}
 
-	public static void removerExemplar(Exemplar exemplar) throws ExcecaoExemplar {
+	public static void removerExemplar(Exemplar exemplar) {
 
-		if(exemplar == null)
-			throw new ExcecaoExemplar("Exemplar nulo.");	
-
-		Exemplar e= AcervoExemplar.removerExemplar(exemplar.getCodigo());
-
-		if(e == null) 
-			throw new ExcecaoExemplar("Exemplar não cadastrado.");
+		AcervoExemplar.removerExemplar(exemplar.getCodigo());
 	}
 
-	public static void removerExemplar(String codigo) throws ExcecaoExemplar {
+	public static void removerExemplar(String codigo) {
 
-		if(codigo == null)
-			throw new ExcecaoExemplar("Código nulo.");	
-
-		Exemplar e= AcervoExemplar.removerExemplar(codigo);
-
-		if(e == null) 
-			throw new ExcecaoExemplar("Não foi encontrado exemplar com o código informado.");
+		AcervoExemplar.removerExemplar(codigo);
 	}
 
-	public static void editarExemplar(Exemplar exemplarAtualizado) throws ExcecaoExemplar {
+	public static void editarExemplar(Exemplar exemplarAtualizado) {
 
-		if(exemplarAtualizado == null)
-			throw new ExcecaoExemplar("O conteúdo de atualização do exemplar está nulo.");
-
-		Exemplar e= AcervoExemplar.editarExemplar(exemplarAtualizado);		
-
-		if(e == null)
-			throw new ExcecaoExemplar("Exemplar não cadastrado.");	
+		AcervoExemplar.editarExemplar(exemplarAtualizado);		
 	}
 
-	public static Exemplar buscarExemplar(String codigo) throws ExcecaoExemplar{
+	public static void editarExemplares(Livro livroAtualizado)  {
 
-		Exemplar exemplar= AcervoExemplar.buscarExemplar(codigo);
+		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livroAtualizado.getIsbn());
 
-		if(exemplar == null)
-			throw new ExcecaoExemplar("Exemplar não encontrado.");
+		if(!conjuntoExemplares.isEmpty()) {
 
-		return exemplar;
+			System.err.println("Será efetuada a edição do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!\n");
+			for(Exemplar e : conjuntoExemplares.values()) 
+				e.setLivro(livroAtualizado);	
+			//editarExemplar(new Exemplar(e.getCodigo(), livroAtualizado)); atualizou mesmo? se nao tentar este codigo
+		}	
+	}
+
+	public static Exemplar buscarExemplar(String codigo) {
+
+		return AcervoExemplar.buscarExemplar(codigo);
 	}
 
 	public static HashMap<String, Exemplar> buscarExemplares(Livro livro){
@@ -92,7 +81,7 @@ public class ControladorExemplar {
 		return AcervoExemplar.buscarExemplares(livro);
 
 	}	
-	
+
 	public static HashMap<String, Exemplar> buscarExemplares(String isbn){
 
 		return AcervoExemplar.buscarExemplares(isbn);
