@@ -67,7 +67,6 @@ public class ControladorExemplar {
 			System.err.println("Será efetuada a edição do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!\n");
 			for(Exemplar e : conjuntoExemplares.values()) 
 				e.setLivro(livroAtualizado);	
-			//editarExemplar(new Exemplar(e.getCodigo(), livroAtualizado)); atualizou mesmo? se nao tentar este codigo
 		}	
 	}
 

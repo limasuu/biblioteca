@@ -1,5 +1,6 @@
 package bibli.controle;
 
+import bibli.modelo.AcervoLivro;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
@@ -38,7 +39,7 @@ public class ValidadorObra {
 			int edicao, String editora, int numeroPaginas,
 			String isbn, String categoria) {
 
-		Livro livro= ControladorLivro.buscarLivro(isbn);
+		Livro livro= AcervoLivro.buscarLivro(isbn);
 
 		boolean mudancas= false;
 

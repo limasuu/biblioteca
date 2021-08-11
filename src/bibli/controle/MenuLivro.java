@@ -1,151 +1,214 @@
 package bibli.controle;
 
-import java.util.HashMap;
-
-import bibli.modelo.Livro;
+import bibli.aplicacao.Principal;
 
 public class MenuLivro {
 
-	public static boolean exibirLivro (String isbn){
+	public static void apresentarOpcoes() {
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
-			return false;
-		}
-		
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
-			return false;
+		System.out.println("\n----------------------------------------------------");
+		System.out.println("-------------------- BIBLIOTECA --------------------");
+		System.out.println("  ________________ menu livros ________________  ");
+		System.out.println("Escolha uma opção:");
+		System.out.println("1. Exibir");
+		System.out.println("2. Cadastrar");
+		System.out.println("3. Editar");
+		System.out.println("4. Excluir");	
+		System.out.println("0. Voltar");
+		System.out.println("----------------------------------------------------");
+
+		int opcao= Principal.lerNumeroTeclado();
+
+		switch(opcao) {
+
+		case 1:
+			apresentarOpcoesExibir();
+			break;
+		case 2:
+			prepararLivro(true);
+			break;
+		case 3:
+			prepararLivro(false);
+			break;
+		case 4:
+			removerLivro();
+			break;
+		case 0:
+			
+			break;
+		default:
+			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			apresentarOpcoes();
 		}	
+	}	
 
-		System.out.println(ControladorLivro.buscarLivro(isbn));
+	private static void apresentarOpcoesExibir() {
 
-		return true;
+		System.out.println("\n----------------------------------------------------");
+		System.out.println("-------------------- BIBLIOTECA --------------------");
+		System.out.println("   _____________ menu livros (exibir) _____________   ");
+		System.out.println("Escolha uma opção:");
+		System.out.println("1. Exibir um livro");
+		System.out.println("2. Exibir vários livros");
+		System.out.println("0. Voltar");	
+		System.out.println("----------------------------------------------------");
+
+		int opcao= Principal.lerNumeroTeclado();
+
+		switch(opcao) {
+
+		case 1:
+			exibirLivro();
+			break;
+		case 2:
+			apresentarOpcoesExibirVarios();
+			break;
+		case 0:
+			apresentarOpcoes();
+			break;
+		default:
+			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			apresentarOpcoesExibir();
+		}
 	}
 
-	public static void exibirLivrosTotal (){
+	private static void apresentarOpcoesExibirVarios() {
+
+		System.out.println("\n----------------------------------------------------");
+		System.out.println("-------------------- BIBLIOTECA --------------------");
+		System.out.println("   ______ menu livros (exibir vários livros) ______   ");
+		System.out.println("Escolha uma opção:");
+		System.out.println("1. Exibir todos os livros");
+		System.out.println("2. Exibir livros por autor");
+		System.out.println("3. Exibir livros por título");
+		System.out.println("0. Voltar");	
+		System.out.println("----------------------------------------------------");
+
+		int opcao= Principal.lerNumeroTeclado();
+
+		switch(opcao) {
+
+		case 1:
+			exibirLivrosTotal();
+			break;
+		case 2:
+			exibirLivrosPorAutor();
+			break;
+		case 3:
+			exibirLivrosPorTitulo();
+			break;
+		case 0:
+			apresentarOpcoesExibir();
+			break;
+		default:
+			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			apresentarOpcoesExibirVarios();
+		}
+	}
+
+	private static void exibirLivro (){
+
+		System.out.println("\n  ________________ opção EXIBIR LIVRO ________________  ");
+		System.out.print("Informe o ISBN do livro para sua a exibição ");
+
+		String isbn= Principal.lerStringTeclado();
+
+		ControladorLivro.exibirLivro(isbn);
+	}
+
+	private static void exibirLivrosTotal (){
 
 		ControladorLivro.exibirLivros();
 	}
 
-	public static boolean exibirLivrosPorAutor (String autor){
+	private static void exibirLivrosPorAutor (){
 
-		if(!ValidadorObra.validarCampo(autor)) {
-			System.err.println("Nome de autor inválido.");
-			return false;
-		}
+		System.out.println("\n  ________________ opção EXIBIR LIVROS POR AUTOR ________________  ");
+		System.out.print("Informe o nome do autor para a exibição dos livros ");
 
-		HashMap<String, Livro> livrosEncontrados= ControladorLivro.buscarLivrosPorAutor(autor);
+		String autor= Principal.lerStringTeclado();
 
-		if(livrosEncontrados.size() == 0) 
-			System.err.println("Nenhum livro encontrado.");			
-		else {
-
-			System.out.println("\n----------- Livros de \"" + autor + "\" -----------");
-			System.out.println("Quantidade: " + livrosEncontrados.size());	
-			System.out.println("------------------------------------------");
-
-			for(Livro livro: livrosEncontrados.values())
-				System.out.println("\n" + livro);	
-
-			System.out.println("------------------------------------------");
-		}
-
-		return true;
+		ControladorLivro.buscarLivrosPorAutor(autor);
 	}
 
-	public static boolean exibirLivrosPorTitulo (String titulo){
+	private static void exibirLivrosPorTitulo (){
 
-		if(!ValidadorObra.validarCampo(titulo)) {
-			System.err.println("Nome de título inválido.");
-			return false;
-		}
+		System.out.println("\n  ________________ opção EXIBIR LIVROS POR TÍTULO ________________  ");
+		System.out.print("Informe o título para a exibição dos livros ");
 
-		HashMap<String, Livro> livrosEncontrados= ControladorLivro.buscarLivrosPorTitulo(titulo);
+		String titulo= Principal.lerStringTeclado();
 
-		if(livrosEncontrados.size() == 0) 
-			System.out.println("Nenhum livro encontrado.");
-		else{
-
-			System.out.println("\n-------- Livros com o título \"" + titulo + "\" --------");
-			System.out.println("Quantidade: " + livrosEncontrados.size());	
-			System.out.println("------------------------------------------");
-
-			for(Livro livro: livrosEncontrados.values())
-				System.out.println("\n" + livro);			
-
-			System.out.println("------------------------------------------");
-
-		} 
-
-		return true;
+		ControladorLivro.exibirLivrosPorTitulo(titulo);	
 	}
 
-	public static boolean adicionarLivro (String titulo, String autor, 
-			int edicao, String editora, int numeroPaginas,
-			String isbn, String categoria){
+	private static void prepararLivro(boolean novo) {
 
-		if(!ValidadorObra.validarCamposLivro(titulo, autor, edicao, editora,
-				numeroPaginas, isbn, categoria)){
-			System.err.println("Há campos inválidos.");
-			return false;
+		String operacao= null;
+		boolean resultadoOperacao= false;
+
+		if(novo) {
+			operacao= "adicionado";
+
+			System.out.println("\n  ________________ opção ADICIONAR LIVRO ________________  ");
+			System.out.println("Informe os dados a seguir para o cadastro de um novo livro:");
+
+			System.out.print("\nISBN ");
+
+		}else {
+
+			operacao= "editado";
+
+			System.out.println("\n  ________________ opção EDITAR LIVRO ________________  ");
+			System.out.println("Informe os dados a seguir para a edição de um livro:");
+
+			System.out.print("\nISBN do livro a ser editado ");
 		}
 
-		if(ControladorLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Há um livro com o ISBN informado no sistema.");
-			return false;
-		}
+		String isbn= Principal.lerStringTeclado();
 
-		Livro livro= new Livro(titulo, autor, edicao, editora, numeroPaginas, isbn, categoria);
-		ControladorLivro.adicionarLivro(livro);
+		System.out.print("Título ");
+		String titulo= Principal.lerStringTeclado();
 
-		return true;
-	}
+		System.out.print("Autor ");
+		String autor= Principal.lerStringTeclado();
 
-	public static boolean editarLivro (String novoTitulo, String novoAutor, 
-			int novaEdicao, String novaEditora, int novoNumeroPaginas,
-			String isbn, String novaCategoria){
+		System.out.print("Edição ");
+		int edicao= Principal.lerNumeroTeclado();
 
-		if(!ValidadorObra.validarCamposLivro(novoTitulo, novoAutor, novaEdicao, novaEditora,
-				novoNumeroPaginas, isbn, novaCategoria)) {
-			System.err.println("Há campos inválidos.");
-			return false;
-		}
+		System.out.print("Editora ");
+		String editora= Principal.lerStringTeclado();
 
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
-			return false;
-		}		
+		System.out.print("Número de páginas ");
+		int numeroPaginas= Principal.lerNumeroTeclado();
 
-		Livro livroAtualizado= ValidadorObra.validarAtualizacaoLivro(novoTitulo, novoAutor,
-				novaEdicao, novaEditora, novoNumeroPaginas, isbn, novaCategoria);
+		System.out.print("Categoria ");
+		String categoria= Principal.lerStringTeclado();	
 
-		if(livroAtualizado == null){
-			System.err.println("Não há mudanças para realizar.");
-			return false;
-		}	
+		if(novo)
+			resultadoOperacao= ControladorLivro.adicionarLivro(titulo, autor, edicao, 
+					editora, numeroPaginas, isbn, categoria);			
+		else 
+			resultadoOperacao= ControladorLivro.editarLivro(titulo, autor, edicao, 
+					editora, numeroPaginas, isbn, categoria);
 
-		ControladorExemplar.editarExemplares(livroAtualizado);
-		ControladorLivro.editarLivro(livroAtualizado);	
-
-		return true;
+		if(resultadoOperacao) 
+			System.out.println("\nLivro \"" + titulo + "\" " + operacao + ".");
+		else 
+			System.err.println("\nOperação não realizada.");		
 	}	
 
-	public static boolean removerLivro(String isbn) {
+	private static void removerLivro() {		
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
-			return false;
-		}
+		System.out.println("\n  ________________ opção REMOVER LIVRO ________________  ");
+		System.out.print("Informe o ISBN do livro para realizar a remoção ");
 
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
-			return false;
-		}		
+		String isbn= Principal.lerStringTeclado();
 
-		MenuExemplar.removerExemplares(isbn);
-		ControladorLivro.removerLivro(isbn);
+		String tituloLivro= ControladorLivro.removerLivro(isbn);
 
-		return true;
+		if(tituloLivro != null) 
+			System.out.println("\nLivro \"" + tituloLivro + "\" removido.");
+		else 
+			System.err.println("\nOperação não realizada.");
 	}
 }
