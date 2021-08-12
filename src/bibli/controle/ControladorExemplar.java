@@ -3,6 +3,7 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.modelo.AcervoExemplar;
+import bibli.modelo.AcervoLivro;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
@@ -18,72 +19,145 @@ public class ControladorExemplar {
 		return AcervoExemplar.getNumeroExemplares();
 	}
 
-	public static boolean verificarExistenciaExemplar(String codigo) {
+	public static int getNumeroExemplares(String isbn) {
 
-		return AcervoExemplar.getExemplares().containsKey(codigo);		
+		return AcervoExemplar.buscarExemplares(isbn).size();
 	}
 
+	public static boolean exibirExemplar(String codigo) {
+		
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
+
+		if(!AcervoExemplar.verificarExistenciaExemplar(codigo)){
+			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
+		}	
+
+		System.out.println(AcervoExemplar.buscarExemplar(codigo));
+
+		return true;
+	}
+	
 	public static void exibirExemplares() {
 
 		if(AcervoExemplar.getNumeroExemplares() == 0)
 			System.out.println("Não há exemplares cadastrados.");
 		else {
-			
+
 			System.out.println("\n----------------- Exemplares -----------------");
-			System.out.println("Quantidade: " + getNumeroExemplares());	
+			System.out.println("Quantidade: " + AcervoExemplar.getNumeroExemplares());	
 			System.out.println("------------------------------------------");
+			
 			for(Exemplar exemplar : AcervoExemplar.getExemplares().values())
 				System.out.println(exemplar+"\n");
+			
 			System.out.println("------------------------------------------");
 		}
-	}
+	}	
 
-	public static void adicionarExemplar(Exemplar exemplar) {
+	public static boolean exibirExemplaresPorLivro(String isbn){
 
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
+		}
+
+		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(isbn);		
+
+		if(exemplaresEncontrados.size() == 0) 
+			System.err.println("Não há exemplares registrados para o livro informado.");			
+		else {
+
+			System.out.println("\n----------- Exemplares com ISBN \"" + isbn + "\" -----------");
+			System.out.println("Quantidade: " + exemplaresEncontrados.size());	
+			System.out.println("------------------------------------------");
+
+			for(Exemplar exemplar: exemplaresEncontrados.values())
+				System.out.println("\n" + exemplar);	
+
+			System.out.println("------------------------------------------");
+		}
+
+		return true;
+	}	
+
+	public static boolean adicionarExemplar(String isbn) {
+
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
+		}
+
+		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}	
+		
+		Livro livro= AcervoLivro.buscarLivro(isbn);
+		Exemplar exemplar= new Exemplar(livro);
+		
 		AcervoExemplar.adicionarExemplar(exemplar);
+		System.out.println("\nCódigo do exemplar: " + exemplar.getCodigo());
+
+		return true;
 	}
+	
+	public static boolean editarExemplares(Livro livroAtualizado)  {
+		
+		if(!ValidadorObra.validarLivro(livroAtualizado))
+			return false;
 
-	public static void removerExemplar(Exemplar exemplar) {
-
-		AcervoExemplar.removerExemplar(exemplar.getCodigo());
-	}
-
-	public static void removerExemplar(String codigo) {
-
-		AcervoExemplar.removerExemplar(codigo);
-	}
-
-	public static void editarExemplar(Exemplar exemplarAtualizado) {
-
-		AcervoExemplar.editarExemplar(exemplarAtualizado);		
-	}
-
-	public static void editarExemplares(Livro livroAtualizado)  {
-
-		HashMap<String, Exemplar> conjuntoExemplares= ControladorExemplar.buscarExemplares(livroAtualizado.getIsbn());
+		HashMap<String, Exemplar> conjuntoExemplares= AcervoExemplar.buscarExemplares(livroAtualizado.getIsbn());
 
 		if(!conjuntoExemplares.isEmpty()) {
 
-			System.err.println("Será efetuada a edição do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!\n");
+			System.err.print("\nSerá efetuada a edição do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!");
 			for(Exemplar e : conjuntoExemplares.values()) 
-				e.setLivro(livroAtualizado);	
+				e.setLivro(livroAtualizado);				
 		}	
+		
+		return true;
+	}
+	
+	public static boolean removerExemplar(String codigo) {
+
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
+
+		if(!AcervoExemplar.verificarExistenciaExemplar(codigo)){
+			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
+		}		
+
+		AcervoExemplar.removerExemplar(codigo);
+
+		return true;
 	}
 
-	public static Exemplar buscarExemplar(String codigo) {
+	public static boolean removerExemplares(String isbn) {
 
-		return AcervoExemplar.buscarExemplar(codigo);
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
+		}
+
+		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("Não foi encontrado livro com o ISBN informado.");
+			return false;
+		}		
+
+		int numeroExemplares= AcervoExemplar.removerExemplares(isbn);
+
+		if(numeroExemplares == 0) {
+			System.out.println("Não há exemplares vinculados a este livro.");
+			return false;
+		}
+
+		return true;
 	}
-
-	public static HashMap<String, Exemplar> buscarExemplares(Livro livro){
-
-		return AcervoExemplar.buscarExemplares(livro);
-
-	}	
-
-	public static HashMap<String, Exemplar> buscarExemplares(String isbn){
-
-		return AcervoExemplar.buscarExemplares(isbn);
-
-	}	
 }

@@ -12,12 +12,6 @@ public class Exemplar implements Comparable<Exemplar>{
 		this.codigo= String.valueOf(totalExemplares);
 		this.livro= livro;
 	}
-	
-	public Exemplar(String codigo, Livro livro) {
-		
-		this.codigo= codigo;
-		this.livro= livro;
-	}
 
 	public String getCodigo() {
 		return codigo;

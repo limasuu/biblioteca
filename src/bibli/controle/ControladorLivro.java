@@ -2,16 +2,29 @@ package bibli.controle;
 
 import java.util.HashMap;
 
+import bibli.modelo.AcervoExemplar;
 import bibli.modelo.AcervoLivro;
 import bibli.modelo.Livro;
 
 public class ControladorLivro {
+	
+	public static boolean exibirLivro (String isbn){
 
-	public static boolean verificarExistenciaLivro(String isbn) {
+		if(!ValidadorObra.validarCampo(isbn)) {
+			System.err.println("ISBN inválido.");
+			return false;
+		}
 
-		return AcervoLivro.getLivros().containsKey(isbn);		
+		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
+			System.err.println("\nNão foi encontrado livro com o ISBN informado.");
+			return false;
+		}	
+
+		System.out.println("\n" + AcervoLivro.buscarLivro(isbn));
+
+		return true;
 	}
-
+	
 	public static void exibirLivros() {
 
 		if(AcervoLivro.getNumeroLivros() == 0)
@@ -29,24 +42,8 @@ public class ControladorLivro {
 		}
 	}
 
-	public static boolean exibirLivro (String isbn){
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
-			return false;
-		}
-
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("\nNão foi encontrado livro com o ISBN informado.");
-			return false;
-		}	
-
-		System.out.println("\n" + AcervoLivro.buscarLivro(isbn));
-
-		return true;
-	}
-
-	public static boolean buscarLivrosPorAutor(String autor){
+	public static boolean exibirLivrosPorAutor(String autor){
 
 		if(!ValidadorObra.validarCampo(autor)) {
 			System.err.println("Nome de autor inválido.");
@@ -108,7 +105,7 @@ public class ControladorLivro {
 			return false;
 		}
 
-		if(ControladorLivro.verificarExistenciaLivro(isbn)){
+		if(AcervoLivro.verificarExistenciaLivro(isbn)){
 			System.err.println("Há um livro com o ISBN informado no sistema.");
 			return false;
 		}
@@ -129,7 +126,7 @@ public class ControladorLivro {
 			return false;
 		}
 
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
 			System.err.println("Não foi encontrado livro com o ISBN informado.");
 			return false;
 		}		
@@ -155,13 +152,13 @@ public class ControladorLivro {
 			return null;
 		}
 
-		if(!ControladorLivro.verificarExistenciaLivro(isbn)){
+		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
 			System.err.println("Não foi encontrado livro com o ISBN informado.");
 			return null;
 		}		
 
 		String titulo= AcervoLivro.buscarLivro(isbn).getTitulo();
-		MenuExemplar.removerExemplares(isbn);
+		AcervoExemplar.removerExemplares(isbn);
 		AcervoLivro.removerLivro(isbn);
 
 		return titulo;

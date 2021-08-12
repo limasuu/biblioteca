@@ -1,6 +1,7 @@
-package bibli.controle;
+package bibli.aplicacao;
 
-import bibli.aplicacao.Principal;
+import bibli.controle.ControladorExemplar;
+import bibli.controle.ControladorLivro;
 
 public class MenuLivro {
 
@@ -44,8 +45,7 @@ public class MenuLivro {
 
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
+		System.out.println("\n-------------------- BIBLIOTECA --------------------");
 		System.out.println("   _____________ menu livros (exibir) _____________   ");
 		System.out.println("Escolha uma opção:");
 		System.out.println("1. Exibir um livro");
@@ -74,8 +74,7 @@ public class MenuLivro {
 
 	private static void apresentarOpcoesExibirVarios() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
+		System.out.println("\n-------------------- BIBLIOTECA --------------------");
 		System.out.println("   ______ menu livros (exibir vários livros) ______   ");
 		System.out.println("Escolha uma opção:");
 		System.out.println("1. Exibir todos os livros");
@@ -128,7 +127,7 @@ public class MenuLivro {
 
 		String autor= Principal.lerStringTeclado();
 
-		ControladorLivro.buscarLivrosPorAutor(autor);
+		ControladorLivro.exibirLivrosPorAutor(autor);
 	}
 
 	private static void exibirLivrosPorTitulo (){
@@ -203,12 +202,16 @@ public class MenuLivro {
 		System.out.print("Informe o ISBN do livro para realizar a remoção ");
 
 		String isbn= Principal.lerStringTeclado();
-
+		int numeroExemplares= ControladorExemplar.getNumeroExemplares(isbn);
 		String tituloLivro= ControladorLivro.removerLivro(isbn);
 
-		if(tituloLivro != null) 
-			System.out.println("\nLivro \"" + tituloLivro + "\" removido.");
-		else 
+		if(tituloLivro != null) {
+			
+			System.out.println("\nLivro \"" + tituloLivro + "\" removido.");			
+			if(numeroExemplares != 0)
+				System.out.println("Foi efetuada a remoção do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");
+		
+		}else 
 			System.err.println("\nOperação não realizada.");
 	}
 }

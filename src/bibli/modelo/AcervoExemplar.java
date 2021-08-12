@@ -16,37 +16,16 @@ public class AcervoExemplar {
 		return exemplares.size();
 	}
 
-	public static void adicionarExemplar(Exemplar exemplar) {
+	public static boolean verificarExistenciaExemplar(String codigo) {
 
-		exemplares.put(exemplar.getCodigo(), exemplar);
-	}
-
-	public static Exemplar removerExemplar(String codigo){
-
-		return exemplares.remove(codigo);
-	}
-
-	public static Exemplar editarExemplar(Exemplar exemplarAtualizado){
-
-		return exemplares.replace(exemplarAtualizado.getCodigo(), exemplarAtualizado);	
+		return exemplares.containsKey(codigo);		
 	}
 
 	public static Exemplar buscarExemplar(String codigo) {
 
 		return exemplares.get(codigo);
 	}
-	
-	public static HashMap<String, Exemplar> buscarExemplares(Livro livro) {
 
-		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
-
-		for(Exemplar exemplar : exemplares.values()) 
-			if(exemplar.getLivro().equals(livro)) 
-				exemplaresEncontrados.put(exemplar.getCodigo(), exemplar);	
-
-		return exemplaresEncontrados;
-	}	
-	
 	public static HashMap<String, Exemplar> buscarExemplares(String isbn) {
 
 		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
@@ -57,5 +36,30 @@ public class AcervoExemplar {
 
 		return exemplaresEncontrados;
 	}	
+	
+	public static void adicionarExemplar(Exemplar exemplar) {
 
+		exemplares.put(exemplar.getCodigo(), exemplar);
+	}
+	
+	public static Exemplar editarExemplar(Exemplar exemplarAtualizado){
+
+		return exemplares.replace(exemplarAtualizado.getCodigo(), exemplarAtualizado);	
+	}
+	
+	public static Exemplar removerExemplar(String codigo){
+
+		return exemplares.remove(codigo);
+	}
+
+	public static int removerExemplares(String isbn) {
+
+		HashMap<String, Exemplar> conjuntoExemplares= buscarExemplares(isbn);
+
+		if(!conjuntoExemplares.isEmpty()) 
+			for(Exemplar e : conjuntoExemplares.values()) 
+				removerExemplar(e.getCodigo());
+
+		return conjuntoExemplares.size();
+	}
 }

@@ -3,8 +3,6 @@ package bibli.aplicacao;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import bibli.controle.MenuLivro;
-
 public class Principal {
 
 	private static Scanner entrada;
@@ -38,7 +36,7 @@ public class Principal {
 				MenuLivro.apresentarOpcoes();
 				break;
 			case 2:
-				System.out.println("Em breve");
+				MenuExemplar.apresentarOpcoes();
 				break;
 			case 0:
 				System.out.println("Agradecemos a visita!");					

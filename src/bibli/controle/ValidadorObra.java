@@ -1,7 +1,6 @@
 package bibli.controle;
 
 import bibli.modelo.AcervoLivro;
-import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
 public class ValidadorObra {
@@ -75,24 +74,11 @@ public class ValidadorObra {
 		return livro;		
 	}
 
-	public static Exemplar validarAtualizacaoExemplar(String codigo, Livro livro) {
-
-		Exemplar exemplar= ControladorExemplar.buscarExemplar(codigo);
-
-		if(!exemplar.getLivro().equals(livro)) {
-			exemplar.setLivro(livro);
-
-			return exemplar;
-		}		
-
-		return null;
-	}
-
 	public static boolean validarLivro(Livro livro) {
 
 		if(livro == null) 
 			return false;
 
-		return ControladorLivro.verificarExistenciaLivro(livro.getIsbn());
+		return AcervoLivro.verificarExistenciaLivro(livro.getIsbn());
 	}
 }
