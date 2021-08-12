@@ -31,7 +31,7 @@ public class AcervoLivro {
 		HashMap<String, Livro> livrosEncontrados= new HashMap<String, Livro>();
 
 		for(Livro livro : livros.values()) 
-			if(livro.getAutor().equals(autor)) 
+			if(livro.getAutor().toLowerCase().contains(autor.toLowerCase())) 
 				livrosEncontrados.put(livro.getIsbn(), livro);	
 
 		return livrosEncontrados;
@@ -42,7 +42,7 @@ public class AcervoLivro {
 		HashMap<String, Livro> livrosEncontrados= new HashMap<String, Livro>();
 
 		for(Livro livro : livros.values()) 
-			if(livro.getTitulo().equals(titulo)) 
+			if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase())) 
 				livrosEncontrados.put(livro.getIsbn(), livro);	
 
 		return livrosEncontrados;

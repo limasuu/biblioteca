@@ -39,39 +39,13 @@ public class ValidadorObra {
 			String isbn, String categoria) {
 
 		Livro livro= AcervoLivro.buscarLivro(isbn);
-
-		boolean mudancas= false;
-
-		if(!livro.getTitulo().equals(titulo)) {
-			livro.setTitulo(titulo);
-			mudancas= true;
-		}
-		if(!livro.getAutor().equals(autor)) {
-			livro.setAutor(autor);
-			mudancas= true;
-		}
-		if(!livro.getEditora().equals(editora)) {
-			livro.setEditora(editora);
-			mudancas= true;
-		}
-		if(!livro.getCategoria().equals(categoria)) {
-			livro.setCategoria(categoria);
-			mudancas= true;
-		}
-		if(livro.getEdicao() != edicao) {
-			livro.setEdicao(edicao);
-			mudancas= true;
-		}
-		if(livro.getNumeroPaginas() != numeroPaginas) {
-			livro.setNumeroPaginas(numeroPaginas);
-			mudancas= true;
-		}
-
-
-		if(!mudancas)
+		Livro livroAtualizado= new Livro(titulo, autor, edicao, editora, 
+				numeroPaginas, isbn, categoria);
+		
+		if(livro.equals(livroAtualizado))
 			return null;
-
-		return livro;		
+		else
+			return livroAtualizado;		
 	}
 
 	public static boolean validarLivro(Livro livro) {

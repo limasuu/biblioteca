@@ -100,7 +100,7 @@ public class ControladorExemplar {
 		Exemplar exemplar= new Exemplar(livro);
 		
 		AcervoExemplar.adicionarExemplar(exemplar);
-		System.out.println("\nCódigo do exemplar: " + exemplar.getCodigo());
+		System.out.println("Código do exemplar: " + exemplar.getCodigo());
 
 		return true;
 	}

@@ -24,7 +24,7 @@ public class MenuExemplar {
 			apresentarOpcoesExibir();
 			break;
 		case 2:
-			adicionarExemplar();
+			apresentarOpcoesCadastrar();
 			break;
 		case 3:
 			apresentarOpcoesExcluir();
@@ -37,7 +37,7 @@ public class MenuExemplar {
 			apresentarOpcoes();
 		}	
 	}	
-	
+
 	private static void apresentarOpcoesExibir() {
 
 		System.out.println("\n-------------------- BIBLIOTECA --------------------");
@@ -47,7 +47,7 @@ public class MenuExemplar {
 		System.out.println("2. Exibir vários exemplares");
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
-		
+
 		int opcao= Principal.lerNumeroTeclado();
 
 		switch(opcao) {
@@ -66,7 +66,7 @@ public class MenuExemplar {
 			apresentarOpcoesExibir();
 		}	
 	}
-	
+
 	private static void apresentarOpcoesExibirVarios() {
 
 		System.out.println("\n-------------------- BIBLIOTECA --------------------");
@@ -76,7 +76,7 @@ public class MenuExemplar {
 		System.out.println("2. Exibir exemplares por livro");
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
-		
+
 		int opcao= Principal.lerNumeroTeclado();
 
 		switch(opcao) {
@@ -93,6 +93,35 @@ public class MenuExemplar {
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	
 			apresentarOpcoesExibirVarios();
+		}	
+	}
+
+	private static void apresentarOpcoesCadastrar() {
+
+		System.out.println("\n-------------------- BIBLIOTECA --------------------");
+		System.out.println("   ___________ menu exemplares (cadastrar) ___________   ");
+		System.out.println("Escolha uma opção:");
+		System.out.println("1. Cadastrar um exemplar");
+		System.out.println("2. Cadastrar vários exemplares");
+		System.out.println("0. Voltar");	
+		System.out.println("----------------------------------------------------");
+
+		int opcao= Principal.lerNumeroTeclado();
+
+		switch(opcao) {
+
+		case 1:
+			cadastrarExemplar(false);
+			break;
+		case 2:
+			cadastrarExemplar(true);
+			break;
+		case 0:
+			apresentarOpcoes();
+			break;
+		default:
+			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			apresentarOpcoesCadastrar();
 		}	
 	}
 
@@ -150,21 +179,42 @@ public class MenuExemplar {
 		ControladorExemplar.exibirExemplaresPorLivro(codigo);
 	}
 
-	private static void adicionarExemplar() {
+	private static void cadastrarExemplar(boolean varios) {
 
 		boolean resultadoOperacao= false;
+		int quantidade= 1;
 
-		System.out.println("\n  ________________ opção ADICIONAR EXEMPLAR ________________  ");
-		System.out.print("Informe o ISBN do livro para o cadastro de um novo exemplar ");
+		if(varios) {
+			System.out.println("\n  ________________ opção CADASTRAR EXEMPLARES ________________  ");
+			System.out.print("Informe o ISBN do livro para o cadastro de novos exemplares ");	
+
+		}else {
+			System.out.println("\n  ________________ opção CADASTRAR EXEMPLAR ________________  ");
+			System.out.print("Informe o ISBN do livro para o cadastro de um novo exemplar ");
+		}
 
 		String isbn= Principal.lerStringTeclado();
 
-		resultadoOperacao= ControladorExemplar.adicionarExemplar(isbn);	
+		if(varios) {
 
-		if(resultadoOperacao) 
-			System.out.println("Exemplar adicionado.");
-		else 
-			System.err.println("Operação não realizada.");		
+			System.out.print("\nQuantidade ");
+			quantidade= Principal.lerNumeroTeclado();
+		}
+
+		for(int i=0; i<quantidade; i++) {
+			resultadoOperacao= ControladorExemplar.adicionarExemplar(isbn);	
+
+			if(!resultadoOperacao) 	
+				break;
+		}
+
+		if(resultadoOperacao) {
+			if(varios)
+				System.out.println("Exemplares cadastrados.");
+			else
+				System.out.println("Exemplar cadastrado.");
+		}else 
+			System.err.println("Operação não realizada.");	
 	}	
 
 	private static void removerExemplar() {

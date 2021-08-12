@@ -2,14 +2,14 @@ package bibli.modelo;
 
 public class Exemplar implements Comparable<Exemplar>{
 	
-	private static int totalExemplares= 0;
+	private static int totalExemplaresJaCadastrados= 0;
 	private String codigo;
 	private Livro livro;
 	
 	public Exemplar(Livro livro) {
 		
-		totalExemplares++;
-		this.codigo= String.valueOf(totalExemplares);
+		totalExemplaresJaCadastrados++;
+		this.codigo= String.valueOf(totalExemplaresJaCadastrados);
 		this.livro= livro;
 	}
 
@@ -29,10 +29,6 @@ public class Exemplar implements Comparable<Exemplar>{
 		this.livro = livro;
 	}
 	
-	public int getTotalExemplares() {
-		return totalExemplares;
-	}	
-		
 	@Override
 	public boolean equals(Object obj) {
 		

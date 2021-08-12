@@ -98,13 +98,13 @@ public class Livro implements Comparable<Livro>{
 					outroLivro.getCategoria() == null)
 				return false;
 						
-			if(outroLivro.getTitulo().equalsIgnoreCase(this.titulo) &&
-					outroLivro.getAutor().equalsIgnoreCase(this.autor) &&					
+			if(outroLivro.getTitulo().equals(this.titulo) &&
+					outroLivro.getAutor().equals(this.autor) &&					
 					(outroLivro.getEdicao() == this.edicao) &&
-					outroLivro.getEditora().equalsIgnoreCase(this.editora) &&
+					outroLivro.getEditora().equals(this.editora) &&
 					(outroLivro.getNumeroPaginas() == this.numeroPaginas) &&
 					outroLivro.getIsbn().equals(this.isbn) &&
-					outroLivro.getCategoria().equalsIgnoreCase(this.categoria))
+					outroLivro.getCategoria().equals(this.categoria))
 				return true;
 		}
 
