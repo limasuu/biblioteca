@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import bibli.modelo.AcervoFuncionario;
 import bibli.modelo.AcervoPessoa;
 import bibli.modelo.Funcionario;
 import bibli.modelo.Pessoa;
@@ -26,32 +27,32 @@ public class Principal {
 		AcervoPessoa.adicionarPessoa(pessoa1);
 		AcervoPessoa.adicionarPessoa(pessoa2);
 		AcervoPessoa.adicionarPessoa(pessoa3);
-		AcervoPessoa.adicionarPessoa(funcionario1);
-		AcervoPessoa.adicionarPessoa(funcionario2);
+		AcervoFuncionario.adicionarFuncionario(funcionario1);
+		AcervoFuncionario.adicionarFuncionario(funcionario2);
 		
 		System.out.println("Há " + AcervoPessoa.getNumeroPessoas() + " pessoas cadastradas na biblioteca.\n");
 		for(Pessoa p : AcervoPessoa.getPessoas().values())
 			System.out.println(p + "\n");
 		
-		System.out.println("\n\nHá " + AcervoPessoa.getNumeroFuncionarios() + " funcionários cadastrados na biblioteca.\n");
-		for(Pessoa p : AcervoPessoa.getFuncionarios().values())
-			System.out.println(p + "\n");
+		System.out.println("\n\nHá " + AcervoFuncionario.getNumeroFuncionarios() + " funcionários cadastrados na biblioteca.\n");
+		for(Funcionario f : AcervoFuncionario.getFuncionarios().values())
+			System.out.println(f + "\n");
 		
 		System.out.println("A pessoa P2 está no cadastro da biblioteca? " + AcervoPessoa.verificarExistenciaPessoa("P2"));
-		System.out.println("O funcionário F1 (P4) está no cadastro da biblioteca? " + AcervoPessoa.verificarExistenciaFuncionario("F1"));
+		System.out.println("O funcionário F1 está no cadastro da biblioteca? " + AcervoFuncionario.verificarExistenciaFuncionario("F1"));
 		
 		pessoa1.setNome("Mariana de Melo");
 		pessoa1.setEndereco("Rua das Flores, 22. Bairro Novo.");
 		pessoa1.setEmail("mari-ana@gmail.com");		
 		
 		AcervoPessoa.editarPessoa(pessoa1);
-		AcervoPessoa.removerPessoa("P4");
+		AcervoFuncionario.removerFuncionario("F1");
 		
 		System.out.println("\nHá " + AcervoPessoa.getNumeroPessoas() + " pessoas cadastradas na biblioteca.\n");
 		for(Pessoa p : AcervoPessoa.getPessoas().values())
 			System.out.println(p + "\n");
 		
-		System.out.println("O funcionário P4 (F1) está no cadastro da biblioteca? " + AcervoPessoa.verificarExistenciaPessoa("F1"));
+		System.out.println("O funcionário F1 está no cadastro da biblioteca? " + AcervoFuncionario.verificarExistenciaFuncionario("F1"));
 		
 	}
 	
