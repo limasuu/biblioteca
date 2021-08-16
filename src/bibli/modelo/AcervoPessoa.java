@@ -21,6 +21,11 @@ public class AcervoPessoa {
 		return pessoas.containsKey(codigo);		
 	}
 
+	public static boolean verificarSeEhFuncionario(String codigo) {
+		
+		return pessoas.get(codigo) instanceof Funcionario;
+	}	
+
 	public static Pessoa buscarPessoa(String codigo) {
 
 		return pessoas.get(codigo);
@@ -39,5 +44,5 @@ public class AcervoPessoa {
 	public static Pessoa removerPessoa(String codigo) {
 
 		return pessoas.remove(codigo);
-	}	
+	}
 }

@@ -66,6 +66,11 @@ public class ControladorPessoa {
 			return false;
 		}		
 
+		if(AcervoPessoa.verificarSeEhFuncionario(codigo)){
+			System.err.println("A edição de funcionários deve ser realizada em sua respectiva seção.");
+			return false;
+		}
+		
 		Pessoa pessoaAtualizada= ValidadorPessoa.validarAtualizacaoPessoa(codigo, novoNome, novoEndereco, novoTelefone, novoEmail);
 
 		if(pessoaAtualizada == null){
@@ -73,7 +78,6 @@ public class ControladorPessoa {
 			return false;
 		}	
 
-		//ControladorFuncionario.editarFuncionarios(pessoaAtualizada);
 		AcervoPessoa.editarPessoa(pessoaAtualizada);	
 
 		return true;
@@ -90,9 +94,13 @@ public class ControladorPessoa {
 			System.err.println("Não foi encontrada pessoa com o código informado.");
 			return null;
 		}		
+		
+		if(!AcervoPessoa.verificarSeEhFuncionario(codigo)){
+			System.err.println("A edição de funcionários deve ser realizada em sua respectiva seção.");
+			return null;
+		}
 
 		String nome= AcervoPessoa.buscarPessoa(codigo).getNome();
-		//ControladorFuncionario.removerFuncionario(codigo);
 		AcervoPessoa.removerPessoa(codigo);
 
 		return nome;
