@@ -31,7 +31,7 @@ public class AcervoFuncionario {
 		HashMap<String, Funcionario> funcionariosEncontrados= new HashMap<String, Funcionario>();
 
 		for(Funcionario funcionario : funcionarios.values()) 
-				if(funcionario.getCargo().equals(cargo)) 
+				if(funcionario.getCargo().equalsIgnoreCase(cargo)) 
 					funcionariosEncontrados.put(funcionario.getMatricula(), funcionario);	
 	
 		return funcionariosEncontrados;

@@ -22,6 +22,10 @@ public class Funcionario extends Pessoa{
 		return matricula;
 	}
 
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
 	public double getSalario() {
 		return salario;
 	}

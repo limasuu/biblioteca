@@ -58,7 +58,6 @@ public class AcervoLivro {
 		return livros.replace(livroAtualizado.getIsbn(), livroAtualizado);
 	}
 
-
 	public static Livro removerLivro(String isbn) {
 
 		return livros.remove(isbn);

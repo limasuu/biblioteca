@@ -16,7 +16,7 @@ public class MenuExemplar {
 		System.out.println("0. Voltar");
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -48,7 +48,7 @@ public class MenuExemplar {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -77,7 +77,7 @@ public class MenuExemplar {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -106,7 +106,7 @@ public class MenuExemplar {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -135,7 +135,7 @@ public class MenuExemplar {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -198,7 +198,7 @@ public class MenuExemplar {
 		if(varios) {
 
 			System.out.print("\nQuantidade ");
-			quantidade= Principal.lerNumeroTeclado();
+			quantidade= Principal.lerInteiroTeclado();
 		}
 
 		for(int i=0; i<quantidade; i++) {

@@ -39,48 +39,48 @@ public class ControladorPessoa {
 		}
 	}
 
-	public static boolean adicionarPessoa(String nome, String endereco, 
+	public static String adicionarPessoa(String nome, String endereco, 
 			String telefone, String email) {
 
 		if(!ValidadorPessoa.validarCamposPessoa(nome, endereco, telefone, email)){
 			System.err.println("Há campos inválidos.");
-			return false;
+			return null;
 		}
 
 		Pessoa pessoa= new Pessoa(nome, endereco, telefone, email);
 		AcervoPessoa.adicionarPessoa(pessoa);
 
-		return true;
+		return pessoa.getCodigo();
 	}	
 
-	public static boolean editarPessoa(String codigo, String novoNome, String novoEndereco, 
+	public static String editarPessoa(String codigo, String novoNome, String novoEndereco, 
 			String novoTelefone, String novoEmail) {
-
-		if(!ValidadorPessoa.validarCamposPessoa(novoNome, novoEndereco, novoTelefone, novoEmail)){
-			System.err.println("Há campos inválidos.");
-			return false;
-		}
-
+		
 		if(!AcervoPessoa.verificarExistenciaPessoa(codigo)){
 			System.err.println("Não foi encontrada pessoa com o código informado.");
-			return false;
+			return null;
 		}		
 
 		if(AcervoPessoa.verificarSeEhFuncionario(codigo)){
 			System.err.println("A edição de funcionários deve ser realizada em sua respectiva seção.");
-			return false;
+			return null;
 		}
+
+		if(!ValidadorPessoa.validarCamposPessoa(novoNome, novoEndereco, novoTelefone, novoEmail)){
+			System.err.println("Há campos inválidos.");
+			return null;
+		}		
 		
 		Pessoa pessoaAtualizada= ValidadorPessoa.validarAtualizacaoPessoa(codigo, novoNome, novoEndereco, novoTelefone, novoEmail);
 
 		if(pessoaAtualizada == null){
 			System.err.println("\nNão há mudanças para realizar.");
-			return false;
+			return null;
 		}	
 
 		AcervoPessoa.editarPessoa(pessoaAtualizada);	
 
-		return true;
+		return pessoaAtualizada.getCodigo();
 	}
 
 	public static String removerPessoa(String codigo) {
@@ -95,7 +95,7 @@ public class ControladorPessoa {
 			return null;
 		}		
 		
-		if(!AcervoPessoa.verificarSeEhFuncionario(codigo)){
+		if(AcervoPessoa.verificarSeEhFuncionario(codigo)){
 			System.err.println("A edição de funcionários deve ser realizada em sua respectiva seção.");
 			return null;
 		}

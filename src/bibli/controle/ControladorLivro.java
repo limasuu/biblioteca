@@ -42,7 +42,6 @@ public class ControladorLivro {
 		}
 	}
 
-
 	public static boolean exibirLivrosPorAutor(String autor){
 
 		if(!ValidadorObra.validarCampo(autor)) {

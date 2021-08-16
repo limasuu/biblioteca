@@ -68,14 +68,14 @@ public class ControladorFuncionario {
 		return true;
 	}	
 	
-	public static boolean adicionarFuncionario(String nome, String endereco, 
+	public static String adicionarFuncionario(String nome, String endereco, 
 			String telefone, String email, 
 			double salario, String cargo) {
 
 		if(!ValidadorPessoa.validarCamposFuncionario(nome, endereco, telefone, 
 				email, salario, cargo)) {
 			System.err.println("Há campos inválidos.");
-			return false;
+			return null;
 		}
 		
 		Funcionario funcionario= new Funcionario(nome, endereco, telefone, email, salario, cargo);
@@ -83,34 +83,34 @@ public class ControladorFuncionario {
 		AcervoFuncionario.adicionarFuncionario(funcionario);
 		AcervoPessoa.adicionarPessoa(funcionario);
 
-		return true;
+		return funcionario.getMatricula();
 	}
 	
-	public static boolean editarFuncionario(String matricula, String novoNome, String novoEndereco, 
+	public static String editarFuncionario(String matricula, String novoNome, String novoEndereco, 
 			String novoTelefone, String novoEmail, double novoSalario, String novoCargo) {
 
 		if(!ValidadorPessoa.validarCamposFuncionario(novoNome, novoEndereco, novoTelefone, 
 				novoEmail, novoSalario, novoCargo)){
 			System.err.println("Há campos inválidos.");
-			return false;
+			return null;
 		}
 
 		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
 			System.err.println("Não foi encontrado funcionário com a matrícula informada.");
-			return false;
+			return null;
 		}		
 
 		Funcionario funcionarioAtualizado= ValidadorPessoa.validarAtualizacaoFuncionario(matricula, novoNome, novoEndereco, novoTelefone, novoEmail, novoSalario, novoCargo);
 
 		if(funcionarioAtualizado == null){
 			System.err.println("\nNão há mudanças para realizar.");
-			return false;
+			return null;
 		}	
 
 		AcervoFuncionario.editarFuncionario(funcionarioAtualizado);
 		AcervoPessoa.editarPessoa(funcionarioAtualizado);
 
-		return true;
+		return funcionarioAtualizado.getMatricula();
 	}
 	
 	public static String removerFuncionario(String matricula) {

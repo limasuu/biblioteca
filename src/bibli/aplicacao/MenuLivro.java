@@ -18,7 +18,7 @@ public class MenuLivro {
 		System.out.println("0. Voltar");
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -53,7 +53,7 @@ public class MenuLivro {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -83,7 +83,7 @@ public class MenuLivro {
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
-		int opcao= Principal.lerNumeroTeclado();
+		int opcao= Principal.lerInteiroTeclado();
 
 		switch(opcao) {
 
@@ -172,13 +172,13 @@ public class MenuLivro {
 		String autor= Principal.lerStringTeclado();
 
 		System.out.print("Edição ");
-		int edicao= Principal.lerNumeroTeclado();
+		int edicao= Principal.lerInteiroTeclado();
 
 		System.out.print("Editora ");
 		String editora= Principal.lerStringTeclado();
 
 		System.out.print("Número de páginas ");
-		int numeroPaginas= Principal.lerNumeroTeclado();
+		int numeroPaginas= Principal.lerInteiroTeclado();
 
 		System.out.print("Categoria ");
 		String categoria= Principal.lerStringTeclado();	
