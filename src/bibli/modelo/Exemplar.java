@@ -9,7 +9,7 @@ public class Exemplar implements Comparable<Exemplar>{
 	public Exemplar(Livro livro) {
 		
 		totalExemplaresJaCadastrados++;
-		this.codigo= String.valueOf(totalExemplaresJaCadastrados);
+		this.codigo= "EX" + String.valueOf(totalExemplaresJaCadastrados);
 		this.livro= livro;
 	}
 
@@ -17,10 +17,6 @@ public class Exemplar implements Comparable<Exemplar>{
 		return codigo;
 	}	
 	
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
-
 	public Livro getLivro() {
 		return livro;
 	}
