@@ -21,10 +21,26 @@ public class AcervoPessoa {
 		return pessoas.containsKey(codigo);		
 	}
 
+	public static boolean verificarSituacaoPessoa(String codigoPessoa) {
+		
+		return pessoas.get(codigoPessoa).isBloqueado();
+	}
+
 	public static boolean verificarSeEhFuncionario(String codigo) {
 		
 		return pessoas.get(codigo) instanceof Funcionario;
 	}	
+
+	public static HashMap<String, Pessoa> buscarPessoasBloqueadas() {
+		
+		HashMap<String, Pessoa> pessoasEncontradas= new HashMap<String, Pessoa>();
+		
+		for(Pessoa pessoa : pessoas.values()) 
+			if(pessoa.isBloqueado() && pessoa.getDataFimBloqueio()!=null)
+				pessoasEncontradas.put(pessoa.getCodigo(), pessoa);	
+		
+		return pessoasEncontradas;		
+	}
 
 	public static Pessoa buscarPessoa(String codigo) {
 

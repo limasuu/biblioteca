@@ -16,8 +16,9 @@ public class Emprestimo implements Comparable<Emprestimo>{
 	private boolean ativo;
 	private int renocacoes;
 	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
 	private LocalDateTime dataInicio;
+	private LocalDateTime dataLimite;	
 	private LocalDateTime dataFim;	
 	
 	public Emprestimo(Funcionario funcionario, Pessoa pessoa, Exemplar exemplar) {
@@ -30,6 +31,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 		this.ativo= true;
 		this.renocacoes= 0;
 		this.dataInicio= LocalDateTime.now();
+		this.dataLimite= dataInicio.plusDays(7);
 		this.dataFim= null;
 	}
 
@@ -79,10 +81,15 @@ public class Emprestimo implements Comparable<Emprestimo>{
 
 	public void setRenocacoes() {
 		this.renocacoes++;
+		this.dataLimite= dataLimite.plusDays(7);
 	}
 
 	public LocalDateTime getDataInicio() {
 		return dataInicio;
+	}
+
+	public LocalDateTime getDataLimite() {
+		return dataLimite;
 	}
 
 	public LocalDateTime getDataFim() {
@@ -120,6 +127,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 					outroEmprestimo.isAtivo() == this.ativo &&
 					outroEmprestimo.getRenocacoes() == this.renocacoes && 
 					outroEmprestimo.getDataInicio().equals(this.dataInicio) &&
+					outroEmprestimo.getDataLimite().equals(this.dataLimite) &&
 					outroEmprestimo.getDataFim().equals(this.dataFim))
 				return true;
 		}		
@@ -133,7 +141,8 @@ public class Emprestimo implements Comparable<Emprestimo>{
 				" | Funcionário(a): " + funcionario.getNome() +				
 				"\nUsuário: " + pessoa.getNome() + ((renocacoes>0) ? (" | Renovações: " + renocacoes) : "") +
 				"\nLivro \"" + exemplar.getLivro().getTitulo() + "\" | Exemplar \"" + exemplar.getCodigo() + 
-				"\"\nInício: " + dataInicio.format(formatter)  + ((dataFim!=null) ? (" | Fim: " + dataFim.format(formatter)) : "");
+				"\"\nInício: " + dataInicio.format(formatter)  + ((dataFim!=null) ? (" | Fim: " + dataFim.format(formatter)) : 
+					" | Prazo: " + dataLimite.format(formatter));
 	}
 	
 	@Override

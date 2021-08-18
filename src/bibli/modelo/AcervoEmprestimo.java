@@ -1,5 +1,6 @@
 package bibli.modelo;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public class AcervoEmprestimo {
@@ -61,5 +62,16 @@ public class AcervoEmprestimo {
 	public static Emprestimo removerEmprestimo(String codigo) {
 
 		return emprestimos.remove(codigo);
+	}
+
+	public static HashMap<String, Emprestimo> buscarEmprestimosVencidos() {
+		
+		HashMap<String, Emprestimo> emprestimosEncontrados= new HashMap<String, Emprestimo>();
+		
+		for(Emprestimo emprestimo : emprestimos.values()) 
+			if(emprestimo.getDataLimite().isBefore(LocalDateTime.now()))
+				emprestimosEncontrados.put(emprestimo.getCodigo(), emprestimo);	
+		
+		return emprestimosEncontrados;
 	}	
 }

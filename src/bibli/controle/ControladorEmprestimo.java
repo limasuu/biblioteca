@@ -1,5 +1,6 @@
 package bibli.controle;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import bibli.modelo.AcervoEmprestimo;
@@ -117,8 +118,17 @@ public class ControladorEmprestimo {
 			return false;
 		}	
 
+		if(AcervoPessoa.verificarSituacaoPessoa(codigoPessoa)){
+			System.err.println("A pessoa encontra-se bloqueada para operações.");
+			return false;
+		}	
+
 		if(!AcervoExemplar.verificarExistenciaExemplar(codigoExemplar)){
 			System.err.println("Não foi encontrado exemplar com o código informado.");
+			return false;
+		}	
+		if(!AcervoExemplar.verificarSituacaExemplar(codigoExemplar)){
+			System.err.println("O exemplar encontra-se indisponível.");
 			return false;
 		}	
 
@@ -126,62 +136,66 @@ public class ControladorEmprestimo {
 		Pessoa pessoa= AcervoPessoa.buscarPessoa(codigoPessoa);
 		Exemplar exemplar= AcervoExemplar.buscarExemplar(codigoExemplar);
 
-		Emprestimo emprestimo= new Emprestimo(funcionario, pessoa, exemplar);
+		Emprestimo emprestimo= new Emprestimo(funcionario, pessoa, exemplar);		
 		AcervoEmprestimo.adicionarEmprestimo(emprestimo);
+
+		exemplar.setDisponivel(false);
+		AcervoExemplar.editarExemplar(exemplar);
 
 		return true;
 	}	
 
 	public static boolean renovarEmprestimo(String codigo) {
 
-	
+		if(!ValidadorEmprestimo.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
 
+		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			return false;
+		}	
+
+		Emprestimo emprestimoAtualizado= AcervoEmprestimo.buscarEmprestimo(codigo);
+
+		if(emprestimoAtualizado.getRenocacoes() >= 3){
+			System.err.println("\nO limite máximo de renovações foi alcançado.\nO exemplar precisa ser devolvido!");
+			return false;
+		}	
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		if(emprestimoAtualizado.getPessoa().isBloqueado()) {
+			System.err.println("\nEsta pessoa está bloqueada para operações.");
+			return false;
+		}
+
+		emprestimoAtualizado.setRenocacoes();
+
 		return true;
 	}
 
 	public static boolean encerrarEmprestimo(String codigo) {
 
+		if(!ValidadorEmprestimo.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
+			return false;
+		}
+
+		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			return false;
+		}	
+
+		Emprestimo emprestimoAtualizado= AcervoEmprestimo.buscarEmprestimo(codigo);
+
+		emprestimoAtualizado.getExemplar().setDisponivel(true);
+
+		Pessoa pessoaAtualizada= emprestimoAtualizado.getPessoa();
+		if(pessoaAtualizada.isBloqueado()) 
+			pessoaAtualizada.setDataFimBloqueio(7);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		emprestimoAtualizado.setAtivo(false);
+		emprestimoAtualizado.setDataFim();
 
 		return true;
 	}
@@ -202,4 +216,18 @@ public class ControladorEmprestimo {
 
 		return true;
 	}	
+
+	public static void atualizarInadimplencias(){
+
+		HashMap<String, Pessoa> pessoasEncontradas= AcervoPessoa.buscarPessoasBloqueadas();
+		for(Pessoa pessoa : pessoasEncontradas.values()) 
+			if(pessoa.getDataFimBloqueio().isBefore(LocalDateTime.now())) {
+				pessoa.setBloqueado(false);
+				pessoa.setDataFimBloqueio(0);
+			}
+
+		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosVencidos();
+		for(Emprestimo emprestimo : emprestimosEncontrados.values()) 
+			emprestimo.getPessoa().setBloqueado(true);
+	}
 }

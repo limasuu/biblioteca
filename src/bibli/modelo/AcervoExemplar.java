@@ -21,6 +21,11 @@ public class AcervoExemplar {
 		return exemplares.containsKey(codigo);		
 	}
 
+	public static boolean verificarSituacaExemplar(String codigoExemplar) {
+		
+		return exemplares.get(codigoExemplar).isDisponivel();
+	}
+
 	public static Exemplar buscarExemplar(String codigo) {
 
 		return exemplares.get(codigo);

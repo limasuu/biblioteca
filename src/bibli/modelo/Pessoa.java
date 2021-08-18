@@ -1,5 +1,8 @@
 package bibli.modelo;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class Pessoa implements Comparable<Pessoa>{
 
 	private static int totalPessoasJaCadastradas= 0;
@@ -9,6 +12,10 @@ public class Pessoa implements Comparable<Pessoa>{
 	private String endereco;
 	private String telefone;
 	private String email;
+	
+	private boolean bloqueado;
+	private LocalDateTime dataFimBloqueio;	
+	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
 
 	public Pessoa(String nome, String endereco, 
 			String telefone, String email) {
@@ -19,6 +26,8 @@ public class Pessoa implements Comparable<Pessoa>{
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email= email;
+		this.bloqueado= false;
+		this.dataFimBloqueio= null;
 	}
 
 	public String getCodigo() {
@@ -57,6 +66,26 @@ public class Pessoa implements Comparable<Pessoa>{
 		this.email = email;
 	}
 	
+	public boolean isBloqueado() {
+		return bloqueado;
+	}
+
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
+
+	public LocalDateTime getDataFimBloqueio() {
+		return dataFimBloqueio;
+	}
+
+	public void setDataFimBloqueio(int dias) {
+		
+		if(dias == 0)
+			this.dataFimBloqueio= null;
+		
+		this.dataFimBloqueio= LocalDateTime.now().plusDays(dias);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 
@@ -80,7 +109,9 @@ public class Pessoa implements Comparable<Pessoa>{
 					outraPessoa.getNome().equals(this.nome) &&
 					outraPessoa.getEndereco().equals(this.endereco) &&
 					outraPessoa.getTelefone().equals(this.telefone) &&
-					outraPessoa.getEmail().equals(this.email))
+					outraPessoa.getEmail().equals(this.email) &&
+					outraPessoa.isBloqueado() == this.bloqueado &&
+					outraPessoa.getDataFimBloqueio().equals(this.dataFimBloqueio))
 				return true;
 		}		
 		return false;
@@ -88,8 +119,9 @@ public class Pessoa implements Comparable<Pessoa>{
 	
 	@Override
 	public String toString() {
-		return "Código: " + codigo + "\n" +
-				"Nome: " + nome + "\nEndereco: " + endereco + 
+		return "Código: " + codigo + (bloqueado ? " | BLOQUEADO" : "") +
+				((dataFimBloqueio!=null) ? "\nFim do bloqueio: " + dataFimBloqueio.format(formatter) : "") +						
+				"\nNome: " + nome + "\nEndereco: " + endereco + 
 				"\nTelefone: " + telefone + " | E-mail: " + email;
 	}
 	

@@ -8,12 +8,6 @@ import bibli.controle.ControladorExemplar;
 import bibli.controle.ControladorFuncionario;
 import bibli.controle.ControladorLivro;
 import bibli.controle.ControladorPessoa;
-import bibli.modelo.AcervoEmprestimo;
-import bibli.modelo.Emprestimo;
-import bibli.modelo.Exemplar;
-import bibli.modelo.Funcionario;
-import bibli.modelo.Livro;
-import bibli.modelo.Pessoa;
 
 public class Principal {
 
@@ -39,21 +33,21 @@ public class Principal {
 		ControladorEmprestimo.adicionarEmprestimo("F1", "P2", "EX2");
 		ControladorEmprestimo.adicionarEmprestimo("F1", "P2", "EX3");
 		
+		System.out.println("\n\n");
 		ControladorEmprestimo.exibirEmprestimos();
+
+		ControladorEmprestimo.renovarEmprestimo("EM3");
+		ControladorEmprestimo.renovarEmprestimo("EM3");
 		
-		ControladorEmprestimo.exibirEmprestimo("EM2");
+		ControladorEmprestimo.renovarEmprestimo("EM2");
+		ControladorEmprestimo.renovarEmprestimo("EM2");
+		ControladorEmprestimo.renovarEmprestimo("EM2");
 		
-		ControladorEmprestimo.exibirEmprestimosPorLivro("978-8595201170");
-		
-		ControladorEmprestimo.exibirEmprestimosPorUsuario("P2");
-		
-	//	ControladorEmprestimo.renovarEmprestimo();
-		
-	//	ControladorEmprestimo.encerrarEmprestimo();
-		
+		ControladorEmprestimo.encerrarEmprestimo("EM2");
 		ControladorEmprestimo.removerEmprestimo("EM1");
 		
-		ControladorEmprestimo.exibirEmprestimos();		
+		ControladorEmprestimo.exibirEmprestimos();
+		
 	}
 	
 	private static void exibirMenu() {

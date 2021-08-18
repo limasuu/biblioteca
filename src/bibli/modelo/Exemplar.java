@@ -5,12 +5,14 @@ public class Exemplar implements Comparable<Exemplar>{
 	private static int totalExemplaresJaCadastrados= 0;
 	private String codigo;
 	private Livro livro;
+	private boolean disponivel;
 	
 	public Exemplar(Livro livro) {
 		
 		totalExemplaresJaCadastrados++;
 		this.codigo= "EX" + String.valueOf(totalExemplaresJaCadastrados);
 		this.livro= livro;
+		this.disponivel= true;
 	}
 
 	public String getCodigo() {
@@ -24,7 +26,15 @@ public class Exemplar implements Comparable<Exemplar>{
 	public void setLivro(Livro livro) {
 		this.livro = livro;
 	}
-	
+		
+	public boolean isDisponivel() {
+		return disponivel;
+	}
+
+	public void setDisponivel(boolean disponivel) {
+		this.disponivel = disponivel;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		
@@ -52,7 +62,8 @@ public class Exemplar implements Comparable<Exemplar>{
 
 	@Override
 	public String toString() {
-		return "Código do exemplar: " + codigo + "\n" + livro;
+		return "Código do exemplar: " + codigo + " | " + (disponivel ? "Disponível" : "Indisponível")
+				+ "\n" + livro;
 	}
 
 	@Override
