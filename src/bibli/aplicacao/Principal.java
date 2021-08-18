@@ -4,10 +4,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import bibli.controle.ControladorEmprestimo;
-import bibli.controle.ControladorExemplar;
-import bibli.controle.ControladorFuncionario;
-import bibli.controle.ControladorLivro;
-import bibli.controle.ControladorPessoa;
 
 public class Principal {
 
@@ -15,39 +11,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-	//	exibirMenu();
-		
-		ControladorPessoa.adicionarPessoa("Carlos Nogueira", "Estrada Campo Novo, 1021. Bairro Novo", "911223344", "nogueira.carlos@gmail.com");
-		ControladorPessoa.adicionarPessoa("Ana de Melo", "Rua das Flores, 2. Bairro Novo.", "912345678", "contato-ana@gmail.com");		
-		
-		ControladorFuncionario.adicionarFuncionario("Eliza Aguiar", "Rua das Pedras, 50. Bairro Central.", "900998877", "eliza2@gmail.com", 1500.35, "Atendente");
-	
-		ControladorLivro.adicionarLivro("Polianna", "Eleanor Porter", 1, "Pé de Letra", 184, "978-8595201170", "Clássico");
-		ControladorLivro.adicionarLivro("O Menino do Pijama Listrado", "John Boine", 1, "Seguinte", 192, "9788535911121", "Ficção infantil");
-		
-		ControladorExemplar.adicionarExemplar("978-8595201170");
-		ControladorExemplar.adicionarExemplar("978-8595201170");
-		ControladorExemplar.adicionarExemplar("9788535911121");
-		
-		ControladorEmprestimo.adicionarEmprestimo("F1", "P1", "EX1");
-		ControladorEmprestimo.adicionarEmprestimo("F1", "P2", "EX2");
-		ControladorEmprestimo.adicionarEmprestimo("F1", "P2", "EX3");
-		
-		System.out.println("\n\n");
-		ControladorEmprestimo.exibirEmprestimos();
-
-		ControladorEmprestimo.renovarEmprestimo("EM3");
-		ControladorEmprestimo.renovarEmprestimo("EM3");
-		
-		ControladorEmprestimo.renovarEmprestimo("EM2");
-		ControladorEmprestimo.renovarEmprestimo("EM2");
-		ControladorEmprestimo.renovarEmprestimo("EM2");
-		
-		ControladorEmprestimo.encerrarEmprestimo("EM2");
-		ControladorEmprestimo.removerEmprestimo("EM1");
-		
-		ControladorEmprestimo.exibirEmprestimos();
-		
+		exibirMenu();
 	}
 	
 	private static void exibirMenu() {
@@ -56,6 +20,8 @@ public class Principal {
 		habilitarTeclado();
 		
 		while(uso) {
+			
+			ControladorEmprestimo.atualizarInadimplencias();
 
 			System.out.println("\n----------------------------------------------------");
 			System.out.println("-------------------- BIBLIOTECA --------------------");
@@ -86,7 +52,7 @@ public class Principal {
 				MenuFuncionario.apresentarOpcoes();
 				break;
 			case 5:
-//				MenuEmprestimo.apresentarOpcoes();
+				MenuEmprestimo.apresentarOpcoes();
 				break;
 			case 0:
 				System.out.println("Agradecemos a visita!");					
