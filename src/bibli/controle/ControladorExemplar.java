@@ -19,9 +19,9 @@ public class ControladorExemplar {
 		return AcervoExemplar.getNumeroExemplares();
 	}
 
-	public static int getNumeroExemplares(String isbn) {
+	public static int getNumeroExemplares(String codigo) {
 
-		return AcervoExemplar.buscarExemplares(isbn).size();
+		return AcervoExemplar.buscarExemplares(codigo).size();
 	}
 
 	public static boolean exibirExemplar(String codigo) {
@@ -58,20 +58,20 @@ public class ControladorExemplar {
 		}
 	}	
 
-	public static boolean exibirExemplaresPorLivro(String isbn){
+	public static boolean exibirExemplaresPorLivro(String codigo){
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return false;
 		}
 
-		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(isbn);		
+		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(codigo);		
 
 		if(exemplaresEncontrados.size() == 0) 
 			System.err.println("Não há exemplares registrados para o livro informado.");			
 		else {
 
-			System.out.println("\n----------- Exemplares com ISBN \"" + isbn + "\" -----------");
+			System.out.println("\n----------- Exemplares com código \"" + codigo + "\" -----------");
 			System.out.println("Quantidade: " + exemplaresEncontrados.size());	
 			System.out.println("------------------------------------------");
 
@@ -84,19 +84,19 @@ public class ControladorExemplar {
 		return true;
 	}	
 
-	public static boolean adicionarExemplar(String isbn) {
+	public static boolean adicionarExemplar(String codigo) {
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return false;
 		}
 
-		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
+		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
+			System.err.println("Não foi encontrado livro com o código informado.");
 			return false;
 		}	
 		
-		Livro livro= AcervoLivro.buscarLivro(isbn);
+		Livro livro= AcervoLivro.buscarLivro(codigo);
 		Exemplar exemplar= new Exemplar(livro);
 		
 		AcervoExemplar.adicionarExemplar(exemplar);
@@ -110,7 +110,7 @@ public class ControladorExemplar {
 		if(!ValidadorObra.validarLivro(livroAtualizado))
 			return false;
 
-		HashMap<String, Exemplar> conjuntoExemplares= AcervoExemplar.buscarExemplares(livroAtualizado.getIsbn());
+		HashMap<String, Exemplar> conjuntoExemplares= AcervoExemplar.buscarExemplares(livroAtualizado.getCodigo());
 
 		if(!conjuntoExemplares.isEmpty()) {
 
@@ -139,19 +139,19 @@ public class ControladorExemplar {
 		return true;
 	}
 
-	public static boolean removerExemplares(String isbn) {
+	public static boolean removerExemplares(String codigo) {
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return false;
 		}
 
-		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
+		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
+			System.err.println("Não foi encontrado livro com o código informado.");
 			return false;
 		}		
 
-		int numeroExemplares= AcervoExemplar.removerExemplares(isbn);
+		int numeroExemplares= AcervoExemplar.removerExemplares(codigo);
 
 		if(numeroExemplares == 0) {
 			System.out.println("Não há exemplares vinculados a este livro.");

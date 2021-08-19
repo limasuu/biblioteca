@@ -46,7 +46,7 @@ public class Principal {
 				MenuExemplar.apresentarOpcoes();
 				break;
 			case 3:
-				MenuPessoa.apresentarOpcoes();
+				MenuUsuario.apresentarOpcoes();
 				break;
 			case 4:
 				MenuFuncionario.apresentarOpcoes();

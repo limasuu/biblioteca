@@ -27,18 +27,25 @@ public class ValidadorObra extends Validador{
 		return true;		
 	}	
 
-	public static Livro validarAtualizacaoLivro(String titulo, String autor, 
-			int edicao, String editora, int numeroPaginas,
-			String isbn, String categoria) {
+	public static Livro validarAtualizacaoLivro(String codigo, String titulo, String autor, 
+			int edicao, String editora, int numeroPaginas,	String isbn, String categoria) {
 
 		Livro livro= AcervoLivro.buscarLivro(isbn);
-		Livro livroAtualizado= new Livro(titulo, autor, edicao, editora, 
+		Livro livroAtualizado= new Livro(codigo, titulo, autor, edicao, editora, 
 				numeroPaginas, isbn, categoria);
 		
 		if(livro.equals(livroAtualizado))
 			return null;
-		else
-			return livroAtualizado;		
+
+		livro.setTitulo(titulo);
+		livro.setAutor(autor);
+		livro.setEdicao(edicao);
+		livro.setEditora(editora);		
+		livro.setNumeroPaginas(numeroPaginas);
+		livro.setIsbn(isbn);
+		livro.setCategoria(categoria);
+
+		return livro;	
 	}	
 
 	public static boolean validarLivro(Livro livro) {
@@ -46,6 +53,6 @@ public class ValidadorObra extends Validador{
 		if(livro == null) 
 			return false;
 
-		return AcervoLivro.verificarExistenciaLivro(livro.getIsbn());
+		return AcervoLivro.verificarExistenciaIsbn(livro.getIsbn());
 	}
 }

@@ -6,11 +6,11 @@ import java.util.HashMap;
 import bibli.modelo.AcervoEmprestimo;
 import bibli.modelo.AcervoExemplar;
 import bibli.modelo.AcervoFuncionario;
-import bibli.modelo.AcervoPessoa;
+import bibli.modelo.AcervoUsuario;
 import bibli.modelo.Emprestimo;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Funcionario;
-import bibli.modelo.Pessoa;
+import bibli.modelo.Usuario;
 
 public class ControladorEmprestimo {
 
@@ -48,20 +48,20 @@ public class ControladorEmprestimo {
 		}
 	}
 
-	public static boolean exibirEmprestimosPorLivro(String isbn){
+	public static boolean exibirEmprestimosPorLivro(String codigo){
 
-		if(!ValidadorEmprestimo.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorEmprestimo.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return false;
 		}
 
-		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosPorLivro(isbn);
+		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosPorLivro(codigo);
 
 		if(emprestimosEncontrados.size() == 0) 
 			System.err.println("Nenhum empréstimo encontrado.");			
 		else {
 
-			System.out.println("\n----------- Empréstimos do livro \"" + isbn + "\" -----------");
+			System.out.println("\n----------- Empréstimos do livro \"" + codigo + "\" -----------");
 			System.out.println("Quantidade: " + emprestimosEncontrados.size());	
 			System.out.println("-------------------------------------------------------------");
 
@@ -100,10 +100,10 @@ public class ControladorEmprestimo {
 		return true;		
 	}
 
-	public static boolean adicionarEmprestimo(String matriculaFuncionario, String codigoPessoa, 
+	public static boolean adicionarEmprestimo(String matriculaFuncionario, String codigoUsuario, 
 			String codigoExemplar) {
 
-		if(!ValidadorEmprestimo.validarCamposEmprestimo(matriculaFuncionario, codigoPessoa, codigoExemplar)){
+		if(!ValidadorEmprestimo.validarCamposEmprestimo(matriculaFuncionario, codigoUsuario, codigoExemplar)){
 			System.err.println("Há campos inválidos.");
 			return false;
 		}
@@ -113,13 +113,13 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoPessoa.verificarExistenciaPessoa(codigoPessoa)){
-			System.err.println("Não foi encontrada pessoa com o código informado.");
+		if(!AcervoUsuario.verificarExistenciaUsuario(codigoUsuario)){
+			System.err.println("Não foi encontrado usuário com o código informado.");
 			return false;
 		}	
 
-		if(AcervoPessoa.verificarSituacaoPessoa(codigoPessoa)){
-			System.err.println("A pessoa encontra-se bloqueada para operações.");
+		if(AcervoUsuario.verificarSituacaoUsuario(codigoUsuario)){
+			System.err.println("O usuário encontra-se bloqueado para operações.");
 			return false;
 		}	
 
@@ -133,14 +133,15 @@ public class ControladorEmprestimo {
 		}	
 
 		Funcionario funcionario= AcervoFuncionario.buscarFuncionario(matriculaFuncionario);
-		Pessoa pessoa= AcervoPessoa.buscarPessoa(codigoPessoa);
+		Usuario usuario= AcervoUsuario.buscarUsuario(codigoUsuario);
 		Exemplar exemplar= AcervoExemplar.buscarExemplar(codigoExemplar);
 
-		Emprestimo emprestimo= new Emprestimo(funcionario, pessoa, exemplar);		
+		Emprestimo emprestimo= new Emprestimo(funcionario, usuario, exemplar);		
 		AcervoEmprestimo.adicionarEmprestimo(emprestimo);
 
 		exemplar.setDisponivel(false);
-		AcervoExemplar.editarExemplar(exemplar);
+		
+		System.out.println("Código do empréstimo: " + emprestimo.getCodigo());
 
 		return true;
 	}	
@@ -164,8 +165,8 @@ public class ControladorEmprestimo {
 			return false;
 		}	
 		
-		if(emprestimoAtualizado.getPessoa().isBloqueado()) {
-			System.err.println("\nEsta pessoa está bloqueada para operações.");
+		if(emprestimoAtualizado.getUsuario().isBloqueado()) {
+			System.err.println("\nEste usuário está bloqueado para operações.");
 			return false;
 		}
 
@@ -190,9 +191,9 @@ public class ControladorEmprestimo {
 
 		emprestimoAtualizado.getExemplar().setDisponivel(true);
 
-		Pessoa pessoaAtualizada= emprestimoAtualizado.getPessoa();
-		if(pessoaAtualizada.isBloqueado()) 
-			pessoaAtualizada.setDataFimBloqueio(7);
+		Usuario usuarioAtualizado= emprestimoAtualizado.getUsuario();
+		if(usuarioAtualizado.isBloqueado()) 
+			usuarioAtualizado.setDataFimBloqueio(7);
 		
 		emprestimoAtualizado.setAtivo(false);
 		emprestimoAtualizado.setDataFim();
@@ -219,15 +220,15 @@ public class ControladorEmprestimo {
 
 	public static void atualizarInadimplencias(){
 
-		HashMap<String, Pessoa> pessoasEncontradas= AcervoPessoa.buscarPessoasBloqueadas();
-		for(Pessoa pessoa : pessoasEncontradas.values()) 
-			if(pessoa.getDataFimBloqueio().isBefore(LocalDateTime.now())) {
-				pessoa.setBloqueado(false);
-				pessoa.setDataFimBloqueio(0);
+		HashMap<String, Usuario> usuariosEncontrados= AcervoUsuario.buscarUsuariosBloqueados();
+		for(Usuario usuario : usuariosEncontrados.values()) 
+			if(usuario.getDataFimBloqueio().isBefore(LocalDateTime.now())) {
+				usuario.setBloqueado(false);
+				usuario.setDataFimBloqueio(0);
 			}
 
 		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosVencidos();
 		for(Emprestimo emprestimo : emprestimosEncontrados.values()) 
-			emprestimo.getPessoa().setBloqueado(true);
+			emprestimo.getUsuario().setBloqueado(true);
 	}
 }

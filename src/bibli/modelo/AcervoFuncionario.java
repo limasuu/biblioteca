@@ -40,18 +40,18 @@ public class AcervoFuncionario {
 	public static void adicionarFuncionario(Funcionario funcionario) {
 
 		funcionarios.put(funcionario.getMatricula(), funcionario);
-		AcervoPessoa.adicionarPessoa(funcionario);
+		AcervoUsuario.adicionarUsuario(funcionario);
 	}
 	
 	public static Funcionario editarFuncionario(Funcionario funcionarioAtualizado) {
 
-		AcervoPessoa.editarPessoa(funcionarioAtualizado);
+		AcervoUsuario.editarUsuario(funcionarioAtualizado);
 		return funcionarios.replace(funcionarioAtualizado.getMatricula(), funcionarioAtualizado);
 	}
 
 	public static Funcionario removerFuncionario(String matricula) {
 
-		AcervoPessoa.removerPessoa(funcionarios.get(matricula).getCodigo());
+		AcervoUsuario.removerUsuario(funcionarios.get(matricula).getCodigo());
 		return funcionarios.remove(matricula);
 	}	
 }

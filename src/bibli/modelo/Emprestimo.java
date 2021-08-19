@@ -10,7 +10,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 	private String codigo;
 	private Funcionario funcionario;
 	
-	private Pessoa pessoa;
+	private Usuario usuario;
 	private Exemplar exemplar;
 	
 	private boolean ativo;
@@ -21,12 +21,12 @@ public class Emprestimo implements Comparable<Emprestimo>{
 	private LocalDateTime dataLimite;	
 	private LocalDateTime dataFim;	
 	
-	public Emprestimo(Funcionario funcionario, Pessoa pessoa, Exemplar exemplar) {
+	public Emprestimo(Funcionario funcionario, Usuario usuario, Exemplar exemplar) {
 
 		totalEmprestimosJaEfetuados++;
 		this.codigo= "EM" + String.valueOf(totalEmprestimosJaEfetuados);
 		this.funcionario= funcionario;
-		this.pessoa= pessoa;
+		this.usuario= usuario;
 		this.exemplar= exemplar;
 		this.ativo= true;
 		this.renocacoes= 0;
@@ -51,12 +51,12 @@ public class Emprestimo implements Comparable<Emprestimo>{
 		this.funcionario = funcionario;
 	}
 
-	public Pessoa getPessoa() {
-		return pessoa;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Exemplar getExemplar() {
@@ -114,7 +114,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 			
 			if(outroEmprestimo.getCodigo() == null || 
 					outroEmprestimo.getFuncionario() == null ||
-					outroEmprestimo.getPessoa() == null ||
+					outroEmprestimo.getUsuario() == null ||
 					outroEmprestimo.getExemplar() == null || 					
 					outroEmprestimo.getRenocacoes() < 0 || 
 					outroEmprestimo.getDataInicio() == null)
@@ -122,7 +122,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 			
 			if(outroEmprestimo.getCodigo().equals(this.codigo) &&
 					outroEmprestimo.getFuncionario().equals(this.funcionario) &&
-					outroEmprestimo.getPessoa().equals(this.pessoa) &&
+					outroEmprestimo.getUsuario().equals(this.usuario) &&
 					outroEmprestimo.getExemplar().equals(this.exemplar) &&
 					outroEmprestimo.isAtivo() == this.ativo &&
 					outroEmprestimo.getRenocacoes() == this.renocacoes && 
@@ -139,7 +139,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 				
 		return "Código: " + codigo + " | " + (ativo ? "ativo" : "finalizado") + 
 				" | Funcionário(a): " + funcionario.getNome() +				
-				"\nUsuário: " + pessoa.getNome() + ((renocacoes>0) ? (" | Renovações: " + renocacoes) : "") +
+				"\nUsuário: " + usuario.getNome() + ((renocacoes>0) ? (" | Renovações: " + renocacoes) : "") +
 				"\nLivro \"" + exemplar.getLivro().getTitulo() + "\" | Exemplar \"" + exemplar.getCodigo() + 
 				"\"\nInício: " + dataInicio.format(formatter)  + ((dataFim!=null) ? (" | Fim: " + dataFim.format(formatter)) : 
 					" | Prazo: " + dataLimite.format(formatter));

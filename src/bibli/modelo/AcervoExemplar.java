@@ -31,12 +31,12 @@ public class AcervoExemplar {
 		return exemplares.get(codigo);
 	}
 
-	public static HashMap<String, Exemplar> buscarExemplares(String isbn) {
+	public static HashMap<String, Exemplar> buscarExemplares(String codigo) {
 
 		HashMap<String, Exemplar> exemplaresEncontrados= new HashMap<String, Exemplar>();
 
 		for(Exemplar exemplar : exemplares.values()) 
-			if(exemplar.getLivro().getIsbn().equals(isbn)) 
+			if(exemplar.getLivro().getCodigo().equals(codigo)) 
 				exemplaresEncontrados.put(exemplar.getCodigo(), exemplar);	
 
 		return exemplaresEncontrados;
@@ -57,9 +57,9 @@ public class AcervoExemplar {
 		return exemplares.remove(codigo);
 	}
 
-	public static int removerExemplares(String isbn) {
+	public static int removerExemplares(String codigo) {
 
-		HashMap<String, Exemplar> conjuntoExemplares= buscarExemplares(isbn);
+		HashMap<String, Exemplar> conjuntoExemplares= buscarExemplares(codigo);
 
 		if(!conjuntoExemplares.isEmpty()) 
 			for(Exemplar e : conjuntoExemplares.values()) 

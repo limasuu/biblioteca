@@ -16,14 +16,23 @@ public class AcervoLivro {
 		return livros.size();
 	}
 
-	public static boolean verificarExistenciaLivro(String isbn) {
+	public static boolean verificarExistenciaLivro(String codigo) {
 
-		return livros.containsKey(isbn);		
+		return livros.containsKey(codigo);		
 	}
-	
-	public static Livro buscarLivro(String isbn) {
 
-		return livros.get(isbn);
+	public static boolean verificarExistenciaIsbn(String isbn) {
+
+		for(Livro livro : livros.values()) 
+			if(livro.getIsbn().equals(isbn)) 
+				return true;
+
+		return false;		
+	}
+
+	public static Livro buscarLivro(String codigo) {
+
+		return livros.get(codigo);
 	}
 
 	public static HashMap<String, Livro> buscarLivrosPorAutor(String autor){
@@ -32,7 +41,7 @@ public class AcervoLivro {
 
 		for(Livro livro : livros.values()) 
 			if(livro.getAutor().toLowerCase().contains(autor.toLowerCase())) 
-				livrosEncontrados.put(livro.getIsbn(), livro);	
+				livrosEncontrados.put(livro.getCodigo(), livro);	
 
 		return livrosEncontrados;
 	}
@@ -43,23 +52,23 @@ public class AcervoLivro {
 
 		for(Livro livro : livros.values()) 
 			if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase())) 
-				livrosEncontrados.put(livro.getIsbn(), livro);	
+				livrosEncontrados.put(livro.getCodigo(), livro);	
 
 		return livrosEncontrados;
 	}
 
 	public static void adicionarLivro(Livro livro) {
 
-		livros.put(livro.getIsbn(), livro);
+		livros.put(livro.getCodigo(), livro);
 	}
-	
+
 	public static Livro editarLivro(Livro livroAtualizado) {
 
-		return livros.replace(livroAtualizado.getIsbn(), livroAtualizado);
+		return livros.replace(livroAtualizado.getCodigo(), livroAtualizado);
 	}
 
-	public static Livro removerLivro(String isbn) {
+	public static Livro removerLivro(String codigo) {
 
-		return livros.remove(isbn);
+		return livros.remove(codigo);
 	}	
 }

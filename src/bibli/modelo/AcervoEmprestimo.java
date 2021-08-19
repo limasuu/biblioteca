@@ -27,12 +27,12 @@ public class AcervoEmprestimo {
 		return emprestimos.get(codigo);
 	}
 
-	public static HashMap<String, Emprestimo> buscarEmprestimosPorLivro(String isbn){
+	public static HashMap<String, Emprestimo> buscarEmprestimosPorLivro(String codigo){
 
 		HashMap<String, Emprestimo> emprestimosEncontrados= new HashMap<String, Emprestimo>();
 
 		for(Emprestimo emprestimo : emprestimos.values()) 
-			if(emprestimo.getExemplar().getLivro().getIsbn().toLowerCase().equals(isbn.toLowerCase())) 
+			if(emprestimo.getExemplar().getLivro().getCodigo().toLowerCase().equals(codigo.toLowerCase())) 
 				emprestimosEncontrados.put(emprestimo.getCodigo(), emprestimo);	
 
 		return emprestimosEncontrados;
@@ -43,7 +43,7 @@ public class AcervoEmprestimo {
 		HashMap<String, Emprestimo> emprestimosEncontrados= new HashMap<String, Emprestimo>();
 
 		for(Emprestimo emprestimo : emprestimos.values()) 
-			if(emprestimo.getPessoa().getCodigo().toLowerCase().equals(codigo.toLowerCase())) 
+			if(emprestimo.getUsuario().getCodigo().toLowerCase().equals(codigo.toLowerCase())) 
 				emprestimosEncontrados.put(emprestimo.getCodigo(), emprestimo);	
 
 		return emprestimosEncontrados;

@@ -3,9 +3,9 @@ package bibli.modelo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Pessoa implements Comparable<Pessoa>{
+public class Usuario implements Comparable<Usuario>{
 
-	private static int totalPessoasJaCadastradas= 0;
+	private static int totalUsuariosJaCadastrados= 0;
 	
 	private String codigo;
 	private String nome;
@@ -17,17 +17,27 @@ public class Pessoa implements Comparable<Pessoa>{
 	private LocalDateTime dataFimBloqueio;	
 	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
 
-	public Pessoa(String nome, String endereco, 
+	public Usuario(String nome, String endereco, 
 			String telefone, String email) {
 
-		totalPessoasJaCadastradas++;
-		this.codigo= "P" + String.valueOf(totalPessoasJaCadastradas);
+		totalUsuariosJaCadastrados++;
+		this.codigo= "U" + String.valueOf(totalUsuariosJaCadastrados);
 		this.nome = nome;
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email= email;
 		this.bloqueado= false;
 		this.dataFimBloqueio= null;
+	}
+	
+	public Usuario(String codigo, String nome, String endereco, 
+			String telefone, String email) {
+		
+		this.codigo= codigo;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.email= email;
 	}
 
 	public String getCodigo() {
@@ -95,23 +105,21 @@ public class Pessoa implements Comparable<Pessoa>{
 		if (this == obj)
 			return true;
 
-		if (obj instanceof Pessoa) {
-			Pessoa outraPessoa= (Pessoa) obj;
+		if (obj instanceof Usuario) {
+			Usuario outroUsuario= (Usuario) obj;
 			
-			if(outraPessoa.getCodigo() == null || 
-					outraPessoa.getNome() == null ||
-					outraPessoa.getEndereco() == null ||
-					outraPessoa.getTelefone() == null || 
-					outraPessoa.getEmail() == null)
+			if(outroUsuario.getCodigo() == null || 
+					outroUsuario.getNome() == null ||
+					outroUsuario.getEndereco() == null ||
+					outroUsuario.getTelefone() == null || 
+					outroUsuario.getEmail() == null)
 				return false;
 			
-			if(outraPessoa.getCodigo().equals(this.codigo) &&
-					outraPessoa.getNome().equals(this.nome) &&
-					outraPessoa.getEndereco().equals(this.endereco) &&
-					outraPessoa.getTelefone().equals(this.telefone) &&
-					outraPessoa.getEmail().equals(this.email) &&
-					outraPessoa.isBloqueado() == this.bloqueado &&
-					outraPessoa.getDataFimBloqueio().equals(this.dataFimBloqueio))
+			if(outroUsuario.getCodigo().equals(this.codigo) &&
+					outroUsuario.getNome().equals(this.nome) &&
+					outroUsuario.getEndereco().equals(this.endereco) &&
+					outroUsuario.getTelefone().equals(this.telefone) &&
+					outroUsuario.getEmail().equals(this.email))
 				return true;
 		}		
 		return false;
@@ -126,7 +134,7 @@ public class Pessoa implements Comparable<Pessoa>{
 	}
 	
 	@Override
-	public int compareTo(Pessoa arg0) { 		
+	public int compareTo(Usuario arg0) { 		
 		
 		return this.codigo.compareToIgnoreCase(arg0.getCodigo());
 	}

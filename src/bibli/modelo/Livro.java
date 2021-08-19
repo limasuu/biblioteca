@@ -2,6 +2,9 @@ package bibli.modelo;
 
 public class Livro implements Comparable<Livro>{
 
+	private static int totalLivrosJaCadastrados= 0;
+
+	private String codigo;
 	private String titulo;
 	private String autor;
 	private int edicao;
@@ -13,7 +16,9 @@ public class Livro implements Comparable<Livro>{
 	public Livro(String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,
 			String isbn, String categoria) {
-
+		
+		totalLivrosJaCadastrados++;
+		this.codigo= "L" + String.valueOf(totalLivrosJaCadastrados);
 		this.titulo = titulo;
 		this.autor = autor;
 		this.edicao = edicao;
@@ -22,6 +27,28 @@ public class Livro implements Comparable<Livro>{
 		this.isbn = isbn;
 		this.categoria = categoria;
 	}	
+	
+	public Livro(String codigo, String titulo, String autor, 
+			int edicao, String editora, int numeroPaginas,
+			String isbn, String categoria) {
+		
+		this.codigo= codigo;
+		this.titulo = titulo;
+		this.autor = autor;
+		this.edicao = edicao;
+		this.editora = editora;
+		this.numeroPaginas = numeroPaginas;
+		this.isbn = isbn;
+		this.categoria = categoria;
+	}	
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 
 	public String getTitulo() {
 		return titulo;
@@ -81,7 +108,7 @@ public class Livro implements Comparable<Livro>{
 
 	@Override
 	public boolean equals(Object obj) {
-		
+
 		if (obj == null)
 			return false;
 
@@ -90,15 +117,17 @@ public class Livro implements Comparable<Livro>{
 
 		if (obj instanceof Livro) {
 			Livro outroLivro = (Livro) obj;
-			
-			if(outroLivro.getTitulo() == null || 
+
+			if(outroLivro.getCodigo() == null || 
+					outroLivro.getTitulo() == null || 
 					outroLivro.getAutor() == null || 
 					outroLivro.getEditora() == null ||
 					outroLivro.getIsbn() == null ||
 					outroLivro.getCategoria() == null)
 				return false;
-						
-			if(outroLivro.getTitulo().equals(this.titulo) &&
+
+			if(outroLivro.getCodigo().equals(this.codigo) &&
+					outroLivro.getTitulo().equals(this.titulo) &&
 					outroLivro.getAutor().equals(this.autor) &&					
 					(outroLivro.getEdicao() == this.edicao) &&
 					outroLivro.getEditora().equals(this.editora) &&
@@ -113,19 +142,19 @@ public class Livro implements Comparable<Livro>{
 
 	@Override
 	public String toString() {
-		return "Titulo: " + titulo + " | Autor: " + autor + 
-				"\nEdicao: " + edicao + " | Editora: " + editora + " | Número de páginas: " + numeroPaginas + 
-				"\nISBN: " + isbn + " | Categoria: " + categoria;
+		return "Código: " + codigo + " | Título: " + titulo +
+				"\nAutor: " + autor + " | Edição: " + edicao + " | Editora: " + editora +
+				"\nNúmero de páginas: " + numeroPaginas + " | ISBN: " + isbn + " | Categoria: " + categoria;
 	}
 
 	@Override
 	public int compareTo(Livro arg0) { 		
-		
+
 		int comparacao= this.titulo.compareToIgnoreCase(arg0.getTitulo());
-		
+
 		if(comparacao == 0)
 			comparacao= this.isbn.compareToIgnoreCase(arg0.getIsbn());
-		
+
 		return comparacao;
 	}
 }

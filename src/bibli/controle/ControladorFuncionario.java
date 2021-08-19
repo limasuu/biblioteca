@@ -3,14 +3,14 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.modelo.AcervoFuncionario;
-import bibli.modelo.AcervoPessoa;
+import bibli.modelo.AcervoUsuario;
 import bibli.modelo.Funcionario;
 
 public class ControladorFuncionario {
 
 	public static boolean exibirFuncionario(String matricula) {
 
-		if(!ValidadorPessoa.validarCampo(matricula)) {
+		if(!ValidadorUsuario.validarCampo(matricula)) {
 			System.err.println("Matrícula inválida.");
 			return false;
 		}
@@ -44,7 +44,7 @@ public class ControladorFuncionario {
 
 	public static boolean exibirFuncionariosPorCargo(String cargo){
 
-		if(!ValidadorPessoa.validarCampo(cargo)) {
+		if(!ValidadorUsuario.validarCampo(cargo)) {
 			System.err.println("Nome de cargo inválido.");
 			return false;
 		}
@@ -72,7 +72,7 @@ public class ControladorFuncionario {
 			String telefone, String email, 
 			double salario, String cargo) {
 
-		if(!ValidadorPessoa.validarCamposFuncionario(nome, endereco, telefone, 
+		if(!ValidadorUsuario.validarCamposFuncionario(nome, endereco, telefone, 
 				email, salario, cargo)) {
 			System.err.println("Há campos inválidos.");
 			return null;
@@ -81,7 +81,7 @@ public class ControladorFuncionario {
 		Funcionario funcionario= new Funcionario(nome, endereco, telefone, email, salario, cargo);
 		
 		AcervoFuncionario.adicionarFuncionario(funcionario);
-		AcervoPessoa.adicionarPessoa(funcionario);
+		AcervoUsuario.adicionarUsuario(funcionario);
 
 		return funcionario.getMatricula();
 	}
@@ -89,7 +89,7 @@ public class ControladorFuncionario {
 	public static String editarFuncionario(String matricula, String novoNome, String novoEndereco, 
 			String novoTelefone, String novoEmail, double novoSalario, String novoCargo) {
 
-		if(!ValidadorPessoa.validarCamposFuncionario(novoNome, novoEndereco, novoTelefone, 
+		if(!ValidadorUsuario.validarCamposFuncionario(novoNome, novoEndereco, novoTelefone, 
 				novoEmail, novoSalario, novoCargo)){
 			System.err.println("Há campos inválidos.");
 			return null;
@@ -100,22 +100,19 @@ public class ControladorFuncionario {
 			return null;
 		}		
 
-		Funcionario funcionarioAtualizado= ValidadorPessoa.validarAtualizacaoFuncionario(matricula, novoNome, novoEndereco, novoTelefone, novoEmail, novoSalario, novoCargo);
+		Funcionario funcionarioAtualizado= ValidadorUsuario.validarAtualizacaoFuncionario(matricula, novoNome, novoEndereco, novoTelefone, novoEmail, novoSalario, novoCargo);
 
 		if(funcionarioAtualizado == null){
 			System.err.println("\nNão há mudanças para realizar.");
 			return null;
 		}	
 
-		AcervoFuncionario.editarFuncionario(funcionarioAtualizado);
-		AcervoPessoa.editarPessoa(funcionarioAtualizado);
-
 		return funcionarioAtualizado.getMatricula();
 	}
 	
 	public static String removerFuncionario(String matricula) {
 
-		if(!ValidadorPessoa.validarCampo(matricula)) {
+		if(!ValidadorUsuario.validarCampo(matricula)) {
 			System.err.println("Matrícula inválida.");
 			return null;
 		}
@@ -127,7 +124,7 @@ public class ControladorFuncionario {
 
 		Funcionario funcionario= AcervoFuncionario.buscarFuncionario(matricula);
 		AcervoFuncionario.removerFuncionario(matricula);
-		AcervoPessoa.removerPessoa(funcionario.getCodigo());
+		AcervoUsuario.removerUsuario(funcionario.getCodigo());
 
 		return funcionario.getNome();
 	}	

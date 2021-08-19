@@ -33,8 +33,7 @@ public class MenuFuncionario {
 		case 4:
 			removerFuncionario();
 			break;
-		case 0:
-			
+		case 0:			
 			break;
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	

@@ -34,8 +34,7 @@ public class MenuLivro {
 		case 4:
 			removerLivro();
 			break;
-		case 0:
-			
+		case 0:			
 			break;
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	
@@ -108,11 +107,11 @@ public class MenuLivro {
 	private static void exibirLivro (){
 
 		System.out.println("\n  ________________ opção EXIBIR LIVRO ________________  ");
-		System.out.print("Informe o ISBN do livro para sua a exibição ");
+		System.out.print("Informe o código do livro para sua a exibição ");
 
-		String isbn= Principal.lerStringTeclado();
+		String codigo= Principal.lerStringTeclado();
 
-		ControladorLivro.exibirLivro(isbn);
+		ControladorLivro.exibirLivro(codigo);
 	}
 
 	private static void exibirLivrosTotal (){
@@ -144,14 +143,13 @@ public class MenuLivro {
 
 		String operacao= null;
 		boolean resultadoOperacao= false;
+		String codigo= null;
 
 		if(novo) {
 			operacao= "adicionado";
 
 			System.out.println("\n  ________________ opção ADICIONAR LIVRO ________________  ");
-			System.out.println("Informe os dados a seguir para o cadastro de um novo livro:");
-
-			System.out.print("\nISBN ");
+			System.out.println("Informe os dados a seguir para o cadastro de um novo livro:\n");
 
 		}else {
 
@@ -160,10 +158,9 @@ public class MenuLivro {
 			System.out.println("\n  ________________ opção EDITAR LIVRO ________________  ");
 			System.out.println("Informe os dados a seguir para a edição de um livro:");
 
-			System.out.print("\nISBN do livro a ser editado ");
+			System.out.print("\nCódigo do livro a ser editado ");
+			codigo= Principal.lerStringTeclado();
 		}
-
-		String isbn= Principal.lerStringTeclado();
 
 		System.out.print("Título ");
 		String titulo= Principal.lerStringTeclado();
@@ -179,6 +176,9 @@ public class MenuLivro {
 
 		System.out.print("Número de páginas ");
 		int numeroPaginas= Principal.lerInteiroTeclado();
+		
+		System.out.print("ISBN ");
+		String isbn= Principal.lerStringTeclado();	
 
 		System.out.print("Categoria ");
 		String categoria= Principal.lerStringTeclado();	
@@ -187,7 +187,7 @@ public class MenuLivro {
 			resultadoOperacao= ControladorLivro.adicionarLivro(titulo, autor, edicao, 
 					editora, numeroPaginas, isbn, categoria);			
 		else 
-			resultadoOperacao= ControladorLivro.editarLivro(titulo, autor, edicao, 
+			resultadoOperacao= ControladorLivro.editarLivro(codigo, titulo, autor, edicao, 
 					editora, numeroPaginas, isbn, categoria);
 
 		if(resultadoOperacao) 
@@ -199,11 +199,11 @@ public class MenuLivro {
 	private static void removerLivro() {		
 
 		System.out.println("\n  ________________ opção REMOVER LIVRO ________________  ");
-		System.out.print("Informe o ISBN do livro para realizar a remoção ");
+		System.out.print("Informe o código do livro para realizar a remoção ");
 
-		String isbn= Principal.lerStringTeclado();
-		int numeroExemplares= ControladorExemplar.getNumeroExemplares(isbn);
-		String tituloLivro= ControladorLivro.removerLivro(isbn);
+		String codigo= Principal.lerStringTeclado();
+		int numeroExemplares= ControladorExemplar.getNumeroExemplares(codigo);
+		String tituloLivro= ControladorLivro.removerLivro(codigo);
 
 		if(tituloLivro != null) {
 			

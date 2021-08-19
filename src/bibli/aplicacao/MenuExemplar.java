@@ -30,7 +30,6 @@ public class MenuExemplar {
 			apresentarOpcoesExcluir();
 			break;
 		case 0:
-
 			break;
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	
@@ -186,14 +185,14 @@ public class MenuExemplar {
 
 		if(varios) {
 			System.out.println("\n  ________________ opção CADASTRAR EXEMPLARES ________________  ");
-			System.out.print("Informe o ISBN do livro para o cadastro de novos exemplares ");	
+			System.out.print("Informe o código do livro para o cadastro de novos exemplares ");	
 
 		}else {
 			System.out.println("\n  ________________ opção CADASTRAR EXEMPLAR ________________  ");
-			System.out.print("Informe o ISBN do livro para o cadastro de um novo exemplar ");
+			System.out.print("Informe o código do livro para o cadastro de um novo exemplar ");
 		}
 
-		String isbn= Principal.lerStringTeclado();
+		String codigo= Principal.lerStringTeclado();
 
 		if(varios) {
 
@@ -202,7 +201,7 @@ public class MenuExemplar {
 		}
 
 		for(int i=0; i<quantidade; i++) {
-			resultadoOperacao= ControladorExemplar.adicionarExemplar(isbn);	
+			resultadoOperacao= ControladorExemplar.adicionarExemplar(codigo);	
 
 			if(!resultadoOperacao) 	
 				break;
@@ -235,11 +234,11 @@ public class MenuExemplar {
 	private static void removerExemplares() {
 
 		System.out.println("\n  ________________ opção EXCLUIR EXEMPLARES POR LIVRO________________  ");
-		System.out.print("Informe o ISBN do livro para realizar as exclusões ");
+		System.out.print("Informe o código do livro para realizar as exclusões ");
 
-		String isbn= Principal.lerStringTeclado();
-		int numeroExemplares= ControladorExemplar.getNumeroExemplares(isbn);
-		boolean resultadoOperacao= ControladorExemplar.removerExemplares(isbn);
+		String codigo= Principal.lerStringTeclado();
+		int numeroExemplares= ControladorExemplar.getNumeroExemplares(codigo);
+		boolean resultadoOperacao= ControladorExemplar.removerExemplares(codigo);
 
 		if(resultadoOperacao)			
 			System.out.println("\nFoi efetuada a exclusão do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");

@@ -8,19 +8,19 @@ import bibli.modelo.Livro;
 
 public class ControladorLivro {
 	
-	public static boolean exibirLivro (String isbn){
+	public static boolean exibirLivro (String codigo){
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return false;
 		}
 
-		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("\nNão foi encontrado livro com o ISBN informado.");
+		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
+			System.err.println("Não foi encontrado livro com o código informado.");
 			return false;
 		}	
 
-		System.out.println("\n" + AcervoLivro.buscarLivro(isbn));
+		System.out.println("\n" + AcervoLivro.buscarLivro(codigo));
 
 		return true;
 	}
@@ -104,7 +104,7 @@ public class ControladorLivro {
 			return false;
 		}
 
-		if(AcervoLivro.verificarExistenciaLivro(isbn)){
+		if(AcervoLivro.verificarExistenciaIsbn(isbn)){
 			System.err.println("Há um livro com o ISBN informado no sistema.");
 			return false;
 		}
@@ -115,50 +115,47 @@ public class ControladorLivro {
 		return true;
 	}	
 
-	public static boolean editarLivro(String novoTitulo, String novoAutor, 
+	public static boolean editarLivro(String codigo, String novoTitulo, String novoAutor, 
 			int novaEdicao, String novaEditora, int novoNumeroPaginas,
-			String isbn, String novaCategoria) {
+			String novoIsbn, String novaCategoria) {
+		
+		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
+			System.err.println("Não foi encontrado livro com o código informado.");
+			return false;
+		}	
 
 		if(!ValidadorObra.validarCamposLivro(novoTitulo, novoAutor, novaEdicao, novaEditora,
-				novoNumeroPaginas, isbn, novaCategoria)) {
+				novoNumeroPaginas, novoIsbn, novaCategoria)) {
 			System.err.println("Há campos inválidos.");
 			return false;
-		}
+		}			
 
-		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
-			return false;
-		}		
-
-		Livro livroAtualizado= ValidadorObra.validarAtualizacaoLivro(novoTitulo, novoAutor,
-				novaEdicao, novaEditora, novoNumeroPaginas, isbn, novaCategoria);
+		Livro livroAtualizado= ValidadorObra.validarAtualizacaoLivro(codigo, novoTitulo, novoAutor,
+				novaEdicao, novaEditora, novoNumeroPaginas, novoIsbn, novaCategoria);
 
 		if(livroAtualizado == null){
 			System.err.println("\nNão há mudanças para realizar.");
 			return false;
 		}	
 
-		ControladorExemplar.editarExemplares(livroAtualizado);
-		AcervoLivro.editarLivro(livroAtualizado);	
-
 		return true;
 	}
 
-	public static String removerLivro(String isbn) {
+	public static String removerLivro(String codigo) {
 
-		if(!ValidadorObra.validarCampo(isbn)) {
-			System.err.println("ISBN inválido.");
+		if(!ValidadorObra.validarCampo(codigo)) {
+			System.err.println("Código inválido.");
 			return null;
 		}
 
-		if(!AcervoLivro.verificarExistenciaLivro(isbn)){
-			System.err.println("Não foi encontrado livro com o ISBN informado.");
+		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
+			System.err.println("Não foi encontrado livro com o código informado.");
 			return null;
 		}		
 
-		String titulo= AcervoLivro.buscarLivro(isbn).getTitulo();
-		AcervoExemplar.removerExemplares(isbn);
-		AcervoLivro.removerLivro(isbn);
+		String titulo= AcervoLivro.buscarLivro(codigo).getTitulo();
+		AcervoExemplar.removerExemplares(codigo);
+		AcervoLivro.removerLivro(codigo);
 
 		return titulo;
 	}	

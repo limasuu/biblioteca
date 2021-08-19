@@ -1,14 +1,14 @@
 package bibli.aplicacao;
 
-import bibli.controle.ControladorPessoa;
+import bibli.controle.ControladorUsuario;
 
-public class MenuPessoa {
+public class MenuUsuario {
 	
 	public static void apresentarOpcoes() {
 
 		System.out.println("\n----------------------------------------------------");
 		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu pessoas ________________  ");
+		System.out.println("  ________________ menu usuários ________________  ");
 		System.out.println("Escolha uma opção:");
 		System.out.println("1. Exibir");
 		System.out.println("2. Cadastrar");
@@ -25,16 +25,15 @@ public class MenuPessoa {
 			apresentarOpcoesExibir();
 			break;
 		case 2:
-			prepararPessoa(true);
+			prepararUsuario(true);
 			break;
 		case 3:
-			prepararPessoa(false);
+			prepararUsuario(false);
 			break;
 		case 4:
-			removerPessoa();
+			removerUsuario();
 			break;
-		case 0:
-			
+		case 0:			
 			break;
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	
@@ -45,10 +44,10 @@ public class MenuPessoa {
 	private static void apresentarOpcoesExibir() {
 
 		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   _____________ menu pessoas (exibir) _____________   ");
+		System.out.println("   _____________ menu usuários (exibir) _____________   ");
 		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir uma pessoa");
-		System.out.println("2. Exibir todas as pessoas");
+		System.out.println("1. Exibir um usuário");
+		System.out.println("2. Exibir todos os usuários");
 		System.out.println("0. Voltar");	
 		System.out.println("----------------------------------------------------");
 
@@ -57,10 +56,10 @@ public class MenuPessoa {
 		switch(opcao) {
 
 		case 1:
-			exibirPessoa();
+			exibirUsuario();
 			break;
 		case 2:
-			exibirPessoasTotal();
+			exibirUsuariosTotal();
 			break;
 		case 0:
 			apresentarOpcoes();
@@ -71,22 +70,22 @@ public class MenuPessoa {
 		}
 	}
 	
-	private static void exibirPessoa (){
+	private static void exibirUsuario (){
 
-		System.out.println("\n  ________________ opção EXIBIR PESSOA ________________  ");
-		System.out.print("Informe o código da pessoa para sua a exibição ");
+		System.out.println("\n  ________________ opção EXIBIR USUÁRIO ________________  ");
+		System.out.print("Informe o código do usuário para sua a exibição ");
 
 		String codigo= Principal.lerStringTeclado();
 
-		ControladorPessoa.exibirPessoa(codigo);
+		ControladorUsuario.exibirUsuario(codigo);
 	}
 	
-	private static void exibirPessoasTotal (){
+	private static void exibirUsuariosTotal (){
 
-		ControladorPessoa.exibirPessoas();
+		ControladorUsuario.exibirUsuarios();
 	}
 
-	private static void prepararPessoa(boolean novo) {
+	private static void prepararUsuario(boolean novo) {
 		
 		String operacao= null;
 		String resultadoOperacao= null;
@@ -95,14 +94,14 @@ public class MenuPessoa {
 		if(novo) {
 			operacao= "adicionado";
 
-			System.out.println("\n  ________________ opção ADICIONAR PESSOA ________________  ");
-			System.out.println("Informe os dados a seguir para o cadastro de uma nova pessoa:");
+			System.out.println("\n  ________________ opção ADICIONAR USUÁRIO ________________  ");
+			System.out.println("Informe os dados a seguir para o cadastro de um novo usuário:");
 
 		}else {
 			operacao= "editado";
 
-			System.out.println("\n  ________________ opção EDITAR PESSOA ________________  ");
-			System.out.println("Informe os dados a seguir para a edição de uma pessoa:");
+			System.out.println("\n  ________________ opção EDITAR USUÁRIO ________________  ");
+			System.out.println("Informe os dados a seguir para a edição de um usuário:");
 			
 			System.out.print("Código ");
 			codigo= Principal.lerStringTeclado();
@@ -121,26 +120,26 @@ public class MenuPessoa {
 		String email= Principal.lerStringTeclado();
 		
 		if(novo)
-			resultadoOperacao= ControladorPessoa.adicionarPessoa(nome, endereco, telefone, email);		
+			resultadoOperacao= ControladorUsuario.adicionarUsuario(nome, endereco, telefone, email);		
 		else 
-			resultadoOperacao= ControladorPessoa.editarPessoa(codigo, nome, endereco, telefone, email);
+			resultadoOperacao= ControladorUsuario.editarUsuario(codigo, nome, endereco, telefone, email);
 
 		if(resultadoOperacao != null) 
-			System.out.println("\nPessoa com código \"" + resultadoOperacao + "\" " + operacao + ".");
+			System.out.println("\nUsuário com código \"" + resultadoOperacao + "\" " + operacao + ".");
 		else 
 			System.err.println("\nOperação não realizada.");
 	}
 	
-	private static void removerPessoa() {		
+	private static void removerUsuario() {		
 
-		System.out.println("\n  ________________ opção REMOVER PESSOA ________________  ");
-		System.out.print("Informe o código da pessoa para realizar a remoção ");
+		System.out.println("\n  ________________ opção REMOVER USUÁRIO ________________  ");
+		System.out.print("Informe o código do usuário para realizar a remoção ");
 
 		String codigo= Principal.lerStringTeclado();
-		String nome= ControladorPessoa.removerPessoa(codigo);
+		String nome= ControladorUsuario.removerUsuario(codigo);
 
 		if(nome != null) 			
-			System.out.println("\nPessoa \"" + nome + "\" removida.");			
+			System.out.println("\nUsuário \"" + nome + "\" removida.");			
 		else 
 			System.err.println("\nOperação não realizada.");
 	}

@@ -38,7 +38,6 @@ public class MenuEmprestimo {
 			removerEmprestimo();
 			break;
 		case 0:
-
 			break;
 		default:
 			System.err.println("\nOpção inválida! Tente novamente.\n");	
@@ -126,11 +125,11 @@ public class MenuEmprestimo {
 	private static void exibirEmprestimosPorLivro (){
 
 		System.out.println("\n  ________________ opção EXIBIR EMPRÉSTIMOS POR LIVRO ________________  ");
-		System.out.print("Informe o ISBN do livro para a exibição dos empréstimos ");
+		System.out.print("Informe o código do livro para a exibição dos empréstimos ");
 
-		String isbn= Principal.lerStringTeclado();
+		String codigo= Principal.lerStringTeclado();
 
-		ControladorEmprestimo.exibirEmprestimosPorLivro(isbn);
+		ControladorEmprestimo.exibirEmprestimosPorLivro(codigo);
 	}
 
 	private static void exibirEmprestimosPorUsuario (){
@@ -151,13 +150,13 @@ public class MenuEmprestimo {
 		System.out.print("Matrícula do funcionário ");
 		String matriculaFuncionario= Principal.lerStringTeclado();
 
-		System.out.print("Código da pessoa ");
-		String codigoPessoa= Principal.lerStringTeclado();
+		System.out.print("Código do usuário ");
+		String codigoUsuario= Principal.lerStringTeclado();
 
 		System.out.print("Código do exemplar ");
 		String codigoExemplar= Principal.lerStringTeclado();
 
-		boolean resultadoOperacao= ControladorEmprestimo.adicionarEmprestimo(matriculaFuncionario, codigoPessoa, codigoExemplar);	
+		boolean resultadoOperacao= ControladorEmprestimo.adicionarEmprestimo(matriculaFuncionario, codigoUsuario, codigoExemplar);	
 
 		if(resultadoOperacao) {
 			System.out.println("Empréstimo cadastrado.");
