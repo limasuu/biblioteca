@@ -18,11 +18,11 @@ public class Funcionario extends Usuario{
 		this.cargo= cargo;
 	}
 	
-	public Funcionario(String matricula, String nome, String endereco, 
+	public Funcionario(String matricula, String codigo, String nome, String endereco, 
 			String telefone, String email, 
 			double salario, String cargo) {
 		
-		super(nome, endereco, telefone, email);
+		super(codigo, nome, endereco, telefone, email);
 		this.matricula= matricula;
 		this.salario= salario;
 		this.cargo= cargo;

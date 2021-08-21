@@ -6,16 +6,16 @@ public class MenuFuncionario {
 	
 	public static void apresentarOpcoes() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu funcionários ________________  ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir");
-		System.out.println("2. Cadastrar");
-		System.out.println("3. Editar");
-		System.out.println("4. Excluir");	
-		System.out.println("0. Voltar");
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.topo") );
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exibir") );
+		System.out.println( Principal.getMensagem("menu.cadastrar") );
+		System.out.println( Principal.getMensagem("menu.3editar") );
+		System.out.println( Principal.getMensagem("menu.4excluir") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -36,20 +36,20 @@ public class MenuFuncionario {
 		case 0:			
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoes();
 		}	
 	}	
 	
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   _____________ menu funcionários (exibir) _____________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir um funcionário");
-		System.out.println("2. Exibir vários funcionários");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.um") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -65,20 +65,20 @@ public class MenuFuncionario {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibir();
 		}
 	}
 	
 	private static void apresentarOpcoesExibirVarios() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ______ menu funcionários (exibir vários funcionários) ______   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir todos os funcionários");
-		System.out.println("2. Exibir funcionários por cargo");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.varios.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.todos") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.varios.cargo") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -94,15 +94,15 @@ public class MenuFuncionario {
 			apresentarOpcoesExibir();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );	
 			apresentarOpcoesExibirVarios();
 		}
 	}
 	
 	private static void exibirFuncionario (){
 
-		System.out.println("\n  ________________ opção EXIBIR FUNCIONÀRIO ________________  ");
-		System.out.print("Informe a matrícula do funcionário para sua a exibição ");
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.um.solicita") );
 
 		String matricula= Principal.lerStringTeclado();
 
@@ -116,8 +116,8 @@ public class MenuFuncionario {
 	
 	private static void exibirFuncionariosPorCargo (){
 
-		System.out.println("\n  ________________ opção EXIBIR FUNCIONÁRIOS POR CARGO ________________  ");
-		System.out.print("Informe o cargo para a exibição dos funcionários ");
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.varios.cargo.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.exibir.varios.cargo.solicita") );
 
 		String cargo= Principal.lerStringTeclado();
 
@@ -126,42 +126,37 @@ public class MenuFuncionario {
 	
 	private static void prepararFuncionario(boolean novo) {
 		
-		String operacao= null;
-		String resultadoOperacao= null;
+		boolean resultadoOperacao= false;
 		String matricula= null;
 
 		if(novo) {
-			operacao= "adicionado";
-
-			System.out.println("\n  ________________ opção ADICIONAR FUNCIONÁRIO ________________  ");
-			System.out.println("Informe os dados a seguir para o cadastro de um novo funcionário:");
+			System.out.println( Principal.getMensagem("menu.funcionario.cadastrar.titulo") );
+			System.out.println( Principal.getMensagem("menu.funcionario.cadastrar.solicita") );
 
 		}else {
-			operacao= "editado";
-
-			System.out.println("\n  ________________ opção EDITAR FUNCIONÁRIO ________________  ");
-			System.out.println("Informe os dados a seguir para a edição de um novo funcionário:");
+			System.out.println( Principal.getMensagem("menu.funcionario.editar.titulo") );
+			System.out.println( Principal.getMensagem("menu.funcionario.editar.solicita") );
 			
-			System.out.print("Matrícula ");
+			System.out.println( Principal.getMensagem("menu.funcionario.matricula") );
 			matricula= Principal.lerStringTeclado();
 		}
 			
-		System.out.print("Nome ");
+		System.out.println( Principal.getMensagem("menu.funcionario.nome") );
 		String nome= Principal.lerStringTeclado();
 
-		System.out.print("Endereço ");
+		System.out.println( Principal.getMensagem("menu.funcionario.endereco") );
 		String endereco= Principal.lerStringTeclado();
 
-		System.out.print("Telefone ");
+		System.out.println( Principal.getMensagem("menu.funcionario.telefone") );
 		String telefone= Principal.lerStringTeclado();
 
-		System.out.print("E-mail ");
+		System.out.println( Principal.getMensagem("menu.funcionario.email") );
 		String email= Principal.lerStringTeclado();
 		
-		System.out.print("Salário ");
+		System.out.println( Principal.getMensagem("menu.funcionario.salario") );
 		double salario= Principal.lerRealTeclado();
 		
-		System.out.print("Cargo ");
+		System.out.println( Principal.getMensagem("menu.funcionario.cargo") );
 		String cargo= Principal.lerStringTeclado();
 		
 		
@@ -172,24 +167,20 @@ public class MenuFuncionario {
 			resultadoOperacao= ControladorFuncionario.editarFuncionario(matricula, nome, endereco, 
 					telefone, email, salario, cargo);
 
-		if(resultadoOperacao != null) 
-			System.out.println("\nFuncionário com matrícula \"" + resultadoOperacao + "\" " + operacao + ".");
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}
 
 	private static void removerFuncionario() {		
 
-		System.out.println("\n  ________________ opção REMOVER FUNCIONÁRIO ________________  ");
-		System.out.print("Informe a matrícula do funcionário para realizar a remoção ");
+		System.out.println( Principal.getMensagem("menu.funcionario.remover.titulo") );
+		System.out.println( Principal.getMensagem("menu.funcionario.remover.solicita") );		
 
 		String matricula= Principal.lerStringTeclado();
-		String nome= ControladorFuncionario.removerFuncionario(matricula);
+		
+		boolean resultadoOperacao= ControladorFuncionario.removerFuncionario(matricula);
 
-		if(nome != null) 			
-			System.out.println("\nFuncionário \"" + nome + "\" removido.");			
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao) 
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
 	}
-
 }

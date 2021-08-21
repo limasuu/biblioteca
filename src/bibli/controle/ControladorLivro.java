@@ -2,6 +2,7 @@ package bibli.controle;
 
 import java.util.HashMap;
 
+import bibli.aplicacao.Principal;
 import bibli.modelo.AcervoExemplar;
 import bibli.modelo.AcervoLivro;
 import bibli.modelo.Livro;
@@ -11,12 +12,12 @@ public class ControladorLivro {
 	public static boolean exibirLivro (String codigo){
 
 		if(!ValidadorObra.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
-			System.err.println("Não foi encontrado livro com o código informado.");
+			System.err.println( Principal.getMensagem("erro.livro.naoEncontrado") );
 			return false;
 		}	
 
@@ -28,41 +29,41 @@ public class ControladorLivro {
 	public static void exibirLivros() {
 
 		if(AcervoLivro.getNumeroLivros() == 0)
-			System.out.println("Não há livros cadastrados.");
+			System.out.println( Principal.getMensagem("erro.livro.vazio") );
 		else {
 
-			System.out.println("\n----------------- Livros -----------------");
-			System.out.println("Quantidade: " + AcervoLivro.getNumeroLivros());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("livro.exibir.topo") );
+			System.out.println( Principal.getMensagem("exibir.quantidade") + AcervoLivro.getNumeroLivros());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Livro livro : AcervoLivro.getLivros().values())
 				System.out.println(livro+"\n");
 
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 	}
 
 	public static boolean exibirLivrosPorAutor(String autor){
 
 		if(!ValidadorObra.validarCampo(autor)) {
-			System.err.println("Nome de autor inválido.");
+			System.err.println( Principal.getMensagem("erro.livro.invalido.autor") );
 			return false;
 		}
 
 		HashMap<String, Livro> livrosEncontrados= AcervoLivro.buscarLivrosPorAutor(autor);
 
 		if(livrosEncontrados.size() == 0) 
-			System.err.println("Nenhum livro encontrado.");			
+			System.out.println( Principal.getMensagem("erro.livro.vazio") );
 		else {
 
 			System.out.println("\n----------- Livros de \"" + autor + "\" -----------");
-			System.out.println("Quantidade: " + livrosEncontrados.size());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("exibir.quantidade") + livrosEncontrados.size());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Livro livro: livrosEncontrados.values())
 				System.out.println("\n" + livro);	
 
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 
 		return true;		
@@ -70,25 +71,25 @@ public class ControladorLivro {
 
 	public static boolean exibirLivrosPorTitulo(String titulo) {
 
-		if(!ValidadorObra.validarCampo(titulo)) {
-			System.err.println("Nome de título inválido.");
+		if(!ValidadorObra.validarCampo(titulo)) {			
+			System.err.println( Principal.getMensagem("erro.livro.invalido.titulo") );
 			return false;
 		}
 
 		HashMap<String, Livro> livrosEncontrados= AcervoLivro.buscarLivrosPorTitulo(titulo);
 
 		if(livrosEncontrados.size() == 0) 
-			System.out.println("Nenhum livro encontrado.");
+			System.out.println( Principal.getMensagem("erro.livro.vazio") );
 		else{
 
 			System.out.println("\n-------- Livros com o título \"" + titulo + "\" --------");
-			System.out.println("Quantidade: " + livrosEncontrados.size());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("exibir.quantidade") + livrosEncontrados.size());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Livro livro: livrosEncontrados.values())
 				System.out.println("\n" + livro);			
 
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		} 
 
 		return true;
@@ -100,17 +101,18 @@ public class ControladorLivro {
 
 		if(!ValidadorObra.validarCamposLivro(titulo, autor, edicao, editora,
 				numeroPaginas, isbn, categoria)){
-			System.err.println("Há campos inválidos.");
+			System.err.println( Principal.getMensagem("erro.invalido.campos") );
 			return false;
 		}
 
 		if(AcervoLivro.verificarExistenciaIsbn(isbn)){
-			System.err.println("Há um livro com o ISBN informado no sistema.");
+			System.err.println( Principal.getMensagem("erro.livro.invalido.isbn") );
 			return false;
 		}
 
 		Livro livro= new Livro(titulo, autor, edicao, editora, numeroPaginas, isbn, categoria);
 		AcervoLivro.adicionarLivro(livro);
+		System.out.println("\nLivro \"" + livro.getCodigo() + "\" cadastrado.");
 
 		return true;
 	}	
@@ -120,43 +122,47 @@ public class ControladorLivro {
 			String novoIsbn, String novaCategoria) {
 		
 		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
-			System.err.println("Não foi encontrado livro com o código informado.");
+			System.err.println( Principal.getMensagem("erro.livro.naoEncontrado") );
 			return false;
 		}	
 
 		if(!ValidadorObra.validarCamposLivro(novoTitulo, novoAutor, novaEdicao, novaEditora,
 				novoNumeroPaginas, novoIsbn, novaCategoria)) {
-			System.err.println("Há campos inválidos.");
+			System.err.println( Principal.getMensagem("erro.invalido.campos") );
 			return false;
 		}			
 
-		Livro livroAtualizado= ValidadorObra.validarAtualizacaoLivro(codigo, novoTitulo, novoAutor,
+		boolean resultadoOperacao= ValidadorObra.validarAtualizacaoLivro(codigo, novoTitulo, novoAutor,
 				novaEdicao, novaEditora, novoNumeroPaginas, novoIsbn, novaCategoria);
 
-		if(livroAtualizado == null){
-			System.err.println("\nNão há mudanças para realizar.");
+		if(!resultadoOperacao){
+			System.err.println( Principal.getMensagem("editar.sem.mudanças") );
 			return false;
 		}	
-
+		
+		System.out.println("\nLivro \"" + codigo + "\" editado.");
 		return true;
 	}
 
-	public static String removerLivro(String codigo) {
+	public static boolean removerLivro(String codigo) {
 
 		if(!ValidadorObra.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
+			return false;
 		}
 
 		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
-			System.err.println("Não foi encontrado livro com o código informado.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.livro.naoEncontrado") );
+			return false;
 		}		
-
-		String titulo= AcervoLivro.buscarLivro(codigo).getTitulo();
-		AcervoExemplar.removerExemplares(codigo);
+		
+		int numeroExemplares= AcervoExemplar.removerExemplares(codigo);
 		AcervoLivro.removerLivro(codigo);
-
-		return titulo;
+		
+		System.out.println( Principal.getMensagem("menu.livro.remover.concluido") );	
+		if(numeroExemplares > 0)
+			System.err.println("Foi efetuada a remoção do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");
+		
+		return true;
 	}	
 }

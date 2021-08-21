@@ -2,6 +2,7 @@ package bibli.controle;
 
 import java.util.HashMap;
 
+import bibli.aplicacao.Principal;
 import bibli.modelo.AcervoFuncionario;
 import bibli.modelo.AcervoUsuario;
 import bibli.modelo.Funcionario;
@@ -11,12 +12,12 @@ public class ControladorFuncionario {
 	public static boolean exibirFuncionario(String matricula) {
 
 		if(!ValidadorUsuario.validarCampo(matricula)) {
-			System.err.println("Matrícula inválida.");
+			System.err.println( Principal.getMensagem("erro.matriculaInvalida") );
 			return false;
 		}
 
 		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
-			System.err.println("Não foi encontrado funcionário com a matrícula informada.");
+			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}	
 
@@ -28,104 +29,109 @@ public class ControladorFuncionario {
 	public static void exibirFuncionarios() {
 
 		if(AcervoFuncionario.getNumeroFuncionarios() == 0)
-			System.out.println("Não há funcionários cadastrados.");
+			System.out.println( Principal.getMensagem("erro.funcionario.vazio") );
 		else {
 
-			System.out.println("\n----------------- Funcionários -----------------");
-			System.out.println("Quantidade: " + AcervoFuncionario.getNumeroFuncionarios());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("funcionario.exibir.topo") );
+			System.out.println( Principal.getMensagem("exibir.quantidade") + AcervoFuncionario.getNumeroFuncionarios());	
+			System.out.println( Principal.getMensagem("menu.base") );
 			
 			for(Funcionario funcionario : AcervoFuncionario.getFuncionarios().values())
 				System.out.println(funcionario+"\n");
 			
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 	}	
 
 	public static boolean exibirFuncionariosPorCargo(String cargo){
 
 		if(!ValidadorUsuario.validarCampo(cargo)) {
-			System.err.println("Nome de cargo inválido.");
+			System.err.println( Principal.getMensagem("erro.funcionario.invalido.cargo") );
 			return false;
 		}
 
 		HashMap<String, Funcionario> funcionariosEncontrados= AcervoFuncionario.buscarFuncionariosPorCargo(cargo);		
 
 		if(funcionariosEncontrados.size() == 0) 
-			System.err.println("Não há funcionários registrados para o cargo informado.");			
+			System.out.println( Principal.getMensagem("erro.funcionario.vazio") );		
 		else {
 
 			System.out.println("\n----------- Funcionários com o cargo \"" + cargo + "\" -----------");
-			System.out.println("Quantidade: " + funcionariosEncontrados.size());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("exibir.quantidade") + funcionariosEncontrados.size());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Funcionario funcionario: funcionariosEncontrados.values())
 				System.out.println("\n" + funcionario);	
 
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 
 		return true;
 	}	
 	
-	public static String adicionarFuncionario(String nome, String endereco, 
+	public static boolean adicionarFuncionario(String nome, String endereco, 
 			String telefone, String email, 
 			double salario, String cargo) {
 
 		if(!ValidadorUsuario.validarCamposFuncionario(nome, endereco, telefone, 
 				email, salario, cargo)) {
-			System.err.println("Há campos inválidos.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.invalido.campos") );
+			return false;
 		}
 		
 		Funcionario funcionario= new Funcionario(nome, endereco, telefone, email, salario, cargo);
 		
 		AcervoFuncionario.adicionarFuncionario(funcionario);
 		AcervoUsuario.adicionarUsuario(funcionario);
+		
+		System.out.println("\nFuncionário \"" + funcionario.getMatricula() + "\" cadastrado.");
 
-		return funcionario.getMatricula();
+		return true;
 	}
 	
-	public static String editarFuncionario(String matricula, String novoNome, String novoEndereco, 
+	public static boolean editarFuncionario(String matricula, String novoNome, String novoEndereco, 
 			String novoTelefone, String novoEmail, double novoSalario, String novoCargo) {
 
 		if(!ValidadorUsuario.validarCamposFuncionario(novoNome, novoEndereco, novoTelefone, 
 				novoEmail, novoSalario, novoCargo)){
-			System.err.println("Há campos inválidos.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.invalido.campos") );
+			return false;
 		}
 
 		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
-			System.err.println("Não foi encontrado funcionário com a matrícula informada.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
+			return false;
 		}		
 
-		Funcionario funcionarioAtualizado= ValidadorUsuario.validarAtualizacaoFuncionario(matricula, novoNome, novoEndereco, novoTelefone, novoEmail, novoSalario, novoCargo);
+		boolean resultadoOperacao= ValidadorUsuario.validarAtualizacaoFuncionario(matricula, novoNome, novoEndereco, novoTelefone, novoEmail, novoSalario, novoCargo);
 
-		if(funcionarioAtualizado == null){
-			System.err.println("\nNão há mudanças para realizar.");
-			return null;
+		if(!resultadoOperacao){
+			System.err.println( Principal.getMensagem("editar.sem.mudanças") );
+			return false;
 		}	
 
-		return funcionarioAtualizado.getMatricula();
+		System.out.println("\nFuncionário \"" + matricula + "\" editado.");
+		return true;
 	}
 	
-	public static String removerFuncionario(String matricula) {
+	public static boolean removerFuncionario(String matricula) {
 
 		if(!ValidadorUsuario.validarCampo(matricula)) {
-			System.err.println("Matrícula inválida.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.matriculaInvalida") );	
+			return false;
 		}
 
 		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
-			System.err.println("Não foi encontrado funcionário com a matrícula informada.");
-			return null;
+			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
+			return false;
 		}		
 
-		Funcionario funcionario= AcervoFuncionario.buscarFuncionario(matricula);
+		String codigo= AcervoFuncionario.buscarFuncionario(matricula).getCodigo();
 		AcervoFuncionario.removerFuncionario(matricula);
-		AcervoUsuario.removerUsuario(funcionario.getCodigo());
+		AcervoUsuario.removerUsuario(codigo);
 
-		return funcionario.getNome();
+		System.out.println( Principal.getMensagem("menu.funcionario.remover.concluido") );	
+
+		return true;
 	}	
 }

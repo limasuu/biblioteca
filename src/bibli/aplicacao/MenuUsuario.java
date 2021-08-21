@@ -6,16 +6,16 @@ public class MenuUsuario {
 	
 	public static void apresentarOpcoes() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu usuários ________________  ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir");
-		System.out.println("2. Cadastrar");
-		System.out.println("3. Editar");
-		System.out.println("4. Excluir");	
-		System.out.println("0. Voltar");
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.topo") );
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.usuario.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exibir") );
+		System.out.println( Principal.getMensagem("menu.cadastrar") );
+		System.out.println( Principal.getMensagem("menu.3editar") );
+		System.out.println( Principal.getMensagem("menu.4excluir") );	
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -36,20 +36,20 @@ public class MenuUsuario {
 		case 0:			
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoes();
 		}	
 	}	
 	
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   _____________ menu usuários (exibir) _____________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir um usuário");
-		System.out.println("2. Exibir todos os usuários");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.usuario.exibir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.usuario.exibir.um") );
+		System.out.println( Principal.getMensagem("menu.usuario.exibir.todos") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -65,15 +65,15 @@ public class MenuUsuario {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibir();
 		}
 	}
 	
 	private static void exibirUsuario (){
 
-		System.out.println("\n  ________________ opção EXIBIR USUÁRIO ________________  ");
-		System.out.print("Informe o código do usuário para sua a exibição ");
+		System.out.println( Principal.getMensagem("menu.usuario.exibir.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.usuario.exibir.um.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -87,36 +87,31 @@ public class MenuUsuario {
 
 	private static void prepararUsuario(boolean novo) {
 		
-		String operacao= null;
-		String resultadoOperacao= null;
+		boolean resultadoOperacao= false;
 		String codigo= null;
 
 		if(novo) {
-			operacao= "adicionado";
-
-			System.out.println("\n  ________________ opção ADICIONAR USUÁRIO ________________  ");
-			System.out.println("Informe os dados a seguir para o cadastro de um novo usuário:");
+			System.out.println( Principal.getMensagem("menu.usuario.cadastrar.titulo") );
+			System.out.println( Principal.getMensagem("menu.usuario.cadastrar.solicita") );
 
 		}else {
-			operacao= "editado";
-
-			System.out.println("\n  ________________ opção EDITAR USUÁRIO ________________  ");
-			System.out.println("Informe os dados a seguir para a edição de um usuário:");
+			System.out.println( Principal.getMensagem("menu.usuario.editar.titulo") );
+			System.out.println( Principal.getMensagem("menu.usuario.editar.solicita") );
 			
-			System.out.print("Código ");
+			System.out.println( Principal.getMensagem("menu.usuario.codigo") );
 			codigo= Principal.lerStringTeclado();
 		}
 			
-		System.out.print("Nome ");
+		System.out.println( Principal.getMensagem("menu.usuario.nome") );
 		String nome= Principal.lerStringTeclado();
 
-		System.out.print("Endereço ");
+		System.out.println( Principal.getMensagem("menu.usuario.endereco") );
 		String endereco= Principal.lerStringTeclado();
 
-		System.out.print("Telefone ");
+		System.out.println( Principal.getMensagem("menu.usuario.telefone") );
 		String telefone= Principal.lerStringTeclado();
 
-		System.out.print("E-mail ");
+		System.out.println( Principal.getMensagem("menu.usuario.email") );
 		String email= Principal.lerStringTeclado();
 		
 		if(novo)
@@ -124,23 +119,20 @@ public class MenuUsuario {
 		else 
 			resultadoOperacao= ControladorUsuario.editarUsuario(codigo, nome, endereco, telefone, email);
 
-		if(resultadoOperacao != null) 
-			System.out.println("\nUsuário com código \"" + resultadoOperacao + "\" " + operacao + ".");
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}
 	
 	private static void removerUsuario() {		
 
-		System.out.println("\n  ________________ opção REMOVER USUÁRIO ________________  ");
-		System.out.print("Informe o código do usuário para realizar a remoção ");
+		System.out.println( Principal.getMensagem("menu.usuario.remover.titulo") );
+		System.out.println( Principal.getMensagem("menu.usuario.remover.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
-		String nome= ControladorUsuario.removerUsuario(codigo);
+		
+		boolean resultadoOperacao= ControladorUsuario.removerUsuario(codigo);
 
-		if(nome != null) 			
-			System.out.println("\nUsuário \"" + nome + "\" removida.");			
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao) 
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );		
 	}
 }

@@ -1,39 +1,44 @@
 package bibli.aplicacao;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.Properties;
 import java.util.Scanner;
 
 import bibli.controle.ControladorEmprestimo;
 
 public class Principal {
 
+	private static Properties properties;
 	private static Scanner entrada;
 
 	public static void main(String[] args) {
 
-		exibirMenu();
+		exibirMenu();		
 	}
-	
+
 	private static void exibirMenu() {
-		
+
 		boolean uso= true;
+		iniciarProperties();
 		habilitarTeclado();
-		
+
 		while(uso) {
-			
+
 			ControladorEmprestimo.atualizarInadimplencias();
 
-			System.out.println("\n----------------------------------------------------");
-			System.out.println("-------------------- BIBLIOTECA --------------------");
-			System.out.println("  ________________ menu principal ________________  ");
-			System.out.println("Escolha uma opção:");
-			System.out.println("1. Menu Livros");
-			System.out.println("2. Menu Exemplares");
-			System.out.println("3. Menu Usuários");
-			System.out.println("4. Menu Funcionários");
-			System.out.println("5. Menu Empréstimos");
-			System.out.println("0. Sair");
-			System.out.println("----------------------------------------------------");
+			System.out.println( getMensagem("menu.topo") );
+			System.out.println( getMensagem("menu.titulo") );
+			System.out.println( getMensagem("menu.principal.titulo") );
+			System.out.println( getMensagem("menu.escolha") );
+			System.out.println( getMensagem("menu.principal.opcao1") );
+			System.out.println( getMensagem("menu.principal.opcao2") );
+			System.out.println( getMensagem("menu.principal.opcao3") );
+			System.out.println( getMensagem("menu.principal.opcao4") );
+			System.out.println( getMensagem("menu.principal.opcao5") );
+			System.out.println( getMensagem("menu.sair"));
+			System.out.println( getMensagem("menu.base"));
 
 			int opcao= lerInteiroTeclado();
 
@@ -55,19 +60,24 @@ public class Principal {
 				MenuEmprestimo.apresentarOpcoes();
 				break;
 			case 0:
-				System.out.println("Agradecemos a visita!");					
+				System.out.println( getMensagem("menu.agradecimento") );					
 				uso= false;
 				desabilitarTeclado();
 				break;
 			default:
-				System.err.println("\nOpção inválida! Tente novamente.\n");	
+				System.err.println( getMensagem("menu.opcaoInvalida") );	
 			}	
 		}
 	}
 
+	public static String getMensagem(String chave) {
+
+		return properties.getProperty(chave);
+	}
+
 	public static String lerStringTeclado() {
 
-		System.out.print("|> ");
+		System.out.print( getMensagem("menu.entradaTeclado") );
 
 		return entrada.nextLine();
 	}
@@ -79,12 +89,12 @@ public class Principal {
 
 		while(leitura) {
 			try {
-				System.out.print("|> ");
+				System.out.print( getMensagem("menu.entradaTeclado") );
 				numero= entrada.nextInt(); 
 				leitura= false;
 
 			}catch (InputMismatchException e) {
-				System.err.print("Informe um valor válido!\n");
+				System.err.print( getMensagem("menu.valorInvalido") );
 
 			}finally {
 				limparBuffer();
@@ -93,7 +103,7 @@ public class Principal {
 
 		return numero;
 	}
-	
+
 	public static double lerRealTeclado() {
 
 		double numero= 0;
@@ -101,12 +111,12 @@ public class Principal {
 
 		while(leitura) {
 			try {
-				System.out.print("|> ");
+				System.out.print( getMensagem("menu.entradaTeclado") );
 				numero= entrada.nextDouble(); 
 				leitura= false;
 
 			}catch (InputMismatchException e) {
-				System.err.print("Informe um valor válido!\n");
+				System.err.print( getMensagem("menu.valorInvalido") );
 
 			}finally {
 				limparBuffer();
@@ -121,12 +131,26 @@ public class Principal {
 		if(entrada.hasNextLine())
 			entrada.nextLine();	
 	}
-	
+
+	private static void iniciarProperties(){
+
+		properties= new Properties();
+		FileInputStream file;
+
+		try {
+			file= new FileInputStream("./info/mensagens.properties");
+			properties.load(file);
+
+		} catch (IOException e) {
+			System.err.print( getMensagem("menu.erroArquivo") );
+		} 
+	}
+
 	public static void habilitarTeclado() {
 
 		entrada= new Scanner(System.in);
 	}
-	
+
 	public static void desabilitarTeclado() {
 
 		entrada.close();

@@ -41,31 +41,31 @@ public class ValidadorUsuario extends Validador{
 		return true;	
 	}
 
-	public static Usuario validarAtualizacaoUsuario(String codigo, String nome, String endereco, 
+	public static boolean validarAtualizacaoUsuario(String codigo, String nome, String endereco, 
 			String telefone, String email) {
 
 		Usuario usuario= AcervoUsuario.buscarUsuario(codigo);
 		Usuario usuarioAtualizado= new Usuario(codigo, nome, endereco, telefone, email);
 
 		if(usuario.equals(usuarioAtualizado))
-			return null;
+			return false;
 
 		usuario.setNome(nome);
 		usuario.setEndereco(endereco);
 		usuario.setTelefone(telefone);
 		usuario.setEmail(email);			
 
-		return usuario;		
+		return true;		
 	}
 
-	public static Funcionario validarAtualizacaoFuncionario(String matricula, String nome, String endereco, 
+	public static boolean validarAtualizacaoFuncionario(String matricula, String nome, String endereco, 
 			String telefone, String email, double salario, String cargo) {
 
 		Funcionario funcionario= AcervoFuncionario.buscarFuncionario(matricula);
-		Funcionario funcionarioAtualizado= new Funcionario(matricula, nome, endereco, telefone, email, salario, cargo);
+		Funcionario funcionarioAtualizado= new Funcionario(matricula, funcionario.getCodigo(), nome, endereco, telefone, email, salario, cargo);
 
 		if(funcionario.equals(funcionarioAtualizado))
-			return null;
+			return false;
 
 		funcionario.setNome(nome);
 		funcionario.setEndereco(endereco);
@@ -74,6 +74,6 @@ public class ValidadorUsuario extends Validador{
 		funcionario.setSalario(salario);
 		funcionario.setCargo(cargo);
 
-		return funcionario;		
+		return true;		
 	}
 }

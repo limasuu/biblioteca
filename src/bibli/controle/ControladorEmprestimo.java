@@ -3,6 +3,7 @@ package bibli.controle;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
+import bibli.aplicacao.Principal;
 import bibli.modelo.AcervoEmprestimo;
 import bibli.modelo.AcervoExemplar;
 import bibli.modelo.AcervoFuncionario;
@@ -17,12 +18,12 @@ public class ControladorEmprestimo {
 	public static boolean exibirEmprestimo (String codigo){
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
-			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
 
@@ -34,41 +35,41 @@ public class ControladorEmprestimo {
 	public static void exibirEmprestimos() {
 
 		if(AcervoEmprestimo.getNumeroEmprestimos() == 0)
-			System.out.println("Não há empréstimos cadastrados.");
+			System.out.println( Principal.getMensagem("erro.emprestimo.vazio") );
 		else {
 
-			System.out.println("\n----------------- Empréstimos -----------------");
-			System.out.println("Quantidade: " + AcervoEmprestimo.getNumeroEmprestimos());	
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("emprestimo.exibir.topo") );
+			System.out.println( Principal.getMensagem("exibir.quantidade") + AcervoEmprestimo.getNumeroEmprestimos());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Emprestimo emprestimo : AcervoEmprestimo.getEmprestimos().values())
 				System.out.println(emprestimo+"\n");
 
-			System.out.println("------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 	}
 
 	public static boolean exibirEmprestimosPorLivro(String codigo){
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosPorLivro(codigo);
 
 		if(emprestimosEncontrados.size() == 0) 
-			System.err.println("Nenhum empréstimo encontrado.");			
+			System.out.println( Principal.getMensagem("erro.emprestimo.vazio") );
 		else {
 
 			System.out.println("\n----------- Empréstimos do livro \"" + codigo + "\" -----------");
-			System.out.println("Quantidade: " + emprestimosEncontrados.size());	
-			System.out.println("-------------------------------------------------------------");
+			System.out.println( Principal.getMensagem("exibir.quantidade") + emprestimosEncontrados.size());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Emprestimo emprestimo: emprestimosEncontrados.values())
 				System.out.println("\n" + emprestimo);	
 
-			System.out.println("-------------------------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 
 		return true;		
@@ -77,24 +78,24 @@ public class ControladorEmprestimo {
 	public static boolean exibirEmprestimosPorUsuario(String codigo) {
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosPorUsuario(codigo);
 
 		if(emprestimosEncontrados.size() == 0) 
-			System.err.println("Nenhum empréstimo encontrado.");
+			System.out.println( Principal.getMensagem("erro.emprestimo.vazio") );
 		else{
 
 			System.out.println("\n----------- Empréstimos do usuário \"" + codigo + "\" -----------");
-			System.out.println("Quantidade: " + emprestimosEncontrados.size());	
-			System.out.println("-------------------------------------------------------------");
+			System.out.println( Principal.getMensagem("exibir.quantidade") + emprestimosEncontrados.size());	
+			System.out.println( Principal.getMensagem("menu.base") );
 
 			for(Emprestimo emprestimo: emprestimosEncontrados.values())
 				System.out.println("\n" + emprestimo);	
 
-			System.out.println("-------------------------------------------------------------");
+			System.out.println( Principal.getMensagem("menu.base") );
 		}
 
 		return true;		
@@ -104,31 +105,32 @@ public class ControladorEmprestimo {
 			String codigoExemplar) {
 
 		if(!ValidadorEmprestimo.validarCamposEmprestimo(matriculaFuncionario, codigoUsuario, codigoExemplar)){
-			System.err.println("Há campos inválidos.");
+			System.err.println( Principal.getMensagem("erro.invalido.campos") );
 			return false;
 		}
 
 		if(!AcervoFuncionario.verificarExistenciaFuncionario(matriculaFuncionario)){
-			System.err.println("Não foi encontrado funcionário com a matrícula informada.");
+			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}
 
 		if(!AcervoUsuario.verificarExistenciaUsuario(codigoUsuario)){
-			System.err.println("Não foi encontrado usuário com o código informado.");
+			System.err.println( Principal.getMensagem("erro.usuario.naoEncontrado") );
 			return false;
 		}	
 
 		if(AcervoUsuario.verificarSituacaoUsuario(codigoUsuario)){
-			System.err.println("O usuário encontra-se bloqueado para operações.");
+			System.err.println( Principal.getMensagem("erro.usuario.bloqueado") );
 			return false;
 		}	
 
 		if(!AcervoExemplar.verificarExistenciaExemplar(codigoExemplar)){
-			System.err.println("Não foi encontrado exemplar com o código informado.");
+			System.err.println( Principal.getMensagem("erro.exemplar.naoEncontrado") );
 			return false;
 		}	
+		
 		if(!AcervoExemplar.verificarSituacaExemplar(codigoExemplar)){
-			System.err.println("O exemplar encontra-se indisponível.");
+			System.err.println( Principal.getMensagem("erro.exemplar.indisponivel") );
 			return false;
 		}	
 
@@ -141,7 +143,7 @@ public class ControladorEmprestimo {
 
 		exemplar.setDisponivel(false);
 		
-		System.out.println("Código do empréstimo: " + emprestimo.getCodigo());
+		System.out.println("\nEmpréstimo \"" + emprestimo.getCodigo() + "\" cadastrado.");
 
 		return true;
 	}	
@@ -149,28 +151,29 @@ public class ControladorEmprestimo {
 	public static boolean renovarEmprestimo(String codigo) {
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
-			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
 
 		Emprestimo emprestimoAtualizado= AcervoEmprestimo.buscarEmprestimo(codigo);
 
 		if(emprestimoAtualizado.getRenocacoes() >= 3){
-			System.err.println("\nO limite máximo de renovações foi alcançado.\nO exemplar precisa ser devolvido!");
+			System.err.println( Principal.getMensagem("erro.emprestimo.limite.renovacao") );
 			return false;
 		}	
 		
-		if(emprestimoAtualizado.getUsuario().isBloqueado()) {
-			System.err.println("\nEste usuário está bloqueado para operações.");
+		if(AcervoUsuario.verificarSituacaoUsuario(emprestimoAtualizado.getUsuario().getCodigo())){
+			System.err.println( Principal.getMensagem("erro.usuario.bloqueado") );
 			return false;
-		}
+		}	
 
 		emprestimoAtualizado.setRenocacoes();
+		System.out.println( Principal.getMensagem("menu.emprestimo.renovar.concluido") );
 
 		return true;
 	}
@@ -178,12 +181,12 @@ public class ControladorEmprestimo {
 	public static boolean encerrarEmprestimo(String codigo) {
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("Código inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
-			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
 
@@ -197,6 +200,8 @@ public class ControladorEmprestimo {
 		
 		emprestimoAtualizado.setAtivo(false);
 		emprestimoAtualizado.setDataFim();
+		
+		System.out.println( Principal.getMensagem("menu.emprestimo.encerrar.concluido") );	
 
 		return true;
 	}
@@ -204,16 +209,17 @@ public class ControladorEmprestimo {
 	public static boolean removerEmprestimo(String codigo){
 
 		if(!ValidadorEmprestimo.validarCampo(codigo)) {
-			System.err.println("\nCódigo inválido.");
+			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
 			return false;
 		}
 
 		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
-			System.err.println("\nNão foi encontrado empréstimo com o código informado.");
+			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
 
 		AcervoEmprestimo.removerEmprestimo(codigo);
+		System.out.println( Principal.getMensagem("menu.emprestimo.remover.concluido") );		
 
 		return true;
 	}	

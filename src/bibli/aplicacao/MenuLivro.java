@@ -1,22 +1,21 @@
 package bibli.aplicacao;
 
-import bibli.controle.ControladorExemplar;
 import bibli.controle.ControladorLivro;
 
 public class MenuLivro {
 
 	public static void apresentarOpcoes() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu livros ________________  ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir");
-		System.out.println("2. Cadastrar");
-		System.out.println("3. Editar");
-		System.out.println("4. Excluir");	
-		System.out.println("0. Voltar");
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.topo") );
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exibir") );
+		System.out.println( Principal.getMensagem("menu.cadastrar") );
+		System.out.println( Principal.getMensagem("menu.3editar") );
+		System.out.println( Principal.getMensagem("menu.4excluir") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -37,20 +36,20 @@ public class MenuLivro {
 		case 0:			
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoes();
 		}	
 	}	
 
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   _____________ menu livros (exibir) _____________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir um livro");
-		System.out.println("2. Exibir vários livros");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.um") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -66,21 +65,21 @@ public class MenuLivro {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibir();
 		}
 	}
 
 	private static void apresentarOpcoesExibirVarios() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ______ menu livros (exibir vários livros) ______   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir todos os livros");
-		System.out.println("2. Exibir livros por autor");
-		System.out.println("3. Exibir livros por título");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.todos") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.autor") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.opcao.titulo") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -99,15 +98,15 @@ public class MenuLivro {
 			apresentarOpcoesExibir();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );	
 			apresentarOpcoesExibirVarios();
 		}
 	}
 
 	private static void exibirLivro (){
 
-		System.out.println("\n  ________________ opção EXIBIR LIVRO ________________  ");
-		System.out.print("Informe o código do livro para sua a exibição ");
+		System.out.println( Principal.getMensagem("menu.livro.exibir.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.um.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -121,8 +120,8 @@ public class MenuLivro {
 
 	private static void exibirLivrosPorAutor (){
 
-		System.out.println("\n  ________________ opção EXIBIR LIVROS POR AUTOR ________________  ");
-		System.out.print("Informe o nome do autor para a exibição dos livros ");
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.autor.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.autor.solicita") );
 
 		String autor= Principal.lerStringTeclado();
 
@@ -131,8 +130,8 @@ public class MenuLivro {
 
 	private static void exibirLivrosPorTitulo (){
 
-		System.out.println("\n  ________________ opção EXIBIR LIVROS POR TÍTULO ________________  ");
-		System.out.print("Informe o título para a exibição dos livros ");
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.titulo.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.exibir.varios.titulo.solicita") );				
 
 		String titulo= Principal.lerStringTeclado();
 
@@ -141,46 +140,40 @@ public class MenuLivro {
 
 	private static void prepararLivro(boolean novo) {
 
-		String operacao= null;
 		boolean resultadoOperacao= false;
 		String codigo= null;
 
 		if(novo) {
-			operacao= "adicionado";
-
-			System.out.println("\n  ________________ opção ADICIONAR LIVRO ________________  ");
-			System.out.println("Informe os dados a seguir para o cadastro de um novo livro:\n");
+			System.out.println( Principal.getMensagem("menu.livro.cadastrar.titulo") );
+			System.out.println( Principal.getMensagem("menu.livro.cadastrar.solicita") );
 
 		}else {
+			System.out.println( Principal.getMensagem("menu.livro.editar.titulo") );
+			System.out.println( Principal.getMensagem("menu.livro.editar.solicita") );
 
-			operacao= "editado";
-
-			System.out.println("\n  ________________ opção EDITAR LIVRO ________________  ");
-			System.out.println("Informe os dados a seguir para a edição de um livro:");
-
-			System.out.print("\nCódigo do livro a ser editado ");
+			System.out.println( Principal.getMensagem("menu.livro.codigo") );
 			codigo= Principal.lerStringTeclado();
 		}
 
-		System.out.print("Título ");
+		System.out.println( Principal.getMensagem("menu.livro.atributo.titulo") );
 		String titulo= Principal.lerStringTeclado();
 
-		System.out.print("Autor ");
+		System.out.println( Principal.getMensagem("menu.livro.autor") );
 		String autor= Principal.lerStringTeclado();
 
-		System.out.print("Edição ");
+		System.out.println( Principal.getMensagem("menu.livro.edicao") );
 		int edicao= Principal.lerInteiroTeclado();
 
-		System.out.print("Editora ");
+		System.out.println( Principal.getMensagem("menu.livro.editora") );
 		String editora= Principal.lerStringTeclado();
 
-		System.out.print("Número de páginas ");
+		System.out.println( Principal.getMensagem("menu.livro.numeroPaginas") );
 		int numeroPaginas= Principal.lerInteiroTeclado();
 		
-		System.out.print("ISBN ");
+		System.out.println( Principal.getMensagem("menu.livro.isbn") );
 		String isbn= Principal.lerStringTeclado();	
 
-		System.out.print("Categoria ");
+		System.out.println( Principal.getMensagem("menu.livro.categoria") );
 		String categoria= Principal.lerStringTeclado();	
 
 		if(novo)
@@ -190,28 +183,20 @@ public class MenuLivro {
 			resultadoOperacao= ControladorLivro.editarLivro(codigo, titulo, autor, edicao, 
 					editora, numeroPaginas, isbn, categoria);
 
-		if(resultadoOperacao) 
-			System.out.println("\nLivro \"" + titulo + "\" " + operacao + ".");
-		else 
-			System.err.println("\nOperação não realizada.");		
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}	
 
 	private static void removerLivro() {		
 
-		System.out.println("\n  ________________ opção REMOVER LIVRO ________________  ");
-		System.out.print("Informe o código do livro para realizar a remoção ");
+		System.out.println( Principal.getMensagem("menu.livro.remover.titulo") );
+		System.out.println( Principal.getMensagem("menu.livro.remover.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
-		int numeroExemplares= ControladorExemplar.getNumeroExemplares(codigo);
-		String tituloLivro= ControladorLivro.removerLivro(codigo);
-
-		if(tituloLivro != null) {
-			
-			System.out.println("\nLivro \"" + tituloLivro + "\" removido.");			
-			if(numeroExemplares != 0)
-				System.out.println("Foi efetuada a remoção do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");
 		
-		}else 
-			System.err.println("\nOperação não realizada.");
+		boolean resultadoOperacao= ControladorLivro.removerLivro(codigo);
+
+		if(!resultadoOperacao) 
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}
 }

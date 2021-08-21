@@ -27,15 +27,15 @@ public class ValidadorObra extends Validador{
 		return true;		
 	}	
 
-	public static Livro validarAtualizacaoLivro(String codigo, String titulo, String autor, 
+	public static boolean validarAtualizacaoLivro(String codigo, String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,	String isbn, String categoria) {
 
-		Livro livro= AcervoLivro.buscarLivro(isbn);
+		Livro livro= AcervoLivro.buscarLivro(codigo);
 		Livro livroAtualizado= new Livro(codigo, titulo, autor, edicao, editora, 
 				numeroPaginas, isbn, categoria);
 		
 		if(livro.equals(livroAtualizado))
-			return null;
+			return false;
 
 		livro.setTitulo(titulo);
 		livro.setAutor(autor);
@@ -45,7 +45,7 @@ public class ValidadorObra extends Validador{
 		livro.setIsbn(isbn);
 		livro.setCategoria(categoria);
 
-		return livro;	
+		return true;	
 	}	
 
 	public static boolean validarLivro(Livro livro) {

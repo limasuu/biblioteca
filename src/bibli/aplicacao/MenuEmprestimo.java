@@ -6,17 +6,17 @@ public class MenuEmprestimo {
 
 	public static void apresentarOpcoes() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu empréstimos ________________  ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir");
-		System.out.println("2. Cadastrar");
-		System.out.println("3. Renovar");
-		System.out.println("4. Encerrar");	
-		System.out.println("5. Excluir");	
-		System.out.println("0. Voltar");
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.topo") );
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exibir") );
+		System.out.println( Principal.getMensagem("menu.cadastrar") );
+		System.out.println( Principal.getMensagem("menu.3renovar") );
+		System.out.println( Principal.getMensagem("menu.4encerrar") );
+		System.out.println( Principal.getMensagem("menu.5excluir") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -26,7 +26,7 @@ public class MenuEmprestimo {
 			apresentarOpcoesExibir();
 			break;
 		case 2:
-			adicionarEmprestimo();
+			cadastrarEmprestimo();
 			break;
 		case 3:
 			renovarEmprestimo();
@@ -40,20 +40,20 @@ public class MenuEmprestimo {
 		case 0:
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoes();
 		}	
 	}	
 
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   _____________ menu empréstimos (exibir) _____________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir um empréstimo");
-		System.out.println("2. Exibir vários empréstimos");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.um") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -69,21 +69,21 @@ public class MenuEmprestimo {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibir();
 		}
 	}
 
 	private static void apresentarOpcoesExibirVarios() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ______ menu empréstimos (exibir vários empréstimos) ______   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir todos os empréstimos");
-		System.out.println("2. Exibir empréstimos por livro");
-		System.out.println("3. Exibir empréstimos por usuário");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.todos") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.livro") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.usuario") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -102,15 +102,15 @@ public class MenuEmprestimo {
 			apresentarOpcoesExibir();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");		
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );	
 			apresentarOpcoesExibirVarios();
 		}
 	}
 
 	private static void exibirEmprestimo (){
 
-		System.out.println("\n  ________________ opção EXIBIR EMPRÉSTIMO ________________  ");
-		System.out.print("Informe o código do empréstimo para sua a exibição ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.um.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -124,8 +124,8 @@ public class MenuEmprestimo {
 
 	private static void exibirEmprestimosPorLivro (){
 
-		System.out.println("\n  ________________ opção EXIBIR EMPRÉSTIMOS POR LIVRO ________________  ");
-		System.out.print("Informe o código do livro para a exibição dos empréstimos ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.livro.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.livro.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -134,79 +134,70 @@ public class MenuEmprestimo {
 
 	private static void exibirEmprestimosPorUsuario (){
 
-		System.out.println("\n  ________________ opção EXIBIR EMPRÉSTIMOS POR USUÁRIO ________________  ");
-		System.out.print("Informe o código do usuário para a exibição dos empréstimos ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.usuario.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.exibir.varios.usuario.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
 		ControladorEmprestimo.exibirEmprestimosPorUsuario(codigo);	
 	}
 
-	private static void adicionarEmprestimo() {
+	private static void cadastrarEmprestimo() {
 
-		System.out.println("\n  ________________ opção CADASTRAR EMPRÉSTIMO ________________  ");
-		System.out.println("Informe os dados a seguir para o cadastro de um empréstimo:");
+		System.out.println( Principal.getMensagem("menu.emprestimo.cadastrar.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.cadastrar.solicita") );
 
-		System.out.print("Matrícula do funcionário ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.cadastrar.matriculaFuncionario") );
 		String matriculaFuncionario= Principal.lerStringTeclado();
 
-		System.out.print("Código do usuário ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.cadastrar.codigoUsuario") );
 		String codigoUsuario= Principal.lerStringTeclado();
 
-		System.out.print("Código do exemplar ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.cadastrar.codigoExemplar") );
 		String codigoExemplar= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorEmprestimo.adicionarEmprestimo(matriculaFuncionario, codigoUsuario, codigoExemplar);	
 
-		if(resultadoOperacao) {
-			System.out.println("Empréstimo cadastrado.");
-		}else 
-			System.err.println("Operação não realizada.");	
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
 	}	
 
 	private static void renovarEmprestimo() {	
 
-		System.out.println("\n  ________________ opção RENOVAR EMPRÉSTIMO ________________  ");
-		System.out.print("Informe o código do empréstimo para realizar a renovação ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.renovar.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.renovar.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorEmprestimo.renovarEmprestimo(codigo);
 
-		if(resultadoOperacao) 			
-			System.out.println("\nEmpréstimo \"" + codigo + "\" renovado.");			
-		else 
-			System.err.println("\nOperação não realizada.");		
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
 	}
 
 	private static void encerrarEmprestimo() {	
 
-		System.out.println("\n  ________________ opção ENCERRAR EMPRÉSTIMO ________________  ");
-		System.out.print("Informe o código do empréstimo para realizar o encerramento ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.encerrar.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.encerrar.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorEmprestimo.encerrarEmprestimo(codigo);
 
-		if(resultadoOperacao) 			
-			System.out.println("\nEmpréstimo \"" + codigo + "\" encerrado.");			
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao)
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
 	}
 
 	private static void removerEmprestimo() {		
 
-		System.out.println("\n  ________________ opção REMOVER EMPRÉSTIMO ________________  ");
-		System.out.print("Informe o código do empréstimo para realizar a remoção ");
+		System.out.println( Principal.getMensagem("menu.emprestimo.remover.titulo") );
+		System.out.println( Principal.getMensagem("menu.emprestimo.remover.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorEmprestimo.removerEmprestimo(codigo);
 
-		if(resultadoOperacao) 			
-			System.out.println("\nEmpréstimo \"" + codigo + "\" removido.");			
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao) 
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
 	}
-
 }

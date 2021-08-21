@@ -6,15 +6,15 @@ public class MenuExemplar {
 
 	public static void apresentarOpcoes() {
 
-		System.out.println("\n----------------------------------------------------");
-		System.out.println("-------------------- BIBLIOTECA --------------------");
-		System.out.println("  ________________ menu exemplares ________________  ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir");
-		System.out.println("2. Cadastrar");
-		System.out.println("3. Excluir");	
-		System.out.println("0. Voltar");
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.topo") );
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exibir") );
+		System.out.println( Principal.getMensagem("menu.cadastrar") );
+		System.out.println( Principal.getMensagem("menu.3excluir") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -32,20 +32,20 @@ public class MenuExemplar {
 		case 0:
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoes();
 		}	
 	}	
 
 	private static void apresentarOpcoesExibir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ___________ menu exemplares (exibir) ___________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir um exemplar");
-		System.out.println("2. Exibir vários exemplares");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.um") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar") );
+		System.out.println( Principal.getMensagem("menu.base") );
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -61,20 +61,20 @@ public class MenuExemplar {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibir();
 		}	
 	}
 
 	private static void apresentarOpcoesExibirVarios() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ____ menu livros (exibir vários exemplares) ____   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Exibir todos os exemplares");
-		System.out.println("2. Exibir exemplares por livro");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.varios.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.todos") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.varios.livro") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -90,20 +90,20 @@ public class MenuExemplar {
 			apresentarOpcoesExibir();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExibirVarios();
 		}	
 	}
 
 	private static void apresentarOpcoesCadastrar() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ___________ menu exemplares (cadastrar) ___________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Cadastrar um exemplar");
-		System.out.println("2. Cadastrar vários exemplares");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.um") );
+		System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -119,20 +119,20 @@ public class MenuExemplar {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesCadastrar();
 		}	
 	}
 
 	private static void apresentarOpcoesExcluir() {
 
-		System.out.println("\n-------------------- BIBLIOTECA --------------------");
-		System.out.println("   ___________ menu exemplares (excluir) ___________   ");
-		System.out.println("Escolha uma opção:");
-		System.out.println("1. Excluir um exemplar");
-		System.out.println("2. Excluir vários exemplares ");
-		System.out.println("0. Voltar");	
-		System.out.println("----------------------------------------------------");
+		System.out.println( Principal.getMensagem("menu.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.excluir.titulo") );
+		System.out.println( Principal.getMensagem("menu.escolha") );
+		System.out.println( Principal.getMensagem("menu.exemplar.excluir.um") );
+		System.out.println( Principal.getMensagem("menu.exemplar.excluir.varios") );
+		System.out.println( Principal.getMensagem("menu.voltar"));
+		System.out.println( Principal.getMensagem("menu.base"));
 
 		int opcao= Principal.lerInteiroTeclado();
 
@@ -148,15 +148,15 @@ public class MenuExemplar {
 			apresentarOpcoes();
 			break;
 		default:
-			System.err.println("\nOpção inválida! Tente novamente.\n");	
+			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
 			apresentarOpcoesExcluir();
 		}	
 	}
 
 	private static void exibirExemplar (){
 
-		System.out.println("\n  ________________ opção EXIBIR EXEMPLAR ________________  ");
-		System.out.print("Informe o código do exemplar para sua a exibição ");
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.um.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -170,8 +170,8 @@ public class MenuExemplar {
 
 	private static void exibirExemplaresPorLivro() {
 
-		System.out.println("\n  ________________ opção EXIBIR EXEMPLARES POR LIVRO ________________  ");
-		System.out.print("Informe o código do livro para a exibição de seus exemplares ");
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.varios.livro.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.exibir.varios.livro.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
 
@@ -184,65 +184,62 @@ public class MenuExemplar {
 		int quantidade= 1;
 
 		if(varios) {
-			System.out.println("\n  ________________ opção CADASTRAR EXEMPLARES ________________  ");
-			System.out.print("Informe o código do livro para o cadastro de novos exemplares ");	
+			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.varios.titulo") );
+			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.varios.solicita") );
 
 		}else {
-			System.out.println("\n  ________________ opção CADASTRAR EXEMPLAR ________________  ");
-			System.out.print("Informe o código do livro para o cadastro de um novo exemplar ");
+			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.um.titulo") );
+			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.um.solicita") );
 		}
 
 		String codigo= Principal.lerStringTeclado();
 
 		if(varios) {
 
-			System.out.print("\nQuantidade ");
+			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.varios.quantidade") );
 			quantidade= Principal.lerInteiroTeclado();
 		}
 
+		int qntd=0;
 		for(int i=0; i<quantidade; i++) {
 			resultadoOperacao= ControladorExemplar.adicionarExemplar(codigo);	
 
-			if(!resultadoOperacao) 	
+			if(!resultadoOperacao) 	{
+				qntd= i;
 				break;
+			}
 		}
 
-		if(resultadoOperacao) {
+		if(!resultadoOperacao) {
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );
+
 			if(varios)
-				System.out.println("Exemplares cadastrados.");
-			else
-				System.out.println("Exemplar cadastrado.");
-		}else 
-			System.err.println("Operação não realizada.");	
+				System.err.println("Realizou-se o cadastro de " + qntd + " exemplar(es).");
+		}	
 	}	
 
 	private static void removerExemplar() {
 
-		System.out.println("\n  ________________ opção EXCLUIR EXEMPLAR ________________  ");
-		System.out.print("Informe o código do exemplar para realizar a exclusão ");
+		System.out.println( Principal.getMensagem("menu.exemplar.remover.um.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.remover.um.solicita") );		
 
 		String codigo= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorExemplar.removerExemplar(codigo);
 
-		if(resultadoOperacao)			
-			System.out.println("\nExemplar excluído.");	
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao)	
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}
 
 	private static void removerExemplares() {
 
-		System.out.println("\n  ________________ opção EXCLUIR EXEMPLARES POR LIVRO________________  ");
-		System.out.print("Informe o código do livro para realizar as exclusões ");
+		System.out.println( Principal.getMensagem("menu.exemplar.remover.varios.titulo") );
+		System.out.println( Principal.getMensagem("menu.exemplar.remover.varios.solicita") );
 
 		String codigo= Principal.lerStringTeclado();
-		int numeroExemplares= ControladorExemplar.getNumeroExemplares(codigo);
 		boolean resultadoOperacao= ControladorExemplar.removerExemplares(codigo);
 
-		if(resultadoOperacao)			
-			System.out.println("\nFoi efetuada a exclusão do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");
-		else 
-			System.err.println("\nOperação não realizada.");
+		if(!resultadoOperacao)	
+			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
 	}
 }
