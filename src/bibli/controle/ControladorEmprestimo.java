@@ -195,8 +195,15 @@ public class ControladorEmprestimo {
 		emprestimoAtualizado.getExemplar().setDisponivel(true);
 
 		Usuario usuarioAtualizado= emprestimoAtualizado.getUsuario();
-		if(usuarioAtualizado.isBloqueado()) 
-			usuarioAtualizado.setDataFimBloqueio(7);
+		if(usuarioAtualizado.isBloqueado()) {
+			
+			if(usuarioAtualizado.getDataFimBloqueio() == null)
+				usuarioAtualizado.setDataFimBloqueio(LocalDateTime.now().plusDays(7));
+			else {
+				LocalDateTime dataFimAtual= usuarioAtualizado.getDataFimBloqueio();
+				usuarioAtualizado.setDataFimBloqueio(dataFimAtual.plusDays(7));				
+			}
+		}
 		
 		emprestimoAtualizado.setAtivo(false);
 		emprestimoAtualizado.setDataFim();
@@ -235,7 +242,7 @@ public class ControladorEmprestimo {
 		for(Usuario usuario : usuariosEncontrados.values()) 
 			if(usuario.getDataFimBloqueio().isBefore(LocalDateTime.now())) {
 				usuario.setBloqueado(false);
-				usuario.setDataFimBloqueio(0);
+				usuario.setDataFimBloqueio(null);
 			}
 
 		HashMap<String, Emprestimo> emprestimosEncontrados= AcervoEmprestimo.buscarEmprestimosVencidos();

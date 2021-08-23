@@ -12,6 +12,7 @@ public class Livro implements Comparable<Livro>{
 	private int numeroPaginas;
 	private String isbn;
 	private String categoria;
+	private int quantidadeExemplares;
 
 	public Livro(String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,
@@ -26,6 +27,7 @@ public class Livro implements Comparable<Livro>{
 		this.numeroPaginas = numeroPaginas;
 		this.isbn = isbn;
 		this.categoria = categoria;
+		this.quantidadeExemplares = 0;
 	}	
 	
 	public Livro(String codigo, String titulo, String autor, 
@@ -106,6 +108,18 @@ public class Livro implements Comparable<Livro>{
 		this.categoria = categoria;
 	}
 
+	public int getQuantidadeExemplares() {
+		return quantidadeExemplares;
+	}
+
+	public void aumentarQuantidadeExemplares() {
+		this.quantidadeExemplares++;
+	}
+	
+	public void diminuirQuantidadeExemplares() {
+		this.quantidadeExemplares--;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 
@@ -143,8 +157,9 @@ public class Livro implements Comparable<Livro>{
 	@Override
 	public String toString() {
 		return "Código: " + codigo + " | Título: " + titulo +
-				"\nAutor: " + autor + " | Edição: " + edicao + " | Editora: " + editora +
-				"\nNúmero de páginas: " + numeroPaginas + " | ISBN: " + isbn + " | Categoria: " + categoria;
+				"\nNúmero de exemplares: " + quantidadeExemplares + " | Autor: " + autor + 
+				"\nEditora: " + editora  + " | " + numeroPaginas + " páginas | Edição: " + edicao +
+				"\nISBN: " + isbn + " | Categoria: " + categoria;
 	}
 
 	@Override

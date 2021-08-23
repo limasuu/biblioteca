@@ -15,7 +15,7 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		exibirMenu();		
+		exibirMenu();
 	}
 
 	private static void exibirMenu() {
@@ -91,7 +91,11 @@ public class Principal {
 			try {
 				System.out.print( getMensagem("menu.entradaTeclado") );
 				numero= entrada.nextInt(); 
-				leitura= false;
+
+				if(numero >= 0)
+					leitura= false;
+				else
+					System.err.print( getMensagem("menu.valorInvalido") );
 
 			}catch (InputMismatchException e) {
 				System.err.print( getMensagem("menu.valorInvalido") );
@@ -113,7 +117,11 @@ public class Principal {
 			try {
 				System.out.print( getMensagem("menu.entradaTeclado") );
 				numero= entrada.nextDouble(); 
-				leitura= false;
+
+				if(numero >= 0)
+					leitura= false;
+				else
+					System.err.print( getMensagem("menu.valorInvalido") );
 
 			}catch (InputMismatchException e) {
 				System.err.print( getMensagem("menu.valorInvalido") );

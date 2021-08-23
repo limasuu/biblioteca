@@ -89,6 +89,7 @@ public class ControladorExemplar {
 			Exemplar exemplar= new Exemplar(livro);
 			
 			AcervoExemplar.adicionarExemplar(exemplar);
+			livro.aumentarQuantidadeExemplares();
 			System.out.println("\nExemplar \"" + exemplar.getCodigo() + "\" cadastrado.");			
 		}
 
@@ -112,7 +113,10 @@ public class ControladorExemplar {
 			return false;
 		}
 
+		Livro livro= AcervoExemplar.buscarExemplar(codigo).getLivro();
+		livro.diminuirQuantidadeExemplares();
 		AcervoExemplar.removerExemplar(codigo);
+		
 		System.out.println( Principal.getMensagem("menu.exemplar.remover.concluido") );	
 
 		return true;

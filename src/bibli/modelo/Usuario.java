@@ -88,12 +88,9 @@ public class Usuario implements Comparable<Usuario>{
 		return dataFimBloqueio;
 	}
 
-	public void setDataFimBloqueio(int dias) {
+	public void setDataFimBloqueio(LocalDateTime dataFimBloqueio) {
 		
-		if(dias == 0)
-			this.dataFimBloqueio= null;
-		
-		this.dataFimBloqueio= LocalDateTime.now().plusDays(dias);
+		this.dataFimBloqueio= dataFimBloqueio;
 	}
 
 	@Override
