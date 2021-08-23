@@ -16,12 +16,12 @@ public class AcervoUsuario {
 		return usuarios.size();
 	}
 
-	public static boolean verificarExistenciaUsuario(String codigo) {
+	public static boolean verificarExistencia(String codigo) {
 
 		return usuarios.containsKey(codigo);		
 	}
 
-	public static boolean verificarSituacaoUsuario(String codigoUsuario) {
+	public static boolean verificarBloqueio(String codigoUsuario) {
 		
 		return usuarios.get(codigoUsuario).isBloqueado();
 	}

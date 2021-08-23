@@ -16,14 +16,26 @@ public class AcervoExemplar {
 		return exemplares.size();
 	}
 
-	public static boolean verificarExistenciaExemplar(String codigo) {
+	public static boolean verificarExistencia(String codigo) {
 
 		return exemplares.containsKey(codigo);		
 	}
 
-	public static boolean verificarSituacaExemplar(String codigoExemplar) {
+	public static boolean verificarDisponibilidade(String codigoExemplar) {
 		
 		return exemplares.get(codigoExemplar).isDisponivel();
+	}
+	
+	public static boolean verificarExemplaresIndisponiveisLivro(String codigo){ 
+
+		int quantidade= 0;
+
+		for(Exemplar exemplar : exemplares.values()) 
+			if(!exemplar.isDisponivel() &&
+					exemplar.getLivro().getCodigo().equalsIgnoreCase(codigo)) 
+				quantidade++;	
+
+		return quantidade > 0;
 	}
 
 	public static Exemplar buscarExemplar(String codigo) {

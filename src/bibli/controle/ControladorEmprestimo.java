@@ -22,7 +22,7 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+		if(!AcervoEmprestimo.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
@@ -114,22 +114,22 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoUsuario.verificarExistenciaUsuario(codigoUsuario)){
+		if(!AcervoUsuario.verificarExistencia(codigoUsuario)){
 			System.err.println( Principal.getMensagem("erro.usuario.naoEncontrado") );
 			return false;
 		}	
 
-		if(AcervoUsuario.verificarSituacaoUsuario(codigoUsuario)){
+		if(AcervoUsuario.verificarBloqueio(codigoUsuario)){
 			System.err.println( Principal.getMensagem("erro.usuario.bloqueado") );
 			return false;
 		}	
 
-		if(!AcervoExemplar.verificarExistenciaExemplar(codigoExemplar)){
+		if(!AcervoExemplar.verificarExistencia(codigoExemplar)){
 			System.err.println( Principal.getMensagem("erro.exemplar.naoEncontrado") );
 			return false;
 		}	
 		
-		if(!AcervoExemplar.verificarSituacaExemplar(codigoExemplar)){
+		if(!AcervoExemplar.verificarDisponibilidade(codigoExemplar)){
 			System.err.println( Principal.getMensagem("erro.exemplar.indisponivel") );
 			return false;
 		}	
@@ -155,7 +155,7 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+		if(!AcervoEmprestimo.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
@@ -167,7 +167,7 @@ public class ControladorEmprestimo {
 			return false;
 		}	
 		
-		if(AcervoUsuario.verificarSituacaoUsuario(emprestimoAtualizado.getUsuario().getCodigo())){
+		if(AcervoUsuario.verificarBloqueio(emprestimoAtualizado.getUsuario().getCodigo())){
 			System.err.println( Principal.getMensagem("erro.usuario.bloqueado") );
 			return false;
 		}	
@@ -185,7 +185,7 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+		if(!AcervoEmprestimo.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
@@ -213,10 +213,15 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoEmprestimo.verificarExistenciaEmprestimo(codigo)){
+		if(!AcervoEmprestimo.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.emprestimo.naoEncontrado") );
 			return false;
 		}	
+		
+		if(AcervoEmprestimo.verificarAtividade(codigo)){
+			System.err.println( Principal.getMensagem("erro.emprestimo.remover.ativo") );
+			return false;
+		}			
 
 		AcervoEmprestimo.removerEmprestimo(codigo);
 		System.out.println( Principal.getMensagem("menu.emprestimo.remover.concluido") );		

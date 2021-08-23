@@ -17,7 +17,7 @@ public class ControladorExemplar {
 			return false;
 		}
 
-		if(!AcervoExemplar.verificarExistenciaExemplar(codigo)){
+		if(!AcervoExemplar.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.exemplar.naoEncontrado") );
 			return false;
 		}	
@@ -102,10 +102,15 @@ public class ControladorExemplar {
 			return false;
 		}
 
-		if(!AcervoExemplar.verificarExistenciaExemplar(codigo)){
+		if(!AcervoExemplar.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.exemplar.naoEncontrado") );
 			return false;
-		}				
+		}	
+		
+		if(!AcervoExemplar.verificarDisponibilidade(codigo)){
+			System.err.println( Principal.getMensagem("erro.exemplar.remover.indisponivel") );
+			return false;
+		}
 
 		AcervoExemplar.removerExemplar(codigo);
 		System.out.println( Principal.getMensagem("menu.exemplar.remover.concluido") );	

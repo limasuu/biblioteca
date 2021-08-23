@@ -17,11 +17,28 @@ public class AcervoEmprestimo {
 		return emprestimos.size();
 	}
 
-	public static boolean verificarExistenciaEmprestimo(String codigo) {
+	public static boolean verificarExistencia(String codigo) {
 
 		return emprestimos.containsKey(codigo);		
 	}
+	
+	public static boolean verificarAtividade(String codigo) {
 
+		return emprestimos.get(codigo).isAtivo();		
+	}
+	
+	public static boolean verificarEmprestimosAtivosPorUsuario(String codigo){ 
+
+		int quantidade= 0;
+
+		for(Emprestimo emprestimo : emprestimos.values()) 
+			if(emprestimo.isAtivo() &&
+					emprestimo.getUsuario().getCodigo().equalsIgnoreCase(codigo)) 
+				quantidade++;	
+
+		return quantidade > 0;
+	}
+	
 	public static Emprestimo buscarEmprestimo(String codigo) {
 
 		return emprestimos.get(codigo);

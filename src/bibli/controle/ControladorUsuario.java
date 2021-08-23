@@ -1,6 +1,7 @@
 package bibli.controle;
 
 import bibli.aplicacao.Principal;
+import bibli.modelo.AcervoEmprestimo;
 import bibli.modelo.AcervoUsuario;
 import bibli.modelo.Usuario;
 
@@ -13,7 +14,7 @@ public class ControladorUsuario {
 			return false;
 		}
 
-		if(!AcervoUsuario.verificarExistenciaUsuario(codigo)){
+		if(!AcervoUsuario.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.usuario.naoEncontrado") );
 			return false;
 		}	
@@ -63,7 +64,7 @@ public class ControladorUsuario {
 			return false;
 		}		
 		
-		if(!AcervoUsuario.verificarExistenciaUsuario(codigo)){
+		if(!AcervoUsuario.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.usuario.naoEncontrado") );
 			return false;
 		}		
@@ -91,13 +92,23 @@ public class ControladorUsuario {
 			return false;
 		}
 
-		if(!AcervoUsuario.verificarExistenciaUsuario(codigo)){
+		if(!AcervoUsuario.verificarExistencia(codigo)){
 			System.err.println( Principal.getMensagem("erro.usuario.naoEncontrado") );
 			return false;
 		}		
 		
 		if(AcervoUsuario.verificarSeEhFuncionario(codigo)){
 			System.err.println( Principal.getMensagem("erro.usuario.remover.funcionario") );
+			return false;
+		}
+		
+		if(AcervoUsuario.verificarBloqueio(codigo)){
+			System.err.println( Principal.getMensagem("erro.usuario.remover.bloqueado") );
+			return false;
+		}
+		
+		if(AcervoEmprestimo.verificarEmprestimosAtivosPorUsuario(codigo)){
+			System.err.println( Principal.getMensagem("erro.usuario.remover.emprestimo.ativo") );
 			return false;
 		}
 

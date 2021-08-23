@@ -156,6 +156,11 @@ public class ControladorLivro {
 			return false;
 		}		
 		
+		if(AcervoExemplar.verificarExemplaresIndisponiveisLivro(codigo)){
+			System.err.println( Principal.getMensagem("erro.livro.remover.exemplar.indisponivel") );
+			return false;
+		}
+		
 		int numeroExemplares= AcervoExemplar.removerExemplares(codigo);
 		AcervoLivro.removerLivro(codigo);
 		
