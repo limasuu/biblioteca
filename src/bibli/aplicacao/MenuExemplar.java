@@ -27,7 +27,7 @@ public class MenuExemplar {
 			apresentarOpcoesCadastrar();
 			break;
 		case 3:
-			apresentarOpcoesExcluir();
+			removerExemplar();
 			break;
 		case 0:
 			break;
@@ -124,35 +124,6 @@ public class MenuExemplar {
 		}	
 	}
 
-	private static void apresentarOpcoesExcluir() {
-
-		System.out.println( Principal.getMensagem("menu.titulo") );
-		System.out.println( Principal.getMensagem("menu.exemplar.excluir.titulo") );
-		System.out.println( Principal.getMensagem("menu.escolha") );
-		System.out.println( Principal.getMensagem("menu.exemplar.excluir.um") );
-		System.out.println( Principal.getMensagem("menu.exemplar.excluir.varios") );
-		System.out.println( Principal.getMensagem("menu.voltar"));
-		System.out.println( Principal.getMensagem("menu.base"));
-
-		int opcao= Principal.lerInteiroTeclado();
-
-		switch(opcao) {
-
-		case 1:
-			removerExemplar();
-			break;
-		case 2:
-			removerExemplares();
-			break;
-		case 0:
-			apresentarOpcoes();
-			break;
-		default:
-			System.err.println( Principal.getMensagem("menu.opcaoInvalida") );
-			apresentarOpcoesExcluir();
-		}	
-	}
-
 	private static void exibirExemplar (){
 
 		System.out.println( Principal.getMensagem("menu.exemplar.exibir.um.titulo") );
@@ -195,27 +166,14 @@ public class MenuExemplar {
 		String codigo= Principal.lerStringTeclado();
 
 		if(varios) {
-
 			System.out.println( Principal.getMensagem("menu.exemplar.cadastrar.varios.quantidade") );
 			quantidade= Principal.lerInteiroTeclado();
-		}
+		}		
+		
+		resultadoOperacao= ControladorExemplar.adicionarExemplar(codigo, quantidade);	
 
-		int qntd=0;
-		for(int i=0; i<quantidade; i++) {
-			resultadoOperacao= ControladorExemplar.adicionarExemplar(codigo);	
-
-			if(!resultadoOperacao) 	{
-				qntd= i;
-				break;
-			}
-		}
-
-		if(!resultadoOperacao) {
+		if(!resultadoOperacao)
 			System.err.println( Principal.getMensagem("menu.naoRealizado") );
-
-			if(varios)
-				System.err.println("Realizou-se o cadastro de " + qntd + " exemplar(es).");
-		}	
 	}	
 
 	private static void removerExemplar() {
@@ -226,18 +184,6 @@ public class MenuExemplar {
 		String codigo= Principal.lerStringTeclado();
 
 		boolean resultadoOperacao= ControladorExemplar.removerExemplar(codigo);
-
-		if(!resultadoOperacao)	
-			System.err.println( Principal.getMensagem("menu.naoRealizado") );	
-	}
-
-	private static void removerExemplares() {
-
-		System.out.println( Principal.getMensagem("menu.exemplar.remover.varios.titulo") );
-		System.out.println( Principal.getMensagem("menu.exemplar.remover.varios.solicita") );
-
-		String codigo= Principal.lerStringTeclado();
-		boolean resultadoOperacao= ControladorExemplar.removerExemplares(codigo);
 
 		if(!resultadoOperacao)	
 			System.err.println( Principal.getMensagem("menu.naoRealizado") );	

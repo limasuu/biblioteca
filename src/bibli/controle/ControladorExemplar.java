@@ -70,7 +70,7 @@ public class ControladorExemplar {
 		return true;
 	}	
 
-	public static boolean adicionarExemplar(String codigo) {
+	public static boolean adicionarExemplar(String codigo, int quantidade) {
 
 		if(!ValidadorObra.validarCampo(codigo)) {
 			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
@@ -83,31 +83,18 @@ public class ControladorExemplar {
 		}	
 		
 		Livro livro= AcervoLivro.buscarLivro(codigo);
-		Exemplar exemplar= new Exemplar(livro);
 		
-		AcervoExemplar.adicionarExemplar(exemplar);
-		System.out.println("\nExemplar \"" + exemplar.getCodigo() + "\" cadastrado.");
+		for(int i=0; i<quantidade; i++) {			
+			
+			Exemplar exemplar= new Exemplar(livro);
+			
+			AcervoExemplar.adicionarExemplar(exemplar);
+			System.out.println("\nExemplar \"" + exemplar.getCodigo() + "\" cadastrado.");			
+		}
 
 		return true;
 	}
-	
-	public static boolean editarExemplares(Livro livroAtualizado)  {
 		
-		if(!ValidadorObra.validarLivro(livroAtualizado))
-			return false;
-
-		HashMap<String, Exemplar> conjuntoExemplares= AcervoExemplar.buscarExemplares(livroAtualizado.getCodigo());
-
-		if(!conjuntoExemplares.isEmpty()) {
-
-			System.err.print("\nSerá efetuada a edição do(s) " + conjuntoExemplares.size() + " exemplar(es) vinculado(s) a este livro!");
-			for(Exemplar e : conjuntoExemplares.values()) 
-				e.setLivro(livroAtualizado);				
-		}	
-		
-		return true;
-	}
-	
 	public static boolean removerExemplar(String codigo) {
 
 		if(!ValidadorObra.validarCampo(codigo)) {
@@ -123,29 +110,6 @@ public class ControladorExemplar {
 		AcervoExemplar.removerExemplar(codigo);
 		System.out.println( Principal.getMensagem("menu.exemplar.remover.concluido") );	
 
-		return true;
-	}
-
-	public static boolean removerExemplares(String codigo) {
-
-		if(!ValidadorObra.validarCampo(codigo)) {
-			System.err.println( Principal.getMensagem("erro.codigoInvalido") );
-			return false;
-		}
-
-		if(!AcervoLivro.verificarExistenciaLivro(codigo)){
-			System.err.println( Principal.getMensagem("erro.livro.naoEncontrado") );
-			return false;
-		}		
-
-		int numeroExemplares= AcervoExemplar.removerExemplares(codigo);
-
-		if(numeroExemplares == 0) {
-			System.err.println( Principal.getMensagem("erro.exemplar.livro.vazio") );
-			return false;
-		}
-
-		System.out.println("Foi efetuada a remoção do(s) " + numeroExemplares + " exemplar(es) vinculado(s) a este livro!");
 		return true;
 	}
 }
