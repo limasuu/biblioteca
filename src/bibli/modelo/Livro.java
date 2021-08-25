@@ -32,7 +32,7 @@ public class Livro implements Comparable<Livro>{
 	
 	public Livro(String codigo, String titulo, String autor, 
 			int edicao, String editora, int numeroPaginas,
-			String isbn, String categoria) {
+			String isbn, String categoria, int quantidadeExemplares) {
 		
 		this.codigo= codigo;
 		this.titulo = titulo;
@@ -42,7 +42,16 @@ public class Livro implements Comparable<Livro>{
 		this.numeroPaginas = numeroPaginas;
 		this.isbn = isbn;
 		this.categoria = categoria;
+		this.quantidadeExemplares = quantidadeExemplares;
 	}	
+	
+	public static int getTotalLivrosJaCadastrados() {
+		return totalLivrosJaCadastrados;
+	}
+
+	public static void setTotalLivrosJaCadastrados(int totalLivrosJaCadastrados) {
+		Livro.totalLivrosJaCadastrados = totalLivrosJaCadastrados;
+	}
 
 	public String getCodigo() {
 		return codigo;
@@ -140,14 +149,14 @@ public class Livro implements Comparable<Livro>{
 					outroLivro.getCategoria() == null)
 				return false;
 
-			if(outroLivro.getCodigo().equals(this.codigo) &&
-					outroLivro.getTitulo().equals(this.titulo) &&
-					outroLivro.getAutor().equals(this.autor) &&					
+			if(outroLivro.getCodigo().equalsIgnoreCase(this.codigo) &&
+					outroLivro.getTitulo().equalsIgnoreCase(this.titulo) &&
+					outroLivro.getAutor().equalsIgnoreCase(this.autor) &&					
 					(outroLivro.getEdicao() == this.edicao) &&
-					outroLivro.getEditora().equals(this.editora) &&
+					outroLivro.getEditora().equalsIgnoreCase(this.editora) &&
 					(outroLivro.getNumeroPaginas() == this.numeroPaginas) &&
-					outroLivro.getIsbn().equals(this.isbn) &&
-					outroLivro.getCategoria().equals(this.categoria))
+					outroLivro.getIsbn().equalsIgnoreCase(this.isbn) &&
+					outroLivro.getCategoria().equalsIgnoreCase(this.categoria))
 				return true;
 		}
 

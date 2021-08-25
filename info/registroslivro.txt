@@ -1,0 +1,6 @@
+6
+L1##Pollyana##Eleanor Porter##1##Pé de Letra##184##978-8595201170##Clássico##1
+L2##O Mundo de Sofia##Jostein Gaarder##1##Seguinte##568##9788535921892##Romance##2
+L3##A Seleção##Kiera Cass##1##Seguinte##368##9788565765015##Young adult##1
+L4##A Elite##Kiera Cass##1##Seguinte##360##9788565765121##Young adult##0
+L5##O Menino do Pijama Listrado##John Boine##1##Seguinte##192##9788535911121##Ficção infantil##0

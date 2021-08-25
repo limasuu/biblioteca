@@ -1,8 +1,11 @@
 package bibli.modelo;
 
+import java.time.LocalDateTime;
+
 public class Funcionario extends Usuario{
 		
 	private static int totalFuncionariosJaCadastrados= 0;
+	
 	private String matricula;
 	private double salario;
 	private String cargo;
@@ -19,15 +22,23 @@ public class Funcionario extends Usuario{
 	}
 	
 	public Funcionario(String matricula, String codigo, String nome, String endereco, 
-			String telefone, String email, 
+			String telefone, String email, boolean bloqueado, LocalDateTime dataFimBloqueio, 
 			double salario, String cargo) {
 		
-		super(codigo, nome, endereco, telefone, email);
+		super(codigo, nome, endereco, telefone, email, bloqueado, dataFimBloqueio);
 		this.matricula= matricula;
 		this.salario= salario;
 		this.cargo= cargo;
 	}
-	
+		
+	public static int getTotalFuncionariosJaCadastrados() {
+		return totalFuncionariosJaCadastrados;
+	}
+
+	public static void setTotalFuncionariosJaCadastrados(int totalFuncionariosJaCadastrados) {
+		Funcionario.totalFuncionariosJaCadastrados = totalFuncionariosJaCadastrados;
+	}
+
 	public String getMatricula() {
 		return matricula;
 	}
@@ -67,9 +78,9 @@ public class Funcionario extends Usuario{
 				return false;
 			
 			if(super.equals(outroFuncionario) &&
-					outroFuncionario.getMatricula().equals(this.matricula) &&
+					outroFuncionario.getMatricula().equalsIgnoreCase(this.matricula) &&
 					outroFuncionario.getSalario() == this.salario &&
-					outroFuncionario.getCargo().equals(this.cargo))
+					outroFuncionario.getCargo().equalsIgnoreCase(this.cargo))
 				return true;
 		}		
 		return false;

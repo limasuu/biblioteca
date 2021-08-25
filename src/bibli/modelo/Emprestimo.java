@@ -16,7 +16,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 	private boolean ativo;
 	private int renocacoes;
 	
-	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
+	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm");
 	private LocalDateTime dataInicio;
 	private LocalDateTime dataLimite;	
 	private LocalDateTime dataFim;	
@@ -33,10 +33,29 @@ public class Emprestimo implements Comparable<Emprestimo>{
 		this.dataInicio= LocalDateTime.now();
 		this.dataLimite= dataInicio.plusDays(7);
 		this.dataFim= null;
+	}	
+
+	public Emprestimo(String codigo, Funcionario funcionario, Usuario usuario, Exemplar exemplar, 
+			boolean ativo, 	int renocacoes, LocalDateTime dataInicio, 
+			LocalDateTime dataLimite, LocalDateTime dataFim) {
+		
+		this.codigo = codigo;
+		this.funcionario = funcionario;
+		this.usuario = usuario;
+		this.exemplar = exemplar;
+		this.ativo = ativo;
+		this.renocacoes = renocacoes;
+		this.dataInicio = dataInicio;
+		this.dataLimite = dataLimite;
+		this.dataFim = dataFim;
 	}
 
 	public static int getTotalEmprestimosJaEfetuados() {
 		return totalEmprestimosJaEfetuados;
+	}
+	
+	public static void setTotalEmprestimosJaEfetuados(int totalEmprestimosJaEfetuados) {
+		Emprestimo.totalEmprestimosJaEfetuados = totalEmprestimosJaEfetuados;
 	}
 
 	public String getCodigo() {
@@ -120,7 +139,7 @@ public class Emprestimo implements Comparable<Emprestimo>{
 					outroEmprestimo.getDataInicio() == null)
 				return false;
 			
-			if(outroEmprestimo.getCodigo().equals(this.codigo) &&
+			if(outroEmprestimo.getCodigo().equalsIgnoreCase(this.codigo) &&
 					outroEmprestimo.getFuncionario().equals(this.funcionario) &&
 					outroEmprestimo.getUsuario().equals(this.usuario) &&
 					outroEmprestimo.getExemplar().equals(this.exemplar) &&

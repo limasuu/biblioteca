@@ -3,8 +3,8 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.aplicacao.Principal;
-import bibli.modelo.AcervoExemplar;
-import bibli.modelo.AcervoLivro;
+import bibli.dados.AcervoExemplar;
+import bibli.dados.AcervoLivro;
 import bibli.modelo.Livro;
 
 public class ControladorLivro {
@@ -156,7 +156,7 @@ public class ControladorLivro {
 			return false;
 		}		
 		
-		if(AcervoExemplar.verificarExemplaresIndisponiveisLivro(codigo)){
+		if(AcervoExemplar.verificarExemplaresIndisponiveisPorLivro(codigo)){
 			System.err.println( Principal.getMensagem("erro.livro.remover.exemplar.indisponivel") );
 			return false;
 		}

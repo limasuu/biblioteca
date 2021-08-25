@@ -31,13 +31,24 @@ public class Usuario implements Comparable<Usuario>{
 	}
 	
 	public Usuario(String codigo, String nome, String endereco, 
-			String telefone, String email) {
+			String telefone, String email, 
+			boolean bloqueado, LocalDateTime dataFimBloqueio) {
 		
 		this.codigo= codigo;
 		this.nome = nome;
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.email= email;
+		this.bloqueado= bloqueado;
+		this.dataFimBloqueio= dataFimBloqueio;
+	}
+	
+	public static int getTotalUsuariosJaCadastrados() {
+		return totalUsuariosJaCadastrados;
+	}
+
+	public static void setTotalUsuariosJaCadastrados(int totalUsuariosJaCadastrados) {
+		Usuario.totalUsuariosJaCadastrados = totalUsuariosJaCadastrados;
 	}
 
 	public String getCodigo() {
@@ -112,11 +123,11 @@ public class Usuario implements Comparable<Usuario>{
 					outroUsuario.getEmail() == null)
 				return false;
 			
-			if(outroUsuario.getCodigo().equals(this.codigo) &&
-					outroUsuario.getNome().equals(this.nome) &&
-					outroUsuario.getEndereco().equals(this.endereco) &&
-					outroUsuario.getTelefone().equals(this.telefone) &&
-					outroUsuario.getEmail().equals(this.email))
+			if(outroUsuario.getCodigo().equalsIgnoreCase(this.codigo) &&
+					outroUsuario.getNome().equalsIgnoreCase(this.nome) &&
+					outroUsuario.getEndereco().equalsIgnoreCase(this.endereco) &&
+					outroUsuario.getTelefone().equalsIgnoreCase(this.telefone) &&
+					outroUsuario.getEmail().equalsIgnoreCase(this.email))
 				return true;
 		}		
 		return false;

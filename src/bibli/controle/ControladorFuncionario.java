@@ -3,8 +3,8 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.aplicacao.Principal;
-import bibli.modelo.AcervoFuncionario;
-import bibli.modelo.AcervoUsuario;
+import bibli.dados.AcervoFuncionario;
+import bibli.dados.AcervoUsuario;
 import bibli.modelo.Funcionario;
 
 public class ControladorFuncionario {
@@ -16,7 +16,7 @@ public class ControladorFuncionario {
 			return false;
 		}
 
-		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
+		if(!AcervoFuncionario.verificarExistencia(matricula)){
 			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}	
@@ -98,7 +98,7 @@ public class ControladorFuncionario {
 			return false;
 		}
 
-		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
+		if(!AcervoFuncionario.verificarExistencia(matricula)){
 			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}		
@@ -121,7 +121,7 @@ public class ControladorFuncionario {
 			return false;
 		}
 
-		if(!AcervoFuncionario.verificarExistenciaFuncionario(matricula)){
+		if(!AcervoFuncionario.verificarExistencia(matricula)){
 			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}		

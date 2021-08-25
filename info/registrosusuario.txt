@@ -1,0 +1,4 @@
+11
+U1##Ana de Melo##Rua das Flores, 2. Bairro Novo.##912345678##contato-ana@gmail.com##false##NULO
+U2##Bruno Souza##Avenida Primeiro de Janeiro, 100. Bairro Central.##988881111##brunosouza@yahoo.com.br##false##NULO
+U3##Carlos Nogueira##Estrada Campo Novo, 1021. Bairro Novo.##911223344##nogueira.carlos@gmail.com##false##NULO

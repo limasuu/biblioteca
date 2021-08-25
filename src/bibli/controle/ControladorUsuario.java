@@ -1,8 +1,8 @@
 package bibli.controle;
 
 import bibli.aplicacao.Principal;
-import bibli.modelo.AcervoEmprestimo;
-import bibli.modelo.AcervoUsuario;
+import bibli.dados.AcervoEmprestimo;
+import bibli.dados.AcervoUsuario;
 import bibli.modelo.Usuario;
 
 public class ControladorUsuario {

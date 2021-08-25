@@ -7,6 +7,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import bibli.controle.ControladorEmprestimo;
+import bibli.dados.AcervoEmprestimo;
+import bibli.dados.AcervoExemplar;
+import bibli.dados.AcervoFuncionario;
+import bibli.dados.AcervoLivro;
+import bibli.dados.AcervoUsuario;
 
 public class Principal {
 
@@ -23,10 +28,11 @@ public class Principal {
 		boolean uso= true;
 		iniciarProperties();
 		habilitarTeclado();
+		
+		resgatarRegistros();
+		ControladorEmprestimo.atualizarInadimplencias();
 
 		while(uso) {
-
-			ControladorEmprestimo.atualizarInadimplencias();
 
 			System.out.println( getMensagem("menu.topo") );
 			System.out.println( getMensagem("menu.titulo") );
@@ -61,13 +67,57 @@ public class Principal {
 				break;
 			case 0:
 				System.out.println( getMensagem("menu.agradecimento") );					
-				uso= false;
-				desabilitarTeclado();
+				uso= false;				
 				break;
 			default:
 				System.err.println( getMensagem("menu.opcaoInvalida") );	
 			}	
 		}
+		
+		desabilitarTeclado();
+		concluirRegistros();
+	}
+
+	private static void iniciarProperties(){
+
+		properties= new Properties();
+		FileInputStream file;
+
+		try {
+			file= new FileInputStream("./info/mensagens.properties");
+			properties.load(file);
+
+		} catch (IOException e) {
+			System.err.print("Ocorreu um erro com o arquivo de mensagens do sistema.");
+		} 
+	}
+
+	public static void habilitarTeclado() {
+
+		entrada= new Scanner(System.in);
+	}
+
+	public static void desabilitarTeclado() {
+
+		entrada.close();
+	}
+
+	private static void resgatarRegistros() {
+
+		AcervoLivro.iniciar();
+		AcervoExemplar.iniciar();
+		AcervoUsuario.iniciar();
+		AcervoFuncionario.iniciar();
+		AcervoEmprestimo.iniciar();
+	}
+
+	private static void concluirRegistros() {
+
+		AcervoLivro.encerrar();
+		AcervoExemplar.encerrar();
+		AcervoUsuario.encerrar();
+		AcervoFuncionario.encerrar();
+		AcervoEmprestimo.encerrar();
 	}
 
 	public static String getMensagem(String chave) {
@@ -138,29 +188,5 @@ public class Principal {
 
 		if(entrada.hasNextLine())
 			entrada.nextLine();	
-	}
-
-	private static void iniciarProperties(){
-
-		properties= new Properties();
-		FileInputStream file;
-
-		try {
-			file= new FileInputStream("./info/mensagens.properties");
-			properties.load(file);
-
-		} catch (IOException e) {
-			System.err.print( getMensagem("menu.erroArquivo") );
-		} 
-	}
-
-	public static void habilitarTeclado() {
-
-		entrada= new Scanner(System.in);
-	}
-
-	public static void desabilitarTeclado() {
-
-		entrada.close();
-	}
+	}	
 }

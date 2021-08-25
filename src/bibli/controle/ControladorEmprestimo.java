@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import bibli.aplicacao.Principal;
-import bibli.modelo.AcervoEmprestimo;
-import bibli.modelo.AcervoExemplar;
-import bibli.modelo.AcervoFuncionario;
-import bibli.modelo.AcervoUsuario;
+import bibli.dados.AcervoEmprestimo;
+import bibli.dados.AcervoExemplar;
+import bibli.dados.AcervoFuncionario;
+import bibli.dados.AcervoUsuario;
 import bibli.modelo.Emprestimo;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Funcionario;
@@ -109,7 +109,7 @@ public class ControladorEmprestimo {
 			return false;
 		}
 
-		if(!AcervoFuncionario.verificarExistenciaFuncionario(matriculaFuncionario)){
+		if(!AcervoFuncionario.verificarExistencia(matriculaFuncionario)){
 			System.err.println( Principal.getMensagem("erro.funcionario.naoEncontrado") );
 			return false;
 		}

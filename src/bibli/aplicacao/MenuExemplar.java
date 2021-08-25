@@ -134,7 +134,7 @@ public class MenuExemplar {
 		ControladorExemplar.exibirExemplar(codigo);
 	}
 
-	public static void exibirExemplaresTotal (){
+	private static void exibirExemplaresTotal (){
 
 		ControladorExemplar.exibirExemplares();
 	}

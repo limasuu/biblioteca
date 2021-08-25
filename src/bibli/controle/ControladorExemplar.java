@@ -3,8 +3,8 @@ package bibli.controle;
 import java.util.HashMap;
 
 import bibli.aplicacao.Principal;
-import bibli.modelo.AcervoExemplar;
-import bibli.modelo.AcervoLivro;
+import bibli.dados.AcervoExemplar;
+import bibli.dados.AcervoLivro;
 import bibli.modelo.Exemplar;
 import bibli.modelo.Livro;
 
@@ -51,13 +51,13 @@ public class ControladorExemplar {
 			return false;
 		}
 
-		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplares(codigo);		
+		HashMap<String, Exemplar> exemplaresEncontrados= AcervoExemplar.buscarExemplaresPorLivro(codigo);		
 
 		if(exemplaresEncontrados.size() == 0) 
 			System.out.println( Principal.getMensagem("erro.exemplar.vazio") );		
 		else {
 
-			System.out.println("\n----------- Exemplares com código \"" + codigo + "\" -----------");
+			System.out.println("\n----------- Exemplares do livro \"" + codigo + "\" -----------");
 			System.out.println( Principal.getMensagem("exibir.quantidade") + exemplaresEncontrados.size());	
 			System.out.println( Principal.getMensagem("menu.base") );
 

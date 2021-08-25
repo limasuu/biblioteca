@@ -3,6 +3,7 @@ package bibli.modelo;
 public class Exemplar implements Comparable<Exemplar>{
 	
 	private static int totalExemplaresJaCadastrados= 0;
+	
 	private String codigo;
 	private Livro livro;
 	private boolean disponivel;
@@ -13,6 +14,21 @@ public class Exemplar implements Comparable<Exemplar>{
 		this.codigo= "EX" + String.valueOf(totalExemplaresJaCadastrados);
 		this.livro= livro;
 		this.disponivel= true;
+	}
+	
+	public Exemplar(String codigo, Livro livro, boolean disponivel) {
+
+		this.codigo = codigo;
+		this.livro = livro;
+		this.disponivel = disponivel;
+	}
+
+	public static int getTotalExemplaresJaCadastrados() {
+		return totalExemplaresJaCadastrados;
+	}
+
+	public static void setTotalExemplaresJaCadastrados(int totalExemplaresJaCadastrados) {
+		Exemplar.totalExemplaresJaCadastrados = totalExemplaresJaCadastrados;
 	}
 
 	public String getCodigo() {
@@ -52,7 +68,7 @@ public class Exemplar implements Comparable<Exemplar>{
 				return false;
 			
 			
-			if(outroExemplar.getCodigo().equals(this.codigo) &&
+			if(outroExemplar.getCodigo().equalsIgnoreCase(this.codigo) &&
 					outroExemplar.getLivro().equals(this.livro))
 				return true;
 		}

@@ -2,7 +2,7 @@ package bibli.controle;
 
 import java.util.ArrayList;
 
-import bibli.modelo.AcervoLivro;
+import bibli.dados.AcervoLivro;
 import bibli.modelo.Livro;
 
 public class ValidadorObra extends Validador{	
@@ -32,7 +32,7 @@ public class ValidadorObra extends Validador{
 
 		Livro livro= AcervoLivro.buscarLivro(codigo);
 		Livro livroAtualizado= new Livro(codigo, titulo, autor, edicao, editora, 
-				numeroPaginas, isbn, categoria);
+				numeroPaginas, isbn, categoria, livro.getQuantidadeExemplares());
 		
 		if(livro.equals(livroAtualizado))
 			return false;
@@ -47,12 +47,4 @@ public class ValidadorObra extends Validador{
 
 		return true;	
 	}	
-
-	public static boolean validarLivro(Livro livro) {
-
-		if(livro == null) 
-			return false;
-
-		return AcervoLivro.verificarExistenciaIsbn(livro.getIsbn());
-	}
 }

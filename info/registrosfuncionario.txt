@@ -1,0 +1,4 @@
+7
+F1##U4##Eliza Aguiar##Rua das Pedras, 50. Bairro Central.##900998877##eliza2@gmail.com##false##NULO##1500.35##Atendente
+F2##U5##Marta da Silva##Travessa dos Pinheiros, 16. Bairro Central.##910203040##martasilva14@gmail.com##false##NULO##1500.35##Atendente
+F3##U6##Ulisses Neves##Rua da Liberdade, 884. Bairro Central.##911110000##ulissesn@gmail.com##false##NULO##1099.99##Auxiliar de Limpeza

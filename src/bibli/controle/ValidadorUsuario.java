@@ -2,8 +2,8 @@ package bibli.controle;
 
 import java.util.ArrayList;
 
-import bibli.modelo.AcervoFuncionario;
-import bibli.modelo.AcervoUsuario;
+import bibli.dados.AcervoFuncionario;
+import bibli.dados.AcervoUsuario;
 import bibli.modelo.Funcionario;
 import bibli.modelo.Usuario;
 
@@ -45,7 +45,8 @@ public class ValidadorUsuario extends Validador{
 			String telefone, String email) {
 
 		Usuario usuario= AcervoUsuario.buscarUsuario(codigo);
-		Usuario usuarioAtualizado= new Usuario(codigo, nome, endereco, telefone, email);
+		Usuario usuarioAtualizado= new Usuario(codigo, nome, endereco, telefone, email, 
+				usuario.isBloqueado(), usuario.getDataFimBloqueio());
 
 		if(usuario.equals(usuarioAtualizado))
 			return false;
@@ -62,7 +63,8 @@ public class ValidadorUsuario extends Validador{
 			String telefone, String email, double salario, String cargo) {
 
 		Funcionario funcionario= AcervoFuncionario.buscarFuncionario(matricula);
-		Funcionario funcionarioAtualizado= new Funcionario(matricula, funcionario.getCodigo(), nome, endereco, telefone, email, salario, cargo);
+		Funcionario funcionarioAtualizado= new Funcionario(matricula, funcionario.getCodigo(), nome, endereco, telefone, email, 
+				funcionario.isBloqueado(), funcionario.getDataFimBloqueio(), salario, cargo);
 
 		if(funcionario.equals(funcionarioAtualizado))
 			return false;
